@@ -6,10 +6,9 @@ import Login from "../Login";
 import NotFound from "../NotFound";
 import SignUp from "../SignUp";
 import Products from "../Products";
-
+import Listproducts from "../ListProducts";
 import { TaskContextProvider } from "../../context/TaskContext";
 import "./App.css";
-import Showproducts from "../ShowProducts";
 
 function AppRoutes() {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ function AppRoutes() {
     { path: "/signup", element: <SignUp /> },
     { path: "/*", element: <NotFound /> },
     { path: "/products", element: <Products /> },
-    { path: "/showproducts", element: <Showproducts /> },
+    { path: "/listproducts", element: <Listproducts /> },
   ]);
   return routes;
 }

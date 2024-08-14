@@ -53,72 +53,93 @@ const Products = () => {
 
   return (
     <Layout>
-      <div className="flex items-center border-2 border-blue-500 p-5">
-        <form
-          className="mx-auto mb-0 mt-8 max-w-md space-y-4"
-          onSubmit={handleSubmit}
-        >
+      <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col">
-            <label htmlFor="name">Tipo</label>
+            <label className="label">Tipo</label>
             <input
+              className="input-primary"
               type="text"
               id="type"
               value={type}
               onChange={(e) => setType(e.target.value)}
             />
 
-            <label htmlFor="brand">Sub Tipo</label>
+            <label className="label" htmlFor="brand">
+              Sub Tipo
+            </label>
             <input
+              className="input-primary"
               type="text"
               id="subType"
               value={subType}
               onChange={(e) => setSubType(e.target.value)}
             />
 
-            <label htmlFor="brand">Marca</label>
+            <label className="label" htmlFor="brand">
+              Marca
+            </label>
             <input
+              className="input-primary"
               type="text"
               id="brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
             />
 
-            <label htmlFor="category">Color</label>
+            <label className="label" htmlFor="category">
+              Color
+            </label>
             <input
+              className="input-primary"
               type="text"
               id="color"
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />
 
-            <label htmlFor="category">Genero</label>
+            <label className="label" htmlFor="category">
+              Genero
+            </label>
             <input
+              className="input-primary"
               type="text"
               id="gender"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             />
-            <label htmlFor="category">Talle</label>
+            <label className="label" htmlFor="category">
+              Talle
+            </label>
             <input
+              className="input-primary"
               type="text"
               id="size"
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />
-            <label htmlFor="category">Costo</label>
+            <label className="label" htmlFor="category">
+              Costo
+            </label>
             <input
+              className="input-primary"
               type="text"
               id="cost"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
             />
 
-            <label htmlFor="file">Subir Imagen</label>
-            <input type="file" id="fileUrl" onChange={uploadImage} />
+            <label className="label" htmlFor="file">
+              Subir Imagen
+            </label>
+            <input
+              className="input-primary"
+              type="file"
+              id="fileUrl"
+              onChange={uploadImage}
+            />
 
-            <button className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
-              Guardar
-            </button>
+            <button className="btn-primary">Guardar</button>
           </div>
         </form>
       </div>

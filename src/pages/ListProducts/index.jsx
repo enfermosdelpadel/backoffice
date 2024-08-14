@@ -56,31 +56,31 @@ const Showproducts = () => {
           <tbody>
             {product.map((item) => (
               <tr key={item.id}>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.type}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.subType}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.brand}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.color}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.gender}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.size}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.cost}
                 </td>
                 <td>
                   <figure className="w-20 h-20">
                     <img
-                      className="w-full h-full rounded-lg object-cover"
+                      className="size-20 rounded-lg object-cover"
                       src={`${reactimages}/${item.fileUrl}`}
                     />
                   </figure>
