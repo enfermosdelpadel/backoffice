@@ -7,6 +7,7 @@ import NotFound from "../NotFound";
 import SignUp from "../SignUp";
 import Products from "../Products";
 import Listproducts from "../ListProducts";
+import Users from "../Users";
 import { TaskContextProvider } from "../../context/TaskContext";
 import "./App.css";
 
@@ -16,7 +17,7 @@ function AppRoutes() {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
-        navigate("/signup");
+        navigate("/login");
         console.log("User is not logged in");
       }
     });
@@ -29,6 +30,7 @@ function AppRoutes() {
     { path: "/*", element: <NotFound /> },
     { path: "/products", element: <Products /> },
     { path: "/listproducts", element: <Listproducts /> },
+    { path: "/users", element: <Users /> },
   ]);
   return routes;
 }

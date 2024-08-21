@@ -4,8 +4,9 @@
 
 @layer components {
   .input-primary {
-    @apply w-full rounded-lg border-gray-200 p-3 text-sm;
+    @apply w-full rounded-s bg-gray-100 border-gray-200 p-3 text-sm;
   }
+
   .btn-primary {
     @apply w-full rounded-lg bg-blue-500 p-3 text-white;
   }

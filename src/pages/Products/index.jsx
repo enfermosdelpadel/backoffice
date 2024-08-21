@@ -12,6 +12,7 @@ const Products = () => {
   const [size, setSize] = useState("");
   const [cost, setCost] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+  const [desc, setDesc] = useState("");
   const [formError, setFormError] = useState(null);
 
   const uploadImage = async (e) => {
@@ -39,7 +40,9 @@ const Products = () => {
 
     const { data, error } = await supabase
       .from("products")
-      .insert([{ type, subType, brand, color, gender, size, cost, fileUrl }]);
+      .insert([
+        { type, subType, brand, color, gender, size, cost, desc, fileUrl },
+      ]);
 
     if (error) {
       console.log(error);
@@ -127,6 +130,17 @@ const Products = () => {
               id="cost"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
+            />
+            <label className="label" htmlFor="category">
+              Descripción
+            </label>
+            <textarea
+              className="input-primary"
+              type="text"
+              rows="7"
+              id="desc"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
             />
 
             <label className="label" htmlFor="file">

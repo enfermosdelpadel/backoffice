@@ -23,12 +23,7 @@ function Signup() {
     <div className="flex items-center justify-center h-screen w-screen">
       <div className="mx-auto max-w-screen-xl  bg-gray-200 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg text-center">
-          <h1 className="text-2xl font-bold sm:text-3xl">Get started today!</h1>
-
-          <p className="mt-4 text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
-            nulla eaque error neque ipsa culpa autem, at itaque nostrum!
-          </p>
+          <h1 className="text-2xl font-bold sm:text-3xl">Registrate!</h1>
         </div>
 
         <form

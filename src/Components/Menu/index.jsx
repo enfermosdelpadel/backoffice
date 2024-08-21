@@ -1,7 +1,9 @@
-import { ArchiveBoxIcon } from "@heroicons/react/24/outline";
+import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
+import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { UsersIcon } from "@heroicons/react/24/outline";
+import { supabase } from "../../supabase/client";
 function Menu() {
   return (
     <div className="flex h-screen w-32 flex-col justify-between border-e bg-white">
@@ -16,9 +18,9 @@ function Menu() {
           <div className="px-2 py-4">
             <a
               href="/products"
-              className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5"
+              className="t group relative flex justify-right rounded bg-blue-50 px-2 py-1.5"
             >
-              <ArchiveBoxIcon className="size-5" />
+              <DocumentArrowUpIcon className="size-5" />
 
               <p className="ml-2 font-medium">Alta</p>
             </a>
@@ -27,36 +29,42 @@ function Menu() {
               <li>
                 <a
                   href="/listproducts"
-                  className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  className="group relative flex justify-right rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
-                  <div className="flex">
-                    <ArchiveBoxIcon className="size-5" />
-                    <p className="ml-2 font-medium">Listado</p>
-                  </div>
+                  <span className="flex items-right space-x-2">
+                    <span className="justify-right">
+                      <DocumentTextIcon className="size-5" />
+                    </span>
+                    <span>Listado</span>
+                  </span>
                 </a>
               </li>
 
               <li>
                 <a
                   href="#"
-                  className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  className="group relative flex justify-right rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
-                  <div className="flex">
-                    <ShoppingBagIcon className="flex justify-end size-5" />
-                    <p className="ml-2 font-medium">Ventas</p>
-                  </div>
+                  <span className="flex items-center space-x-2">
+                    <span className="justify-right">
+                      <ShoppingBagIcon className="size-5" />
+                    </span>
+                    <span>Ventas</span>
+                  </span>
                 </a>
               </li>
 
               <li>
                 <a
-                  href="#"
+                  href="/users"
                   className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
-                  <div className="flex">
-                    <UsersIcon className="flex justify-start size-5" />
-                    <p className="ml-2 font-medium">Usuarios</p>
-                  </div>
+                  <span className="flex items-right space-x-2">
+                    <span>
+                      <UsersIcon className="size-5" />
+                    </span>
+                    <span>Usuarios</span>
+                  </span>
                 </a>
               </li>
             </ul>
@@ -66,7 +74,7 @@ function Menu() {
       <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
         <form action="#">
           <button
-            type="submit"
+            onClick={() => supabase.auth.signOut()}
             className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
           >
             <ArrowLeftEndOnRectangleIcon className="size-6" />
