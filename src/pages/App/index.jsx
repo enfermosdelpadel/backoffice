@@ -4,7 +4,6 @@ import { supabase } from "../../supabase/client";
 import Home from "../home";
 import Login from "../Login";
 import NotFound from "../NotFound";
-import SignUp from "../SignUp";
 import Products from "../Products";
 import Listproducts from "../ListProducts";
 import Users from "../Users";
@@ -26,7 +25,6 @@ function AppRoutes() {
   let routes = useRoutes([
     { path: "/", element: <Home /> },
     { path: "/login", element: <Login /> },
-    { path: "/signup", element: <SignUp /> },
     { path: "/*", element: <NotFound /> },
     { path: "/products", element: <Products /> },
     { path: "/listproducts", element: <Listproducts /> },

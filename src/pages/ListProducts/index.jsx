@@ -1,9 +1,12 @@
 import Layout from "../../Components/Layout";
 import { supabase } from "../../supabase/client";
 import { useEffect, useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { MinusIcon } from "@heroicons/react/16/solid";
+import { PencilIcon } from "@heroicons/react/16/solid";
 
-const reactimages =
-  "https://cniymayhyvbjdmrlopea.supabase.co/storage/v1/object/public/images/";
+// const reactimages =
+//   "https://cniymayhyvbjdmrlopea.supabase.co/storage/v1/object/public/images/";
 
 const Showproducts = () => {
   const [product, setProduct] = useState([]);
@@ -48,7 +51,10 @@ const Showproducts = () => {
                 Costo
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Imagen
+                Stock
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                Modificar
               </th>
             </tr>
           </thead>
@@ -78,12 +84,42 @@ const Showproducts = () => {
                   {item.cost}
                 </td>
                 <td>
-                  <figure className="w-20 h-20">
-                    <img
-                      className="size-20 rounded-lg object-cover"
-                      src={`${reactimages}/${item.fileUrl}`}
-                    />
-                  </figure>
+                  <div>
+                    <label htmlFor="Quantity" className="sr-only">
+                      Quantity
+                    </label>
+
+                    <div className="flex">
+                      <button
+                        type="button"
+                        className="size-10 leading-10 text-gray-600 transition hover:opacity-75"
+                      >
+                        <MinusIcon className="size-5" />
+                      </button>
+
+                      <input
+                        type="number"
+                        id="Quantity"
+                        value="1"
+                        className="h-10 w-10 rounded border-gray-200 text-center"
+                      />
+
+                      <button
+                        type="button"
+                        className="size-10 leading-10 text-gray-600 transition hover:opacity-75"
+                      >
+                        <PlusIcon className="size-5" />
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn-primary flex justify-center"
+                  >
+                    <PencilIcon className="size-5" />
+                  </button>
                 </td>
               </tr>
             ))}
