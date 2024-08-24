@@ -3,6 +3,7 @@ import { supabase } from "../../supabase/client";
 import Layout from "../../Components/Layout";
 
 const Products = () => {
+  const bucket = import.meta.env.VITE_BUKCKET_NAME;
   //   const navigate = useNavigate();
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
@@ -27,7 +28,7 @@ const Products = () => {
     console.log("success", data);
     console.log("error", error);
     if (data) {
-      setFileUrl(data.path);
+      setFileUrl(`${bucket}${data.path}`);
     }
   };
 

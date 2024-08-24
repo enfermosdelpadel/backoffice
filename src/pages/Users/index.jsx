@@ -1,9 +1,9 @@
 import Layout from "../../Components/Layout";
 import { useContext } from "react";
-import { TaskContext } from "../../context/TaskContext";
+import { DataContext } from "../../context/DataContext";
 
 const Users = () => {
-  const context = useContext(TaskContext);
+  const context = useContext(DataContext);
 
   return (
     <Layout>

@@ -1,15 +1,10 @@
 import Layout from "../../Components/Layout";
 import { supabase } from "../../supabase/client";
 import { useEffect, useState } from "react";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { MinusIcon } from "@heroicons/react/16/solid";
-import { PencilIcon } from "@heroicons/react/16/solid";
-
-// const reactimages =
-//   "https://cniymayhyvbjdmrlopea.supabase.co/storage/v1/object/public/images/";
+import { PlusIcon, MinusIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 const Showproducts = () => {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState([""]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -60,8 +55,8 @@ const Showproducts = () => {
           </thead>
 
           <tbody>
-            {product.map((item) => (
-              <tr key={item.id}>
+            {product.map((item, index) => (
+              <tr key={index}>
                 <td className="whitespace-nowrap px-5 py-2 text-gray-700">
                   {item.type}
                 </td>
@@ -115,7 +110,7 @@ const Showproducts = () => {
                 </td>
                 <td>
                   <button
-                    type="button"
+                    type="submit"
                     className="btn-primary flex justify-center"
                   >
                     <PencilIcon className="size-5" />

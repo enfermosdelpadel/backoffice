@@ -1,7 +1,9 @@
 import { supabase } from "../../supabase/client";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -9,8 +11,9 @@ function Login() {
     e.preventDefault();
     try {
       await supabase.auth.signInWithPassword({ email, password });
+      navigate("/");
     } catch (error) {
-      console.log("Error signing in:", error.message);
+      alert(`Error signing in: ${error.message}`);
     }
   };
 
@@ -18,7 +21,9 @@ function Login() {
     <div className="flex items-center justify-center h-screen w-screen">
       <div className="mx-auto max-w-screen-xl  bg-gray-200 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg text-center">
-          <h1 className="text-2xl font-bold sm:text-3xl">Tienes Cuenta?</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">
+            Loguearse al sistema
+          </h1>
         </div>
 
         <form
@@ -34,7 +39,7 @@ function Login() {
               <input
                 type="email"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter email"
+                placeholder="Ingresa tu user/email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -67,7 +72,7 @@ function Login() {
               <input
                 type="password"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter password"
+                placeholder="Ingresa tu contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -97,19 +102,12 @@ function Login() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-500">
-              No account?
-              <a className="underline p-1" href="/signup">
-                Sing up
-              </a>
-            </p>
-
+          <div className="flex items-center justify-center">
             <button
               type="submit"
               className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
             >
-              Login
+              Ingresar
             </button>
           </div>
         </form>

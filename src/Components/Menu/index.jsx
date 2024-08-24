@@ -1,17 +1,22 @@
-import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
-import { DocumentTextIcon } from "@heroicons/react/24/outline";
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
-import { ShoppingBagIcon } from "@heroicons/react/24/outline";
-import { UsersIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentArrowUpIcon,
+  DocumentTextIcon,
+  UsersIcon,
+  HomeIcon,
+  ShoppingBagIcon,
+  ArrowLeftEndOnRectangleIcon,
+} from "@heroicons/react/24/outline";
 import { supabase } from "../../supabase/client";
 function Menu() {
   return (
     <div className="flex h-screen w-32 flex-col justify-between border-e bg-white">
       <div>
-        <div className="inline-flex size-16 items-center justify-center">
-          <span className="grid size-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-            L
-          </span>
+        <div className="flex size-16 items-center justify-center">
+          <a href="/">
+            <span className="grid size-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
+              <HomeIcon className="size-5" />
+            </span>
+          </a>
         </div>
 
         <div className="border-t border-gray-100">

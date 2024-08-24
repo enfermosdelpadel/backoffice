@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import { createContext, useState, useEffect } from "react";
 import { supabase } from "../supabase/client";
 
-export const TaskContext = createContext();
+export const DataContext = createContext();
 
-export const TaskContextProvider = ({ children }) => {
+export const DataContextProvider = ({ children }) => {
   const [profile, setProfile] = useState([]);
   const [user, setUser] = useState([null]); // Initialize user as null
 
@@ -83,12 +83,12 @@ export const TaskContextProvider = ({ children }) => {
   // };
 
   return (
-    <TaskContext.Provider value={{ user, profile }}>
+    <DataContext.Provider value={{ user, profile }}>
       {children}
-    </TaskContext.Provider>
+    </DataContext.Provider>
   );
 };
 
-TaskContextProvider.propTypes = {
+DataContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

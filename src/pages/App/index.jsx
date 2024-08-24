@@ -7,7 +7,7 @@ import NotFound from "../NotFound";
 import Products from "../Products";
 import Listproducts from "../ListProducts";
 import Users from "../Users";
-import { TaskContextProvider } from "../../context/TaskContext";
+import { DataContextProvider } from "../../context/DataContext";
 import "./App.css";
 
 function AppRoutes() {
@@ -35,11 +35,11 @@ function AppRoutes() {
 
 function App() {
   return (
-    <TaskContextProvider>
+    <DataContextProvider>
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
-    </TaskContextProvider>
+    </DataContextProvider>
   );
 }
 
