@@ -1,15 +1,12 @@
-import Layout from "../../Components/Layout";
+import Layout from "../../Components/Layout"
+import Statistics from "../../Components/Statistics"
 
 const Home = () => {
-  // const context = useContext(TaskContext);
-
   return (
     <Layout>
-      <div>
-        <h1>Welcome Baby!</h1>
-      </div>
+      <Statistics />
     </Layout>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

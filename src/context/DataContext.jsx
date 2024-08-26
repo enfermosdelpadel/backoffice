@@ -1,34 +1,50 @@
-import PropTypes from "prop-types";
-import { createContext, useState, useEffect } from "react";
-import { supabase } from "../supabase/client";
+import PropTypes from "prop-types"
+import { createContext, useState, useEffect } from "react"
+import { supabase } from "../supabase/client"
 
-export const DataContext = createContext();
+export const DataContext = createContext()
 
 export const DataContextProvider = ({ children }) => {
-  const [profile, setProfile] = useState([]);
-  const [user, setUser] = useState([null]); // Initialize user as null
+  const [profile, setProfile] = useState([])
+  const [user, setUser] = useState([null]) // Initialize user as null
+
+  const [product, setProduct] = useState([""])
+
+  //obtener y sumar todo el stock
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from("products").select("*")
+      if (error) {
+        throw error
+      } else {
+        setProduct(data)
+      }
+    }
+    fetchProducts()
+  }, [])
 
   useEffect(() => {
     const fetchUser = async () => {
       const {
         data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    fetchUser();
-  }, [user]);
+      } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    fetchUser()
+  }, [user])
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const { data, error } = await supabase.from("profiles").select("*");
+      const { data, error } = await supabase.from("profiles").select("*")
       if (error) {
-        throw error;
+        throw error
       } else {
-        setProfile(data);
+        setProfile(data)
       }
-    };
-    fetchProfiles();
-  }, []);
+    }
+    fetchProfiles()
+  }, [])
 
   // Understand why this dont work
   // const fetchTasks = async (done = false) => {
@@ -83,12 +99,12 @@ export const DataContextProvider = ({ children }) => {
   // };
 
   return (
-    <DataContext.Provider value={{ user, profile }}>
+    <DataContext.Provider value={{ user, profile, product }}>
       {children}
     </DataContext.Provider>
-  );
-};
+  )
+}
 
 DataContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
-};
+}
