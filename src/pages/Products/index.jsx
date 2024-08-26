@@ -12,6 +12,8 @@ const Products = () => {
   const [gender, setGender] = useState("");
   const [size, setSize] = useState("");
   const [cost, setCost] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const [desc, setDesc] = useState("");
   const [formError, setFormError] = useState(null);
@@ -39,11 +41,20 @@ const Products = () => {
     //   setFormError("Please fill in all the fields.");
     // }
 
-    const { data, error } = await supabase
-      .from("products")
-      .insert([
-        { type, subType, brand, color, gender, size, cost, desc, fileUrl },
-      ]);
+    const { data, error } = await supabase.from("products").insert([
+      {
+        type,
+        subType,
+        brand,
+        color,
+        gender,
+        size,
+        cost,
+        price,
+        desc,
+        fileUrl,
+      },
+    ]);
 
     if (error) {
       console.log(error);
@@ -57,107 +68,158 @@ const Products = () => {
 
   return (
     <Layout>
-      <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
+      <div className="rounded-lg bg-gray-100 p-8 shadow-lg">
+        <form onSubmit={handleSubmit} className=" mt-8 grid grid-cols-6 gap-6">
+          <div className="col-span-6 sm:col-span-3">
             <label className="label">Tipo</label>
+
             <input
-              className="input-primary"
               type="text"
               id="type"
               value={type}
               onChange={(e) => setType(e.target.value)}
-            />
-
-            <label className="label" htmlFor="brand">
-              Sub Tipo
-            </label>
-            <input
+              name="type"
               className="input-primary"
+            />
+          </div>
+
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Sub Tipo</label>
+
+            <input
               type="text"
               id="subType"
               value={subType}
               onChange={(e) => setSubType(e.target.value)}
-            />
-
-            <label className="label" htmlFor="brand">
-              Marca
-            </label>
-            <input
+              name="subType"
               className="input-primary"
+            />
+          </div>
+
+          <div className="col-span-6 sm:col-span-3 ">
+            <label className="label">Marca</label>
+
+            <input
               type="text"
               id="brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-            />
-
-            <label className="label" htmlFor="category">
-              Color
-            </label>
-            <input
+              name="brand"
               className="input-primary"
+            />
+          </div>
+
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Color</label>
+
+            <input
               type="text"
               id="color"
               value={color}
               onChange={(e) => setColor(e.target.value)}
-            />
-
-            <label className="label" htmlFor="category">
-              Genero
-            </label>
-            <input
+              name="color"
               className="input-primary"
+            />
+          </div>
+
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Genero</label>
+
+            <input
               type="text"
               id="gender"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
-            />
-            <label className="label" htmlFor="category">
-              Talle
-            </label>
-            <input
+              name="gender"
               className="input-primary"
+            />
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Talle</label>
+
+            <input
               type="text"
               id="size"
               value={size}
               onChange={(e) => setSize(e.target.value)}
-            />
-            <label className="label" htmlFor="category">
-              Costo
-            </label>
-            <input
+              name="size"
               className="input-primary"
+            />
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Costo</label>
+
+            <input
               type="text"
               id="cost"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
+              name="cost"
+              className="input-primary"
             />
-            <label className="label" htmlFor="category">
-              Descripción
-            </label>
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Precio Venta</label>
+
+            <input
+              type="text"
+              id="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              name="price"
+              className="input-primary"
+            />
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Stock</label>
+
+            <input
+              type="text"
+              id="stock"
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
+              name="stock"
+              className="input-primary"
+            />
+          </div>
+          <div className="col-span-6">
+            <label className="label">Descripción</label>
             <textarea
               className="input-primary"
               type="text"
-              rows="7"
+              rows="5"
               id="desc"
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
+              name="desc"
             />
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Imagen</label>
 
-            <label className="label" htmlFor="file">
-              Subir Imagen
-            </label>
             <input
-              className="input-primary"
               type="file"
               id="fileUrl"
               onChange={uploadImage}
+              name="image"
+              className="input-primary "
             />
-
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <figure className="w-40 h-40 rounded-lg">
+              <img
+                className="w-full h-full rounded-lg object-cover"
+                src=""
+                alt=""
+              />
+            </figure>
+          </div>
+          <div className="col-span-6">
             <button className="btn-primary">Guardar</button>
           </div>
         </form>
       </div>
+
       {formError && <p className="error">{formError}</p>}
     </Layout>
   );

@@ -1,26 +1,27 @@
-import { BrowserRouter, useRoutes, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { supabase } from "../../supabase/client";
-import Home from "../home";
-import Login from "../Login";
-import NotFound from "../NotFound";
-import Products from "../Products";
-import Listproducts from "../ListProducts";
-import Users from "../Users";
-import { DataContextProvider } from "../../context/DataContext";
-import "./App.css";
+import { BrowserRouter, useRoutes, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { supabase } from "../../supabase/client"
+import Menu from "../../Components/Menu"
+import Home from "../home"
+import Login from "../Login"
+import NotFound from "../NotFound"
+import Products from "../Products"
+import Listproducts from "../ListProducts"
+import Users from "../Users"
+import { DataContextProvider } from "../../context/DataContext"
+import "./App.css"
 
 function AppRoutes() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
-        navigate("/login");
-        console.log("User is not logged in");
+        navigate("/login")
+        console.log("User is not logged in")
       }
-    });
-  }, [navigate]);
+    })
+  }, [navigate])
 
   let routes = useRoutes([
     { path: "/", element: <Home /> },
@@ -29,8 +30,8 @@ function AppRoutes() {
     { path: "/products", element: <Products /> },
     { path: "/listproducts", element: <Listproducts /> },
     { path: "/users", element: <Users /> },
-  ]);
-  return routes;
+  ])
+  return routes
 }
 
 function App() {
@@ -38,9 +39,10 @@ function App() {
     <DataContextProvider>
       <BrowserRouter>
         <AppRoutes />
+        <Menu />
       </BrowserRouter>
     </DataContextProvider>
-  );
+  )
 }
 
-export default App;
+export default App
