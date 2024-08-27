@@ -4,7 +4,7 @@ import Layout from "../../Components/Layout"
 
 const Products = () => {
   const bucket = import.meta.env.VITE_BUKCKET_NAME
-  const image = "public/image-x.svg"
+  const image = "/public/image-x.svg"
   const [type, setType] = useState("")
   const [subType, setSubType] = useState("")
   const [brand, setBrand] = useState("")
@@ -22,13 +22,12 @@ const Products = () => {
   const uploadImage = async (e) => {
     const date = Date.now()
     const imageFile = e.target.files[0]
-    const { data, error } = await supabase.storage
+    const { data } = await supabase.storage
       .from("images/")
       .upload(`public/${date}.png`, imageFile, {
         cacheControl: "3600",
         upsert: false,
       })
-    alert.error(error)
     setPreview(`${bucket}${data?.path}`)
     if (data) {
       setFileUrl(`${bucket}${data.path}`)
