@@ -1,41 +1,42 @@
-import { useState } from "react";
-import { supabase } from "../../supabase/client";
-import Layout from "../../Components/Layout";
+import { useState } from "react"
+import { supabase } from "../../supabase/client"
+import Layout from "../../Components/Layout"
 
 const Products = () => {
-  const bucket = import.meta.env.VITE_BUKCKET_NAME;
-  //   const navigate = useNavigate();
-  const [type, setType] = useState("");
-  const [subType, setSubType] = useState("");
-  const [brand, setBrand] = useState("");
-  const [color, setColor] = useState("");
-  const [gender, setGender] = useState("");
-  const [size, setSize] = useState("");
-  const [cost, setCost] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
-  const [desc, setDesc] = useState("");
-  const [formError, setFormError] = useState(null);
+  const bucket = import.meta.env.VITE_BUKCKET_NAME
+  const image = "public/image-x.svg"
+  const [type, setType] = useState("")
+  const [subType, setSubType] = useState("")
+  const [brand, setBrand] = useState("")
+  const [color, setColor] = useState("")
+  const [gender, setGender] = useState("")
+  const [size, setSize] = useState("")
+  const [cost, setCost] = useState("")
+  const [price, setPrice] = useState("")
+  const [stock, setStock] = useState("")
+  const [fileUrl, setFileUrl] = useState("")
+  const [desc, setDesc] = useState("")
+  const [formError, setFormError] = useState(null)
+  const [preview, setPreview] = useState(null)
 
   const uploadImage = async (e) => {
-    const date = Date.now();
-    const imageFile = e.target.files[0];
+    const date = Date.now()
+    const imageFile = e.target.files[0]
     const { data, error } = await supabase.storage
       .from("images/")
       .upload(`public/${date}.png`, imageFile, {
         cacheControl: "3600",
         upsert: false,
-      });
-    console.log("success", data);
-    console.log("error", error);
+      })
+    alert.error(error)
+    setPreview(`${bucket}${data?.path}`)
     if (data) {
-      setFileUrl(`${bucket}${data.path}`);
+      setFileUrl(`${bucket}${data.path}`)
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // if (!name || !brand || !category || !model || !fileUrl) {
     //   setFormError("Please fill in all the fields.");
@@ -54,17 +55,17 @@ const Products = () => {
         desc,
         fileUrl,
       },
-    ]);
+    ])
 
     if (error) {
-      console.log(error);
-      setFormError("Please fill in all the fields.");
+      console.log(error)
+      setFormError("Please fill in all the fields.")
     }
 
     if (data) {
-      setFormError(null);
+      setFormError(null)
     }
-  };
+  }
 
   return (
     <Layout>
@@ -208,8 +209,8 @@ const Products = () => {
           <div className="col-span-6 sm:col-span-3">
             <figure className="w-40 h-40 rounded-lg">
               <img
-                className="w-full h-full rounded-lg object-cover"
-                src=""
+                className=" w-full h-full rounded-lg object-center"
+                src={preview ? preview : image}
                 alt=""
               />
             </figure>
@@ -222,7 +223,7 @@ const Products = () => {
 
       {formError && <p className="error">{formError}</p>}
     </Layout>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
