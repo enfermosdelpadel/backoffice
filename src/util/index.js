@@ -1,8 +1,8 @@
 /* 
 
 */
-export const sockTotal = (product) => {
+export const sockTotal = (products) => {
   let sum = 0
-  product.forEach((item) => (sum += item.stock))
+  products.forEach((item) => (sum += item.stock))
   return sum
 }
