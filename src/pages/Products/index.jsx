@@ -1,22 +1,25 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { supabase } from "../../supabase/client"
 import Layout from "../../Components/Layout"
+import { DataContext } from "../../context/DataContext"
 
 const Products = () => {
+  const context = useContext(DataContext)
+
   const bucket = import.meta.env.VITE_BUKCKET_NAME
-  const image = "/public/image-x.svg"
-  const [type, setType] = useState("")
-  const [subType, setSubType] = useState("")
-  const [brand, setBrand] = useState("")
-  const [color, setColor] = useState("")
-  const [gender, setGender] = useState("")
-  const [size, setSize] = useState("")
-  const [cost, setCost] = useState("")
-  const [price, setPrice] = useState("")
-  const [stock, setStock] = useState("")
-  const [fileUrl, setFileUrl] = useState("")
-  const [desc, setDesc] = useState("")
-  const [formError, setFormError] = useState(null)
+  const image = "/image-x.svg"
+  // const [type, setType] = useState("")
+  // const [subType, setSubType] = useState("")
+  // const [brand, setBrand] = useState("")
+  // const [color, setColor] = useState("")
+  // const [gender, setGender] = useState("")
+  // const [size, setSize] = useState("")
+  // const [cost, setCost] = useState("")
+  // const [price, setPrice] = useState("")
+  // const [stock, setStock] = useState("")
+  // const [fileUrl, setFileUrl] = useState("")
+  // const [desc, setDesc] = useState("")
+  // const [formError, setFormError] = useState(null)
   const [preview, setPreview] = useState(null)
 
   const uploadImage = async (e) => {
@@ -30,40 +33,18 @@ const Products = () => {
       })
     setPreview(`${bucket}${data?.path}`)
     if (data) {
-      setFileUrl(`${bucket}${data.path}`)
+      context.setAddProduct.fileUrl(`${bucket}${data.path}`)
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // if (!name || !brand || !category || !model || !fileUrl) {
-    //   setFormError("Please fill in all the fields.");
-    // }
-
-    const { data, error } = await supabase.from("products").insert([
-      {
-        type,
-        subType,
-        brand,
-        color,
-        gender,
-        size,
-        cost,
-        price,
-        desc,
-        stock,
-        fileUrl,
-      },
-    ])
-
-    if (error) {
+    try {
+      await context.insertProduct({
+        ...context.setAddProduct,
+      })
+    } catch (error) {
       console.log(error)
-      setFormError("Please fill in all the fields.")
-    }
-
-    if (data) {
-      setFormError(null)
     }
   }
 
@@ -78,7 +59,7 @@ const Products = () => {
               type="text"
               id="type"
               value={type}
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => context.setAddProduct.type(e.target.value)}
               name="type"
               className="input-primary"
             />

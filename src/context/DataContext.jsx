@@ -8,6 +8,23 @@ export const DataContextProvider = ({ children }) => {
   const [profile, setProfile] = useState([])
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [addProduct, setAddProduct] = useState({
+    type: "",
+    subType: "",
+    brand: "",
+    color: "",
+    gender: "",
+    size: "",
+    cost: "",
+    price: "",
+    desc: "",
+    stock: "",
+    fileUrl: "",
+  })
+
+  const openForm = () => setIsFormOpen(true)
+  const closeForm = () => setIsFormOpen(false)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,6 +72,29 @@ export const DataContextProvider = ({ children }) => {
   //   }
   // };
 
+  const insertProduct = async (addProduct) => {
+    try {
+      const { error } = await supabase.from("products").insert({
+        type: addProduct.type,
+        subType: addProduct.subType,
+        brand: addProduct.brand,
+        color: addProduct.color,
+        gender: addProduct.gender,
+        size: addProduct.size,
+        cost: addProduct.cost,
+        price: addProduct.price,
+        desc: addProduct.desc,
+        stock: addProduct.stock,
+        fileUrl: addProduct.fileUrl,
+      })
+      if (error) {
+        throw error
+      }
+    } catch (error) {
+      alert(error.error_description || error.message)
+    }
+  }
+
   const deleteProduct = async (id) => {
     try {
       const { error } = await supabase.from("products").delete().eq("id", id)
@@ -81,7 +121,21 @@ export const DataContextProvider = ({ children }) => {
   // };
 
   return (
-    <DataContext.Provider value={{ user, profile, products, deleteProduct }}>
+    <DataContext.Provider
+      value={{
+        user,
+        profile,
+        products,
+        deleteProduct,
+        isFormOpen,
+        openForm,
+        closeForm,
+        insertProduct,
+        setProducts,
+        addProduct,
+        setAddProduct,
+      }}
+    >
       {children}
     </DataContext.Provider>
   )
