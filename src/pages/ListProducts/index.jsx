@@ -1,11 +1,16 @@
 import Layout from "../../Components/Layout"
 import { useContext } from "react"
-import { PencilIcon } from "@heroicons/react/24/outline"
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { DataContext } from "../../context/DataContext"
 
 const Showproducts = () => {
   const context = useContext(DataContext)
-  const product = context.product
+  const products = context.products
+
+  const handleDelete = async (id) => {
+    if (!confirm("¿Deseas eliminar este producto?")) return
+    await context.deleteProduct(id)
+  }
 
   return (
     <Layout>
@@ -23,11 +28,12 @@ const Showproducts = () => {
               <th className="th">Precio de Venta</th>
               <th className="th">Stock</th>
               <th className="th">Modificar</th>
+              <th className="th">Eliminar</th>
             </tr>
           </thead>
 
           <tbody>
-            {product.map((item, index) => (
+            {products.map((item, index) => (
               <tr key={index}>
                 <td className="td">{item.type}</td>
                 <td className="td">{item.subType}</td>
@@ -44,6 +50,14 @@ const Showproducts = () => {
                     className="btn-primary flex justify-center"
                   >
                     <PencilIcon className="size-5" />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="btn-delete flex justify-center"
+                  >
+                    <TrashIcon className="size-5" />
                   </button>
                 </td>
               </tr>

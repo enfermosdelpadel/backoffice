@@ -7,10 +7,7 @@ export const DataContext = createContext()
 export const DataContextProvider = ({ children }) => {
   const [profile, setProfile] = useState([])
   const [user, setUser] = useState([null]) // Initialize user as null
-
-  const [product, setProduct] = useState([""])
-
-  //obtener y sumar todo el stock
+  const [products, setProducts] = useState([""])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,7 +15,7 @@ export const DataContextProvider = ({ children }) => {
       if (error) {
         throw error
       } else {
-        setProduct(data)
+        setProducts(data)
       }
     }
     fetchProducts()
@@ -46,21 +43,6 @@ export const DataContextProvider = ({ children }) => {
     fetchProfiles()
   }, [])
 
-  // Understand why this dont work
-  // const fetchTasks = async (done = false) => {
-  //   const { data, error } = await supabase
-  //     .from("task")
-  //     .select("*")
-  //     .eq("userid", user.id) //only fetch tasks that belong to the user
-  //     .eq("done", done)
-  //     .order("id", { ascending: true });
-  //   if (error) {
-  //     throw error;
-  //   } else {
-  //     setTasks(data);
-  //   }
-  // };
-
   // const createTask = async (taskName) => {
   //   try {
   //     const result = await supabase.from("task").insert({
@@ -73,18 +55,18 @@ export const DataContextProvider = ({ children }) => {
   //   }
   // };
 
-  // const deleteTask = async (id) => {
-  //   const { error, data } = await supabase
-  //     .from("task")
-  //     .delete()
-  //     .eq("userid", user.id)
-  //     .eq("id", id);
-  //   // console.log(id);
-  //   if (error) throw error;
-  //   else {
-  //     console.log(data);
-  //   }
-  // };
+  const deleteProduct = async (id) => {
+    try {
+      const { error } = await supabase.from("products").delete().eq("id", id)
+
+      if (error) {
+        throw error
+      }
+      setProducts(products.filter((product) => product.id !== id))
+    } catch (error) {
+      alert(error.error_description || error.message)
+    }
+  }
 
   // const updateTask = async (id, done) => {
   //   const { error, data } = await supabase
@@ -99,7 +81,7 @@ export const DataContextProvider = ({ children }) => {
   // };
 
   return (
-    <DataContext.Provider value={{ user, profile, product }}>
+    <DataContext.Provider value={{ user, profile, products, deleteProduct }}>
       {children}
     </DataContext.Provider>
   )

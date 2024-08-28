@@ -52,6 +52,7 @@ const Products = () => {
         cost,
         price,
         desc,
+        stock,
         fileUrl,
       },
     ])
