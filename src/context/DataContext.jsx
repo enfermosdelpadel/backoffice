@@ -9,6 +9,9 @@ export const DataContextProvider = ({ children }) => {
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
   const [isFormOpen, setIsFormOpen] = useState(false)
+  const openForm = () => setIsFormOpen(true)
+  const closeForm = () => setIsFormOpen(false)
+
   const [addProduct, setAddProduct] = useState({
     type: "",
     subType: "",
@@ -23,8 +26,27 @@ export const DataContextProvider = ({ children }) => {
     fileUrl: "",
   })
 
-  const openForm = () => setIsFormOpen(true)
-  const closeForm = () => setIsFormOpen(false)
+  const insertProduct = async (addProduct) => {
+    try {
+      const { data } = await supabase.from("products").insert({
+        type: addProduct.type,
+        subType: addProduct.subType,
+        brand: addProduct.brand,
+        color: addProduct.color,
+        gender: addProduct.gender,
+        size: addProduct.size,
+        cost: addProduct.cost,
+        price: addProduct.price,
+        desc: addProduct.desc,
+        stock: addProduct.stock,
+        fileUrl: addProduct.fileUrl,
+      })
+      console.log(data)
+      alert("Producto Guardado con éxito")
+    } catch (error) {
+      alert(error.error_description || error.message)
+    }
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -59,41 +81,6 @@ export const DataContextProvider = ({ children }) => {
     }
     fetchProfiles()
   }, [])
-
-  // const createTask = async (taskName) => {
-  //   try {
-  //     const result = await supabase.from("task").insert({
-  //       name: taskName,
-  //       userid: user.id,
-  //     });
-  //     console.log(result);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
-
-  const insertProduct = async (addProduct) => {
-    try {
-      const { error } = await supabase.from("products").insert({
-        type: addProduct.type,
-        subType: addProduct.subType,
-        brand: addProduct.brand,
-        color: addProduct.color,
-        gender: addProduct.gender,
-        size: addProduct.size,
-        cost: addProduct.cost,
-        price: addProduct.price,
-        desc: addProduct.desc,
-        stock: addProduct.stock,
-        fileUrl: addProduct.fileUrl,
-      })
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.error_description || error.message)
-    }
-  }
 
   const deleteProduct = async (id) => {
     try {

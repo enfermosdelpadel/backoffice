@@ -8,18 +8,7 @@ const Products = () => {
 
   const bucket = import.meta.env.VITE_BUKCKET_NAME
   const image = "/image-x.svg"
-  // const [type, setType] = useState("")
-  // const [subType, setSubType] = useState("")
-  // const [brand, setBrand] = useState("")
-  // const [color, setColor] = useState("")
-  // const [gender, setGender] = useState("")
-  // const [size, setSize] = useState("")
-  // const [cost, setCost] = useState("")
-  // const [price, setPrice] = useState("")
-  // const [stock, setStock] = useState("")
-  // const [fileUrl, setFileUrl] = useState("")
-  // const [desc, setDesc] = useState("")
-  // const [formError, setFormError] = useState(null)
+
   const [preview, setPreview] = useState(null)
 
   const uploadImage = async (e) => {
@@ -33,18 +22,48 @@ const Products = () => {
       })
     setPreview(`${bucket}${data?.path}`)
     if (data) {
-      context.setAddProduct.fileUrl(`${bucket}${data.path}`)
+      context.setAddProduct({
+        ...context.addProduct,
+        fileUrl: `${bucket}${data.path}`,
+      })
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (
+      context.addProduct.type === "" ||
+      context.addProduct.subType === "" ||
+      context.addProduct.brand === "" ||
+      context.addProduct.color === "" ||
+      context.addProduct.size === "" ||
+      context.addProduct.cost === "" ||
+      context.addProduct.price === "" ||
+      context.addProduct.desc === "" ||
+      context.addProduct.stock === ""
+    ) {
+      alert("Por favor complete las casillas necesarias")
+      return
+    }
     try {
       await context.insertProduct({
-        ...context.setAddProduct,
+        ...context.addProduct,
+      })
+      context.setAddProduct({
+        type: "",
+        subType: "",
+        brand: "",
+        color: "",
+        gender: "",
+        size: "",
+        cost: "",
+        price: "",
+        desc: "",
+        stock: "",
+        fileUrl: "",
       })
     } catch (error) {
-      console.log(error)
+      alert(error.error_description || error.message)
     }
   }
 
@@ -58,8 +77,13 @@ const Products = () => {
             <input
               type="text"
               id="type"
-              value={type}
-              onChange={(e) => context.setAddProduct.type(e.target.value)}
+              value={context.addProduct.type}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  type: e.target.value,
+                })
+              }
               name="type"
               className="input-primary"
             />
@@ -71,8 +95,13 @@ const Products = () => {
             <input
               type="text"
               id="subType"
-              value={subType}
-              onChange={(e) => setSubType(e.target.value)}
+              value={context.addProduct.subType}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  subType: e.target.value,
+                })
+              }
               name="subType"
               className="input-primary"
             />
@@ -84,8 +113,13 @@ const Products = () => {
             <input
               type="text"
               id="brand"
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
+              value={context.addProduct.brand}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  brand: e.target.value,
+                })
+              }
               name="brand"
               className="input-primary"
             />
@@ -97,8 +131,13 @@ const Products = () => {
             <input
               type="text"
               id="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
+              value={context.addProduct.color}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  color: e.target.value,
+                })
+              }
               name="color"
               className="input-primary"
             />
@@ -110,8 +149,13 @@ const Products = () => {
             <input
               type="text"
               id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
+              value={context.addProduct.gender}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  gender: e.target.value,
+                })
+              }
               name="gender"
               className="input-primary"
             />
@@ -122,8 +166,13 @@ const Products = () => {
             <input
               type="text"
               id="size"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
+              value={context.addProduct.size}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  size: e.target.value,
+                })
+              }
               name="size"
               className="input-primary"
             />
@@ -134,8 +183,13 @@ const Products = () => {
             <input
               type="text"
               id="cost"
-              value={cost}
-              onChange={(e) => setCost(e.target.value)}
+              value={context.addProduct.cost}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  cost: e.target.value,
+                })
+              }
               name="cost"
               className="input-primary"
             />
@@ -146,8 +200,13 @@ const Products = () => {
             <input
               type="text"
               id="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              value={context.addProduct.price}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  price: e.target.value,
+                })
+              }
               name="price"
               className="input-primary"
             />
@@ -158,8 +217,13 @@ const Products = () => {
             <input
               type="text"
               id="stock"
-              value={stock}
-              onChange={(e) => setStock(e.target.value)}
+              value={context.addProduct.stock}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  stock: e.target.value,
+                })
+              }
               name="stock"
               className="input-primary"
             />
@@ -171,8 +235,13 @@ const Products = () => {
               type="text"
               rows="5"
               id="desc"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              value={context.addProduct.desc}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  desc: e.target.value,
+                })
+              }
               name="desc"
             />
           </div>
@@ -201,8 +270,6 @@ const Products = () => {
           </div>
         </form>
       </div>
-
-      {formError && <p className="error">{formError}</p>}
     </Layout>
   )
 }
