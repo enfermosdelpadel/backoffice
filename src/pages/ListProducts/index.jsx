@@ -1,4 +1,5 @@
 import Layout from "../../Components/Layout"
+import FormProducts from "../../Components/FormProducts"
 import { useContext } from "react"
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { DataContext } from "../../context/DataContext"
@@ -46,7 +47,7 @@ const Showproducts = () => {
                 <td className="td">{item.stock}</td>
                 <td>
                   <button
-                    type="submit"
+                    onClick={() => context.openForm()}
                     className="btn-primary flex justify-center"
                   >
                     <PencilIcon className="size-5" />
@@ -65,6 +66,7 @@ const Showproducts = () => {
           </tbody>
         </table>
       </div>
+      <FormProducts />
     </Layout>
   )
 }

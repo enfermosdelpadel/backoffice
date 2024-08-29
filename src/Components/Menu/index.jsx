@@ -27,7 +27,7 @@ function Menu() {
             px-2 py-1.5"
           >
             <DocumentArrowUpIcon className="size-5" />
-            <p className="ml-2 font-medium">Items</p>
+            <p className="ml-2 font-medium">Alta</p>
           </NavLink>
           <ul>
             <li>
