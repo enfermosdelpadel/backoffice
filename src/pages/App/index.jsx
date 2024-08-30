@@ -8,6 +8,8 @@ import NotFound from "../NotFound"
 import Products from "../Products"
 import Listproducts from "../ListProducts"
 import Users from "../Users"
+import { Sales } from "../Sales"
+import { Customers } from "../Customers"
 import { DataContextProvider } from "../../context/DataContext"
 import "./App.css"
 
@@ -29,6 +31,8 @@ function AppRoutes() {
     { path: "/*", element: <NotFound /> },
     { path: "/products", element: <Products /> },
     { path: "/listproducts", element: <Listproducts /> },
+    { path: "/sales", element: <Sales /> },
+    { path: "/customers", element: <Customers /> },
     { path: "/users", element: <Users /> },
   ])
   return routes

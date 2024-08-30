@@ -11,6 +11,7 @@ export const DataContextProvider = ({ children }) => {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const openForm = () => setIsFormOpen(true)
   const closeForm = () => setIsFormOpen(false)
+  const [updateProduct, setUpdateProduct] = useState({})
 
   const [addProduct, setAddProduct] = useState({
     type: "",
@@ -43,6 +44,30 @@ export const DataContextProvider = ({ children }) => {
       })
       console.log(data)
       alert("Producto Guardado con éxito")
+    } catch (error) {
+      alert(error.error_description || error.message)
+    }
+  }
+
+  const editProduct = async (id, updateProduct) => {
+    try {
+      const { data } = await supabase
+        .from("products")
+        .update({
+          type: updateProduct.type,
+          subType: updateProduct.subType,
+          brand: updateProduct.brand,
+          color: updateProduct.color,
+          gender: updateProduct.gender,
+          size: updateProduct.size,
+          cost: updateProduct.cost,
+          price: updateProduct.price,
+          desc: updateProduct.desc,
+          stock: updateProduct.stock,
+          fileUrl: updateProduct.fileUrl,
+        })
+        .eq("id", id)
+      console.log(data)
     } catch (error) {
       alert(error.error_description || error.message)
     }
@@ -121,6 +146,9 @@ export const DataContextProvider = ({ children }) => {
         setProducts,
         addProduct,
         setAddProduct,
+        updateProduct,
+        setUpdateProduct,
+        editProduct,
       }}
     >
       {children}
