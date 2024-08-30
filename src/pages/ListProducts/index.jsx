@@ -47,7 +47,7 @@ const Showproducts = () => {
                 <td className="td">{item.stock}</td>
                 <td>
                   <button
-                    onClick={() => context.openForm()}
+                    onClick={() => context.openForm(item.id)}
                     className="btn-primary flex justify-center"
                   >
                     <PencilIcon className="size-5" />

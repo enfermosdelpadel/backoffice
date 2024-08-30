@@ -6,7 +6,12 @@
   .input-primary {
     @apply mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm;
   }
-
+  .btn-menu {
+    @apply relative flex rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700;
+  }
+  .btn-menu-active {
+    @apply relative flex rounded px-2 py-1.5 bg-blue-500 text-white;
+  }
   .btn-primary {
     @apply inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500;
   }

@@ -36,7 +36,6 @@ const Products = () => {
       context.addProduct.subType === "" ||
       context.addProduct.brand === "" ||
       context.addProduct.color === "" ||
-      context.addProduct.size === "" ||
       context.addProduct.cost === "" ||
       context.addProduct.price === "" ||
       context.addProduct.desc === "" ||
@@ -62,6 +61,7 @@ const Products = () => {
         stock: "",
         fileUrl: "",
       })
+      setPreview(null)
     } catch (error) {
       alert(error.error_description || error.message)
     }

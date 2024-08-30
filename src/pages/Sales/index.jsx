@@ -1,11 +1,11 @@
 import Layout from "../../Components/Layout"
 
-function Customers() {
+function Sales() {
   return (
     <Layout>
-      <h1>Clientes</h1>
+      <h1>Ventas</h1>
     </Layout>
   )
 }
 
-export { Customers }
+export { Sales }

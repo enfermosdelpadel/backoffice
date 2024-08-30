@@ -18,9 +18,7 @@ const FormProducts = () => {
         ></XMarkIcon>
         <form action="#" className=" mt-8 grid grid-cols-6 gap-6">
           <div className="col-span-6 sm:col-span-3">
-            <label htmlFor="FirstName" className="label">
-              Tipo
-            </label>
+            <label className="label">Tipo</label>
 
             <input
               type="text"
@@ -31,9 +29,7 @@ const FormProducts = () => {
           </div>
 
           <div className="col-span-6 sm:col-span-3">
-            <label htmlFor="LastName" className="label">
-              Sub Tipo
-            </label>
+            <label className="label">Sub Tipo</label>
 
             <input
               type="text"
@@ -44,9 +40,7 @@ const FormProducts = () => {
           </div>
 
           <div className="col-span-6 sm:col-span-3 ">
-            <label htmlFor="Email" className="label">
-              Marca
-            </label>
+            <label className="label">Marca</label>
 
             <input
               type="text"
@@ -57,9 +51,7 @@ const FormProducts = () => {
           </div>
 
           <div className="col-span-6 sm:col-span-3">
-            <label htmlFor="Password" className="label">
-              Color
-            </label>
+            <label className="label">Color</label>
 
             <input
               type="text"
@@ -109,6 +101,23 @@ const FormProducts = () => {
               className="input-primary"
             />
           </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Stock</label>
+
+            <input
+              type="text"
+              id="stock"
+              value={context.addProduct.stock}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  stock: e.target.value,
+                })
+              }
+              name="stock"
+              className="input-primary"
+            />
+          </div>
           <div className="col-span-6">
             <label className="label">Descripción</label>
             <textarea
@@ -133,7 +142,7 @@ const FormProducts = () => {
             </figure>
           </div>
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button className="btn-primary">Valor necesario</button>
+            <button className="btn-primary">Actualizar</button>
           </div>
         </form>
       </div>
