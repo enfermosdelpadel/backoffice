@@ -19,7 +19,8 @@ function AppRoutes() {
   const context = useContext(DataContext)
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((session) => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event, session)
       if (!session) {
         navigate("/login")
         context.closeMenu()
