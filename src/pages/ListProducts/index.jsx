@@ -13,6 +13,11 @@ const Showproducts = () => {
     await context.deleteProduct(id)
   }
 
+  const handleEdit = async (item) => {
+    context.setSelectedItem(item)
+    context.openForm()
+  }
+
   return (
     <Layout>
       <div className="overflow-x-auto">
@@ -36,6 +41,8 @@ const Showproducts = () => {
           <tbody>
             {products.map((item, index) => (
               <tr key={index}>
+                <td className="hidden">{item.id}</td>
+                <td className="hidden">{item.fileUrl}</td>
                 <td className="td">{item.type}</td>
                 <td className="td">{item.subType}</td>
                 <td className="td">{item.brand}</td>
@@ -45,9 +52,10 @@ const Showproducts = () => {
                 <td className="td">{item.cost}</td>
                 <td className="td">{item.price}</td>
                 <td className="td">{item.stock}</td>
+
                 <td>
                   <button
-                    onClick={() => context.openForm(item.id)}
+                    onClick={() => handleEdit(item)}
                     className="btn-primary flex justify-center"
                   >
                     <PencilIcon className="size-5" />

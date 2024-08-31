@@ -17,10 +17,10 @@ function AppRoutes() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange((session) => {
       if (!session) {
         navigate("/login")
-        console.log("User is not logged in")
+        // console.log("User is not logged in")
       }
     })
   }, [navigate])

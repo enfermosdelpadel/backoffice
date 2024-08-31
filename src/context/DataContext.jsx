@@ -11,7 +11,8 @@ export const DataContextProvider = ({ children }) => {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const openForm = () => setIsFormOpen(true)
   const closeForm = () => setIsFormOpen(false)
-  const [updateProduct, setUpdateProduct] = useState({})
+
+  const [selectedItem, setSelectedItem] = useState({})
 
   const [addProduct, setAddProduct] = useState({
     type: "",
@@ -49,25 +50,28 @@ export const DataContextProvider = ({ children }) => {
     }
   }
 
-  const editProduct = async (id, updateProduct) => {
+  const editProduct = async (selectedItem) => {
     try {
+      console.log(selectedItem.id)
       const { data } = await supabase
         .from("products")
         .update({
-          type: updateProduct.type,
-          subType: updateProduct.subType,
-          brand: updateProduct.brand,
-          color: updateProduct.color,
-          gender: updateProduct.gender,
-          size: updateProduct.size,
-          cost: updateProduct.cost,
-          price: updateProduct.price,
-          desc: updateProduct.desc,
-          stock: updateProduct.stock,
-          fileUrl: updateProduct.fileUrl,
+          type: selectedItem.type,
+          subType: selectedItem.subType,
+          brand: selectedItem.brand,
+          color: selectedItem.color,
+          gender: selectedItem.gender,
+          size: selectedItem.size,
+          cost: selectedItem.cost,
+          price: selectedItem.price,
+          desc: selectedItem.desc,
+          stock: selectedItem.stock,
+          fileUrl: selectedItem.fileUrl,
         })
-        .eq("id", id)
+        .eq("id", selectedItem.id)
       console.log(data)
+      alert("Producto Actualizado con éxito")
+      closeForm()
     } catch (error) {
       alert(error.error_description || error.message)
     }
@@ -146,9 +150,9 @@ export const DataContextProvider = ({ children }) => {
         setProducts,
         addProduct,
         setAddProduct,
-        updateProduct,
-        setUpdateProduct,
         editProduct,
+        setSelectedItem,
+        selectedItem,
       }}
     >
       {children}
