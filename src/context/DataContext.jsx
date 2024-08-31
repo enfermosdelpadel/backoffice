@@ -17,7 +17,20 @@ export const DataContextProvider = ({ children }) => {
   const openMenu = () => setIsUserLogin(true)
   const closeMenu = () => setIsUserLogin(false)
 
-  const [selectedItem, setSelectedItem] = useState({})
+  const [selectedItem, setSelectedItem] = useState({
+    id: "",
+    type: "",
+    subType: "",
+    brand: "",
+    color: "",
+    gender: "",
+    size: "",
+    cost: "",
+    price: "",
+    desc: "",
+    stock: "",
+    fileUrl: "",
+  })
 
   const [addProduct, setAddProduct] = useState({
     type: "",

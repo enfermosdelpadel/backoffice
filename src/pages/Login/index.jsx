@@ -32,9 +32,7 @@ function Login() {
           className="mx-auto mb-0 mt-8 max-w-md space-y-4"
         >
           <div>
-            <label htmlFor="email" className="sr-only">
-              Email
-            </label>
+            <label className="sr-only">Email</label>
 
             <div className="relative">
               <input
@@ -53,9 +51,7 @@ function Login() {
           </div>
 
           <div>
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
+            <label className="sr-only">Password</label>
 
             <div className="relative">
               <input
