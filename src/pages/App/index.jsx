@@ -1,5 +1,5 @@
 import { BrowserRouter, useRoutes, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useContext } from "react"
 import { supabase } from "../../supabase/client"
 import Menu from "../../Components/Menu"
 import Home from "../home"
@@ -11,19 +11,23 @@ import Users from "../Users"
 import { Sales } from "../Sales"
 import { Customers } from "../Customers"
 import { DataContextProvider } from "../../context/DataContext"
+import { DataContext } from "../../context/DataContext"
 import "./App.css"
 
 function AppRoutes() {
   const navigate = useNavigate()
+  const context = useContext(DataContext)
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange((session) => {
       if (!session) {
         navigate("/login")
-        console.log("User is not logged in")
+        context.closeMenu()
+      } else {
+        context.openMenu()
       }
     })
-  }, [navigate])
+  }, [navigate, context])
 
   let routes = useRoutes([
     { path: "/", element: <Home /> },

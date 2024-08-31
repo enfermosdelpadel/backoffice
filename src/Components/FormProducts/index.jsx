@@ -3,8 +3,18 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import { DataContext } from "../../context/DataContext"
 const FormProducts = () => {
   const context = useContext(DataContext)
-  const image =
-    "https://cniymayhyvbjdmrlopea.supabase.co/storage/v1/object/public/images/public/1724535488688.png"
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await context.editProduct({
+        ...context.selectedItem,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div
       className={`${
@@ -16,14 +26,20 @@ const FormProducts = () => {
           onClick={() => context.closeForm()}
           className="h-6 w-6 text-black cursor-pointer place-self-end"
         ></XMarkIcon>
-        <form action="#" className=" mt-8 grid grid-cols-6 gap-6">
+        <form onSubmit={handleSubmit} className=" mt-8 grid grid-cols-6 gap-6">
           <div className="col-span-6 sm:col-span-3">
             <label className="label">Tipo</label>
 
             <input
+              value={context.selectedItem.type}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  type: e.target.value,
+                })
+              }}
               type="text"
               id="type"
-              name="type"
               className="input-primary"
             />
           </div>
@@ -32,6 +48,13 @@ const FormProducts = () => {
             <label className="label">Sub Tipo</label>
 
             <input
+              value={context.selectedItem?.subType}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  subType: e.target.value,
+                })
+              }}
               type="text"
               id="subType"
               name="subType"
@@ -43,6 +66,13 @@ const FormProducts = () => {
             <label className="label">Marca</label>
 
             <input
+              value={context.selectedItem?.brand}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  brand: e.target.value,
+                })
+              }}
               type="text"
               id="brand"
               name="brand"
@@ -54,6 +84,13 @@ const FormProducts = () => {
             <label className="label">Color</label>
 
             <input
+              value={context.selectedItem?.color}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  color: e.target.value,
+                })
+              }}
               type="text"
               id="color"
               name="color"
@@ -65,6 +102,13 @@ const FormProducts = () => {
             <label className="label">Genero</label>
 
             <input
+              value={context.selectedItem?.gender}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  gender: e.target.value,
+                })
+              }}
               type="text"
               id="gender"
               name="gender"
@@ -75,6 +119,13 @@ const FormProducts = () => {
             <label className="label">Talle</label>
 
             <input
+              value={context.selectedItem?.size}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  size: e.target.value,
+                })
+              }}
               type="text"
               id="size"
               name="size"
@@ -85,6 +136,13 @@ const FormProducts = () => {
             <label className="label">Costo</label>
 
             <input
+              value={context.selectedItem?.cost}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  cost: e.target.value,
+                })
+              }}
               type="text"
               id="cost"
               name="cost"
@@ -95,6 +153,13 @@ const FormProducts = () => {
             <label className="label">Precio Venta</label>
 
             <input
+              value={context.selectedItem?.price}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  price: e.target.value,
+                })
+              }}
               type="text"
               id="price"
               name="price"
@@ -105,15 +170,15 @@ const FormProducts = () => {
             <label className="label">Stock</label>
 
             <input
-              type="text"
-              id="stock"
-              value={context.addProduct.stock}
-              onChange={(e) =>
-                context.setAddProduct({
-                  ...context.addProduct,
+              value={context.selectedItem?.stock}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
                   stock: e.target.value,
                 })
-              }
+              }}
+              type="text"
+              id="stock"
               name="stock"
               className="input-primary"
             />
@@ -121,6 +186,13 @@ const FormProducts = () => {
           <div className="col-span-6">
             <label className="label">Descripción</label>
             <textarea
+              value={context.selectedItem?.desc}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  desc: e.target.value,
+                })
+              }}
               className="input-primary"
               type="text"
               rows="5"
@@ -136,7 +208,7 @@ const FormProducts = () => {
             <figure className="w-40 h-40 rounded-lg">
               <img
                 className="w-full h-full rounded-lg object-cover"
-                src={image}
+                src={context.selectedItem?.fileUrl}
                 alt=""
               />
             </figure>

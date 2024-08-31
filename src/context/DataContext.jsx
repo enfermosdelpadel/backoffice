@@ -8,10 +8,16 @@ export const DataContextProvider = ({ children }) => {
   const [profile, setProfile] = useState([])
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
+  //Open and close Modal
   const [isFormOpen, setIsFormOpen] = useState(false)
   const openForm = () => setIsFormOpen(true)
   const closeForm = () => setIsFormOpen(false)
-  const [updateProduct, setUpdateProduct] = useState({})
+  //Open and close Menu
+  const [isUserLogin, setIsUserLogin] = useState(false)
+  const openMenu = () => setIsUserLogin(true)
+  const closeMenu = () => setIsUserLogin(false)
+
+  const [selectedItem, setSelectedItem] = useState({})
 
   const [addProduct, setAddProduct] = useState({
     type: "",
@@ -49,25 +55,28 @@ export const DataContextProvider = ({ children }) => {
     }
   }
 
-  const editProduct = async (id, updateProduct) => {
+  const editProduct = async (selectedItem) => {
     try {
+      console.log(selectedItem.id)
       const { data } = await supabase
         .from("products")
         .update({
-          type: updateProduct.type,
-          subType: updateProduct.subType,
-          brand: updateProduct.brand,
-          color: updateProduct.color,
-          gender: updateProduct.gender,
-          size: updateProduct.size,
-          cost: updateProduct.cost,
-          price: updateProduct.price,
-          desc: updateProduct.desc,
-          stock: updateProduct.stock,
-          fileUrl: updateProduct.fileUrl,
+          type: selectedItem.type,
+          subType: selectedItem.subType,
+          brand: selectedItem.brand,
+          color: selectedItem.color,
+          gender: selectedItem.gender,
+          size: selectedItem.size,
+          cost: selectedItem.cost,
+          price: selectedItem.price,
+          desc: selectedItem.desc,
+          stock: selectedItem.stock,
+          fileUrl: selectedItem.fileUrl,
         })
-        .eq("id", id)
+        .eq("id", selectedItem.id)
       console.log(data)
+      alert("Producto Actualizado con éxito")
+      closeForm()
     } catch (error) {
       alert(error.error_description || error.message)
     }
@@ -120,17 +129,15 @@ export const DataContextProvider = ({ children }) => {
     }
   }
 
-  // const updateTask = async (id, done) => {
-  //   const { error, data } = await supabase
-  //     .from("task")
-  //     .update({ done: !done })
-  //     .eq("userid", user.id)
-  //     .eq("id", id);
-  //   if (error) throw error;
-  //   else {
-  //     console.log(data);
-  //   }
-  // };
+  const logout = async () => {
+    try {
+      window.confirm("Está seguro de que desea salir?")
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <DataContext.Provider
@@ -146,9 +153,13 @@ export const DataContextProvider = ({ children }) => {
         setProducts,
         addProduct,
         setAddProduct,
-        updateProduct,
-        setUpdateProduct,
         editProduct,
+        setSelectedItem,
+        selectedItem,
+        openMenu,
+        closeMenu,
+        isUserLogin,
+        logout,
       }}
     >
       {children}
