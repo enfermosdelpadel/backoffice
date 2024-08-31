@@ -132,7 +132,7 @@ export const DataContextProvider = ({ children }) => {
   const logout = async () => {
     try {
       window.confirm("Está seguro de que desea salir?")
-      const { error } = await supabase.auth.signOut()
+      const { error } = await supabase.auth.signOut({ scope: "local" })
       if (error) throw error
     } catch (error) {
       console.log(error)
