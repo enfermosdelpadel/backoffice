@@ -26,6 +26,7 @@ const Showproducts = () => {
             <tr>
               <th className="th">Tipo</th>
               <th className="th">Sub Tipo</th>
+              <th className="th">Modelo</th>
               <th className="th">Marca</th>
               <th className="th">Color</th>
               <th className="th">Genero</th>
@@ -45,6 +46,7 @@ const Showproducts = () => {
                 <td className="hidden">{item.fileUrl}</td>
                 <td className="td">{item.type}</td>
                 <td className="td">{item.subType}</td>
+                <td className="td">{item.model}</td>
                 <td className="td">{item.brand}</td>
                 <td className="td">{item.color}</td>
                 <td className="td">{item.gender}</td>

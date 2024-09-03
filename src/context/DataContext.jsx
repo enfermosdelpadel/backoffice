@@ -21,6 +21,7 @@ export const DataContextProvider = ({ children }) => {
     id: "",
     type: "",
     subType: "",
+    model: "",
     brand: "",
     color: "",
     gender: "",
@@ -35,6 +36,7 @@ export const DataContextProvider = ({ children }) => {
   const [addProduct, setAddProduct] = useState({
     type: "",
     subType: "",
+    model: "",
     brand: "",
     color: "",
     gender: "",
@@ -51,6 +53,7 @@ export const DataContextProvider = ({ children }) => {
       const { data } = await supabase.from("products").insert({
         type: addProduct.type,
         subType: addProduct.subType,
+        model: addProduct.model,
         brand: addProduct.brand,
         color: addProduct.color,
         gender: addProduct.gender,
@@ -76,6 +79,7 @@ export const DataContextProvider = ({ children }) => {
         .update({
           type: selectedItem.type,
           subType: selectedItem.subType,
+          model: selectedItem.model,
           brand: selectedItem.brand,
           color: selectedItem.color,
           gender: selectedItem.gender,

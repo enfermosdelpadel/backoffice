@@ -61,6 +61,23 @@ const FormProducts = () => {
               className="input-primary"
             />
           </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Modelo</label>
+
+            <input
+              value={context.selectedItem?.model}
+              onChange={(e) => {
+                context.setSelectedItem({
+                  ...context.selectedItem,
+                  model: e.target.value,
+                })
+              }}
+              type="text"
+              id="model"
+              name="model"
+              className="input-primary"
+            />
+          </div>
 
           <div className="col-span-6 sm:col-span-3 ">
             <label className="label">Marca</label>

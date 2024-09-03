@@ -51,6 +51,7 @@ const Products = () => {
       context.setAddProduct({
         type: "",
         subType: "",
+        model: "",
         brand: "",
         color: "",
         gender: "",
@@ -103,6 +104,23 @@ const Products = () => {
                 })
               }
               name="subType"
+              className="input-primary"
+            />
+          </div>
+          <div className="col-span-6 sm:col-span-3">
+            <label className="label">Modelo</label>
+
+            <input
+              type="text"
+              id="model"
+              value={context.addProduct.model}
+              onChange={(e) =>
+                context.setAddProduct({
+                  ...context.addProduct,
+                  model: e.target.value,
+                })
+              }
+              name="model"
               className="input-primary"
             />
           </div>
