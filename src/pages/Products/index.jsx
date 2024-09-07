@@ -1,33 +1,12 @@
-import { useState, useContext } from "react"
-import { supabase } from "../../supabase/client"
+import { useContext } from "react"
+
 import Layout from "../../Components/Layout"
 import { DataContext } from "../../context/DataContext"
 
 const Products = () => {
   const context = useContext(DataContext)
 
-  const bucket = import.meta.env.VITE_BUKCKET_NAME
   const image = "/image-x.svg"
-
-  const [preview, setPreview] = useState(null)
-
-  const uploadImage = async (e) => {
-    const date = Date.now()
-    const imageFile = e.target.files[0]
-    const { data } = await supabase.storage
-      .from("images/")
-      .upload(`public/${date}.png`, imageFile, {
-        cacheControl: "3600",
-        upsert: false,
-      })
-    setPreview(`${bucket}${data?.path}`)
-    if (data) {
-      context.setAddProduct({
-        ...context.addProduct,
-        fileUrl: `${bucket}${data.path}`,
-      })
-    }
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -62,7 +41,7 @@ const Products = () => {
         stock: "",
         fileUrl: "",
       })
-      setPreview(null)
+      context.setPreview(null)
     } catch (error) {
       alert(error.error_description || error.message)
     }
@@ -269,7 +248,7 @@ const Products = () => {
             <input
               type="file"
               id="fileUrl"
-              onChange={uploadImage}
+              onChange={context.uploadImage}
               name="image"
               className="input-primary "
             />
@@ -278,7 +257,7 @@ const Products = () => {
             <figure className="w-40 h-40 rounded-lg">
               <img
                 className=" w-full h-full rounded-lg object-center"
-                src={preview ? preview : image}
+                src={context.preview ? context.preview : image}
                 alt=""
               />
             </figure>
