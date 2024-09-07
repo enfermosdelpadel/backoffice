@@ -219,7 +219,13 @@ const FormProducts = () => {
           <div className="col-span-6 sm:col-span-3">
             <label className="label">Imagen</label>
 
-            <input type="file" id="fileUrl" name="image" className="" />
+            <input
+              type="file"
+              id="fileUrl"
+              name="image"
+              onChange={context.updateImage}
+              className=""
+            />
           </div>
           <div className="col-span-6 sm:col-span-3">
             <figure className="w-40 h-40 rounded-lg">

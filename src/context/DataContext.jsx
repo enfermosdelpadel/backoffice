@@ -17,6 +17,8 @@ export const DataContextProvider = ({ children }) => {
   const openMenu = () => setIsUserLogin(true)
   const closeMenu = () => setIsUserLogin(false)
 
+  const [preview, setPreview] = useState(null)
+
   const [selectedItem, setSelectedItem] = useState({
     id: "",
     type: "",
@@ -48,6 +50,27 @@ export const DataContextProvider = ({ children }) => {
     fileUrl: "",
   })
 
+  // URL for add and update images
+  const bucket = import.meta.env.VITE_BUKCKET_NAME
+
+  const uploadImage = async (e) => {
+    const date = Date.now()
+    const imageFile = e.target.files[0]
+    const { data } = await supabase.storage
+      .from("images/")
+      .upload(`public/${date}.png`, imageFile, {
+        cacheControl: "3600",
+        upsert: false,
+      })
+    setPreview(`${bucket}${data?.path}`)
+    if (data) {
+      setAddProduct({
+        ...addProduct,
+        fileUrl: `${bucket}${data.path}`,
+      })
+    }
+  }
+
   const insertProduct = async (addProduct) => {
     try {
       const { data } = await supabase.from("products").insert({
@@ -66,11 +89,26 @@ export const DataContextProvider = ({ children }) => {
       })
       console.log(data)
       alert("Producto Guardado con éxito")
+      // setProducts([...products, addProduct]) ver porque no funciona
     } catch (error) {
       alert(error.error_description || error.message)
     }
   }
 
+  const updateImage = async (e) => {
+    const date = Date.now()
+    const imageFile = e.target.files[0]
+    const { data } = await supabase.storage
+      .from("images/")
+      .upload(`public/${date}.png`, imageFile, {
+        cacheControl: "3600",
+        upsert: false,
+      })
+    setSelectedItem({
+      ...selectedItem,
+      fileUrl: `${bucket}${data.path}`,
+    })
+  }
   const editProduct = async (selectedItem) => {
     try {
       console.log(selectedItem.id)
@@ -94,10 +132,30 @@ export const DataContextProvider = ({ children }) => {
       console.log(data)
       alert("Producto Actualizado con éxito")
       closeForm()
+      setProducts(
+        products.map((product) =>
+          product.id === selectedItem.id ? selectedItem : product
+        )
+      )
     } catch (error) {
       alert(error.error_description || error.message)
     }
   }
+
+  const deleteProduct = async (id) => {
+    try {
+      const { error } = await supabase.from("products").delete().eq("id", id)
+
+      if (error) {
+        throw error
+      }
+      setProducts(products.filter((product) => product.id !== id))
+    } catch (error) {
+      alert(error.error_description || error.message)
+    }
+  }
+
+  //Fetch Products, Users, Profiles
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -133,19 +191,6 @@ export const DataContextProvider = ({ children }) => {
     fetchProfiles()
   }, [])
 
-  const deleteProduct = async (id) => {
-    try {
-      const { error } = await supabase.from("products").delete().eq("id", id)
-
-      if (error) {
-        throw error
-      }
-      setProducts(products.filter((product) => product.id !== id))
-    } catch (error) {
-      alert(error.error_description || error.message)
-    }
-  }
-
   const logout = async () => {
     try {
       if (!window.confirm("Está seguro de que desea salir?")) return
@@ -177,6 +222,10 @@ export const DataContextProvider = ({ children }) => {
         closeMenu,
         isUserLogin,
         logout,
+        uploadImage,
+        preview,
+        setPreview,
+        updateImage,
       }}
     >
       {children}
