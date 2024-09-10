@@ -160,6 +160,7 @@ export const DataContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       const { data, error } = await supabase.from("products").select("*")
+
       if (error) {
         throw error
       } else {

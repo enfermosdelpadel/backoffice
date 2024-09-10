@@ -29,4 +29,15 @@
   .th {
     @apply whitespace-nowrap px-4 py-2 font-medium text-gray-900;
   }
+
+  .li-active {
+    @apply block size-8 rounded border-blue-600 bg-blue-600 text-center leading-8 text-white hover:cursor-pointer;
+  }
+
+  .li {
+    @apply block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900  hover:bg-gray-200 hover:cursor-pointer;
+  }
+  .chevron {
+    @apply inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900  hover:bg-gray-200;
+  }
 }
