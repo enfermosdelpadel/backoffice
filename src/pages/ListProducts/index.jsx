@@ -1,6 +1,6 @@
 import Layout from "../../Components/Layout"
 import FormProducts from "../../Components/FormProducts"
-import { useContext, useState } from "react"
+import { useContext, useState, useCallback } from "react"
 import {
   PencilIcon,
   TrashIcon,
@@ -34,8 +34,28 @@ const Showproducts = () => {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage
   const currentRows = products.slice(indexOfFirstRow, indexOfLastRow)
 
+  // Sorting
+  const [sort, setSort] = useState({ column: "id", order: "asc" })
+
+  const handleSort = useCallback((column) => {
+    setSort((prevSort) => {
+      if (prevSort.column === column) {
+        return { column, order: prevSort.order === "asc" ? "desc" : "asc" }
+      }
+      return { column, order: "asc" }
+    })
+  }, [])
+
+  const sortedRows = currentRows.sort((a, b) => {
+    if (sort.order === "asc") {
+      return a[sort.column] > b[sort.column] ? 1 : -1
+    }
+    return a[sort.column] < b[sort.column] ? 1 : -1
+  })
+
+  // Pagination
   const renderRows = () => {
-    return currentRows.map((item, index) => (
+    return sortedRows.map((item, index) => (
       <tr key={index}>
         <td className="hidden">{item.id}</td>
         <td className="hidden">{item.fileUrl}</td>
@@ -54,6 +74,7 @@ const Showproducts = () => {
           <button
             onClick={() => handleEdit(item)}
             className="btn-primary flex justify-center"
+            title="Editar"
           >
             <PencilIcon className="size-5" />
           </button>
@@ -62,6 +83,7 @@ const Showproducts = () => {
           <button
             onClick={() => handleDelete(item.id)}
             className="btn-delete flex justify-center"
+            title="Eliminar"
           >
             <TrashIcon className="size-5" />
           </button>
@@ -94,22 +116,82 @@ const Showproducts = () => {
   return (
     <Layout>
       <div className="rounded-t-lg border-b border-gray-200">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+        <div className="overflow-x-auto sm:rounded-lg">
+          <table className="w-full text-left  rtl:text-right divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="ltr:text-left rtl:text-right">
               <tr>
-                <th className="th">Tipo</th>
-                <th className="th">Sub Tipo</th>
-                <th className="th">Modelo</th>
-                <th className="th">Marca</th>
-                <th className="th">Color</th>
-                <th className="th">Genero</th>
-                <th className="th">Talle</th>
-                <th className="th">Costo</th>
-                <th className="th">Precio de Venta</th>
-                <th className="th">Stock</th>
-                <th className="th">Modificar</th>
-                <th className="th">Eliminar</th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("type")}
+                  className="th"
+                >
+                  Tipo
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("subType")}
+                  className="th"
+                >
+                  Sub Tipo
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("model")}
+                  className="th"
+                >
+                  Modelo
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("brand")}
+                  className="th"
+                >
+                  Marca
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("color")}
+                  className="th"
+                >
+                  Color
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("gender")}
+                  className="th"
+                >
+                  Genero
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("size")}
+                  className="th"
+                >
+                  Talle
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("cost")}
+                  className="th"
+                >
+                  Costo
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("price")}
+                  className="th"
+                >
+                  Precio de Venta
+                </th>
+                <th
+                  scope="col"
+                  onClick={() => handleSort("stock")}
+                  className="th"
+                >
+                  Stock
+                </th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
 
