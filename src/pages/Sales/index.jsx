@@ -3,7 +3,7 @@ import Layout from "../../Components/Layout"
 function Sales() {
   return (
     <Layout>
-      <h1>Ventas</h1>
+      <div> Ventas</div>
     </Layout>
   )
 }

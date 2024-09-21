@@ -40,4 +40,40 @@
   .chevron {
     @apply inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900  hover:bg-gray-200;
   }
+  .container {
+    @apply flex flex-col  justify-center p-10 px-20;
+  }
+  .pagination {
+    @apply mt-6 flex justify-between border-b border-gray-200;
+  }
+  .page-controller {
+    @apply w-5 h-4 flex;
+  }
+  select {
+    @apply border border-gray-300 rounded-sm;
+  }
+}
+
+@layer base {
+  table {
+    @apply border-spacing-0 border border-gray-300 bg-white text-left text-sm;
+  }
+  tr:last-child td {
+    @apply border-b-0;
+  }
+  th,
+  td {
+    @apply m-0 p-2 border-b border-r border-gray-300;
+  }
+  tr:nth-child(odd) {
+    @apply bg-gray-200 text-black;
+  }
+
+  tr:nth-child(even) {
+    @apply bg-white text-black;
+  }
+
+  button {
+    @apply border border-gray-300 px-2 py-1 rounded-sm active:border-gray-500 hover:bg-blue-400 hover:text-white;
+  }
 }

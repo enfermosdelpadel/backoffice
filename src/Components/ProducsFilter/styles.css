@@ -1,0 +1,11 @@
+input {
+  border: 1px solid #d1cccc;
+  border-radius: 0.2rem;
+  height: 1.5rem;
+}
+
+.cars-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

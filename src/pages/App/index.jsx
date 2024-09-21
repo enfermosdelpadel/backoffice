@@ -6,7 +6,7 @@ import Home from "../home"
 import Login from "../Login"
 import NotFound from "../NotFound"
 import Products from "../Products"
-import Listproducts from "../ListProducts"
+import { ListProducts } from "../ListProducts"
 import Users from "../Users"
 import { Sales } from "../Sales"
 import { Customers } from "../Customers"
@@ -34,7 +34,7 @@ function AppRoutes() {
     { path: "/login", element: <Login /> },
     { path: "/*", element: <NotFound /> },
     { path: "/products", element: <Products /> },
-    { path: "/listproducts", element: <Listproducts /> },
+    { path: "/listproducts", element: <ListProducts /> },
     { path: "/sales", element: <Sales /> },
     { path: "/customers", element: <Customers /> },
     { path: "/users", element: <Users /> },
