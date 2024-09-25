@@ -1,5 +1,6 @@
 import Layout from "../../Components/Layout"
 import { ProducsFilter } from "../../Components/ProducsFilter"
+import { Dropdown } from "../../Components/Dropdown"
 import {
   useTable,
   useSortBy,
@@ -126,6 +127,9 @@ function ListProducts() {
                         )
                       })
                     }
+                    <td>
+                      <Dropdown />
+                    </td>
                   </tr>
                 )
               })
