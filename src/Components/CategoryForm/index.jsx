@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { v4 as uuidv4 } from "uuidv4"
 import PropTypes from "prop-types"
 
 // import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"
@@ -11,7 +10,7 @@ const CategoryForm = (props) => {
 
   const handleAddCategory = () => {
     if (newCategory.trim() !== "") {
-      const newCategoryData = { id: uuidv4(), name: newCategory }
+      const newCategoryData = { name: newCategory }
       setCategories([...categories, newCategoryData])
       setNewCategory("")
     }
