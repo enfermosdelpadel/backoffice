@@ -52,6 +52,9 @@
   select {
     @apply border border-gray-300 rounded-sm;
   }
+  .span-error {
+    @apply text-xs text-red-500;
+  }
 }
 
 @layer base {

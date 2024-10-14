@@ -2,10 +2,8 @@ import PropTypes from "prop-types"
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="flex items-center justify-center flex-grow">
-        {children}
-      </div>
+    <div className="flex flex-col items-center ml-60 mr-10 mt-10">
+      {children}
     </div>
   )
 }

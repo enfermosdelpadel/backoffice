@@ -1,13 +1,13 @@
-import Layout from "../../Components/Layout";
-import { useContext } from "react";
-import { DataContext } from "../../context/DataContext";
+import Layout from "../../Components/Layout"
+import { useContext } from "react"
+import { DataContext } from "../../context/DataContext"
 
 const Users = () => {
-  const context = useContext(DataContext);
+  const context = useContext(DataContext)
 
   return (
     <Layout>
-      <div className="overflow-x-auto">
+      <div className="container">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
@@ -65,7 +65,7 @@ const Users = () => {
         </table>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users

@@ -23,7 +23,7 @@ function ProducsFilter({
   }
 
   return (
-    <span className="cars-filter">
+    <span className="style-filter">
       Buscar productos:{" "}
       <input
         size={50}
