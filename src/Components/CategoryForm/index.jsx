@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { v4 as uuidv4 } from "uuid"
+import { v4 as uuidv4 } from "uuidv4"
 import PropTypes from "prop-types"
 
 // import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"

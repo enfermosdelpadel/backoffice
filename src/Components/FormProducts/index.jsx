@@ -33,7 +33,7 @@ const FormProducts = (props) => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    // watch,
     reset,
   } = useForm()
 
