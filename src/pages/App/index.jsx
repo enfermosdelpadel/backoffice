@@ -2,13 +2,15 @@ import { BrowserRouter, useRoutes, useNavigate } from "react-router-dom"
 import { useEffect, useContext } from "react"
 import { supabase } from "../../supabase/client"
 import Menu from "../../Components/Menu"
-import Home from "../home"
+import { Home } from "../home"
 import Login from "../Login"
 import NotFound from "../NotFound"
 import { Products } from "../Products"
 import { ListProducts } from "../ListProducts"
 import { Categories } from "../Categories"
 import Users from "../Users"
+import { Supliers } from "../Suppliers"
+import { Purchases } from "../Purchases"
 import { Sales } from "../Sales"
 import { Customers } from "../Customers"
 import { DataContextProvider } from "../../context/DataContext"
@@ -40,6 +42,8 @@ function AppRoutes() {
     { path: "/customers", element: <Customers /> },
     { path: "/users", element: <Users /> },
     { path: "/categories", element: <Categories /> },
+    { path: "/suppliers", element: <Supliers /> },
+    { path: "/purchases", element: <Purchases /> },
   ])
   return routes
 }

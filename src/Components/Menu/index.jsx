@@ -10,6 +10,8 @@ import {
   PlusCircleIcon,
   CogIcon,
   TagIcon,
+  DocumentPlusIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -122,6 +124,36 @@ function Menu() {
             </li>
             <li>
               <NavLink
+                to="/suppliers"
+                className={({ isActive }) =>
+                  isActive ? "btn-menu-active" : "btn-menu"
+                }
+              >
+                <span className="flex items-right space-x-2">
+                  <span>
+                    <UserGroupIcon className="size-5" />
+                  </span>
+                  <span>Proveedores</span>
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/purchases"
+                className={({ isActive }) =>
+                  isActive ? "btn-menu-active" : "btn-menu"
+                }
+              >
+                <span className="flex items-right space-x-2">
+                  <span>
+                    <DocumentPlusIcon className="size-5" />
+                  </span>
+                  <span>Compras</span>
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/users"
                 className={({ isActive }) =>
                   isActive ? "btn-menu-active" : "btn-menu"
@@ -164,22 +196,6 @@ function Menu() {
                       </span>
                     </NavLink>
                   </li>
-
-                  {/* <li>
-                    <NavLink
-                      to="/listproducts"
-                      className={({ isActive }) =>
-                        isActive ? "btn-menu-active" : "btn-menu"
-                      }
-                    >
-                      <span className="flex items-right space-x-2">
-                        <span className="justify-right">
-                          <InboxStackIcon className="size-5" />
-                        </span>
-                        <span>Listado</span>
-                      </span>
-                    </NavLink>
-                  </li> */}
                 </ul>
               </details>
             </li>
