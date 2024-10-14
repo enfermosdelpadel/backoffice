@@ -8,6 +8,10 @@ export const DataContextProvider = ({ children }) => {
   const [profile, setProfile] = useState([])
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
+  const [brands, setBrands] = useState([""])
+  const [types, setTypes] = useState([""])
+  const [subTypes, setSubTypes] = useState([""])
+  const [models, setModels] = useState([""])
   //Open and close Modal
   const [isFormOpen, setIsFormOpen] = useState(false)
   const openForm = () => setIsFormOpen(true)
@@ -17,7 +21,7 @@ export const DataContextProvider = ({ children }) => {
   const openMenu = () => setIsUserLogin(true)
   const closeMenu = () => setIsUserLogin(false)
 
-  const [preview, setPreview] = useState(null)
+  const [imageUrl, setImageUrl] = useState("")
 
   const [selectedItem, setSelectedItem] = useState({
     id: "",
@@ -54,23 +58,27 @@ export const DataContextProvider = ({ children }) => {
   const bucket = import.meta.env.VITE_BUKCKET_NAME
 
   const uploadImage = async (e) => {
-    const date = Date.now()
-    const imageFile = e.target.files[0]
-    const { data } = await supabase.storage
-      .from("images/")
-      .upload(`public/${date}.png`, imageFile, {
-        cacheControl: "3600",
+    const file = e.target.files[0]
+    if (!file) return
+    const fileName = `${Date.now()}-${file.name}`
+    const { data, error: uploadError } = await supabase.storage
+      .from("images")
+      .upload(`public/${fileName}`, file, {
         upsert: false,
       })
-    setPreview(`${bucket}${data?.path}`)
-    if (data) {
-      setAddProduct({
-        ...addProduct,
+    if (uploadError) {
+      console.error("Error uploading image:", uploadError)
+      alert("Error al subir imagen")
+    } else if (data) {
+      console.log("Image uploaded:", data)
+      setImageUrl({
         fileUrl: `${bucket}${data.path}`,
       })
+      console.log("Image uploaded:", imageUrl.fileUrl)
+    } else {
+      console.error("Error uploading image:", data)
     }
   }
-
   const insertProduct = async (addProduct) => {
     try {
       const { data } = await supabase.from("products").insert({
@@ -192,6 +200,56 @@ export const DataContextProvider = ({ children }) => {
     fetchProfiles()
   }, [])
 
+  useEffect(() => {
+    const fetchBrands = async () => {
+      const { data, error } = await supabase.from("brands").select("*")
+      if (error) {
+        throw error
+      } else {
+        setBrands(data)
+      }
+    }
+    fetchBrands()
+  }, [])
+
+  useEffect(() => {
+    const fetchType = async () => {
+      const { data, error } = await supabase.from("types").select("*")
+      if (error) {
+        throw error
+      } else {
+        setTypes(data)
+      }
+    }
+    fetchType()
+  }, [])
+
+  useEffect(() => {
+    const fetchsubType = async () => {
+      const { data, error } = await supabase
+        .from("sub_types")
+        .select("*,types(*)")
+      if (error) {
+        throw error
+      } else {
+        setSubTypes(data)
+      }
+    }
+    fetchsubType()
+  }, [])
+
+  useEffect(() => {
+    const fetchModel = async () => {
+      const { data, error } = await supabase.from("models").select("*")
+      if (error) {
+        throw error
+      } else {
+        setModels(data)
+      }
+    }
+    fetchModel()
+  }, [])
+
   const logout = async () => {
     try {
       if (!window.confirm("Está seguro de que desea salir?")) return
@@ -224,9 +282,17 @@ export const DataContextProvider = ({ children }) => {
         isUserLogin,
         logout,
         uploadImage,
-        preview,
-        setPreview,
         updateImage,
+        brands,
+        setBrands,
+        types,
+        setTypes,
+        subTypes,
+        setSubTypes,
+        models,
+        setModels,
+        imageUrl,
+        setImageUrl,
       }}
     >
       {children}

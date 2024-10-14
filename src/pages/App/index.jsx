@@ -5,8 +5,9 @@ import Menu from "../../Components/Menu"
 import Home from "../home"
 import Login from "../Login"
 import NotFound from "../NotFound"
-import Products from "../Products"
+import { Products } from "../Products"
 import { ListProducts } from "../ListProducts"
+import { Categories } from "../Categories"
 import Users from "../Users"
 import { Sales } from "../Sales"
 import { Customers } from "../Customers"
@@ -38,6 +39,7 @@ function AppRoutes() {
     { path: "/sales", element: <Sales /> },
     { path: "/customers", element: <Customers /> },
     { path: "/users", element: <Users /> },
+    { path: "/categories", element: <Categories /> },
   ])
   return routes
 }

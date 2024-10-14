@@ -8,6 +8,8 @@ import {
   InboxStackIcon,
   ChevronDownIcon,
   PlusCircleIcon,
+  CogIcon,
+  TagIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -20,7 +22,7 @@ function Menu() {
     <div
       className={`${
         context.isUserLogin ? "flex" : "hidden"
-      }  h-screen w-40 flex-col justify-between border-e fixed top-0 left-0 bg-white`}
+      }  h-screen w-50 flex-col justify-between border-e fixed top-0 left-0 bg-white`}
     >
       <div className="border-t border-gray-100">
         <div className="px-2 py-4">
@@ -132,6 +134,54 @@ function Menu() {
                   <span>Usuarios</span>
                 </span>
               </NavLink>
+            </li>
+            <li>
+              <details className="group [&_summary::-webkit-details-marker]:hidden hover:cursor-pointer">
+                <summary className="btn-menu gap-2">
+                  <span className="justify-right">
+                    <CogIcon className="size-5" />
+                  </span>
+                  <span>Ajustes</span>
+
+                  <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                    <ChevronDownIcon className="size-5" />
+                  </span>
+                </summary>
+
+                <ul className="mt-2 space-y-1 px-4">
+                  <li>
+                    <NavLink
+                      to="/categories"
+                      className={({ isActive }) =>
+                        isActive ? "btn-menu-active" : "btn-menu"
+                      }
+                    >
+                      <span className="flex items-right space-x-2">
+                        <span className="justify-right">
+                          <TagIcon className="size-5" />
+                        </span>
+                        <span>Categorias</span>
+                      </span>
+                    </NavLink>
+                  </li>
+
+                  {/* <li>
+                    <NavLink
+                      to="/listproducts"
+                      className={({ isActive }) =>
+                        isActive ? "btn-menu-active" : "btn-menu"
+                      }
+                    >
+                      <span className="flex items-right space-x-2">
+                        <span className="justify-right">
+                          <InboxStackIcon className="size-5" />
+                        </span>
+                        <span>Listado</span>
+                      </span>
+                    </NavLink>
+                  </li> */}
+                </ul>
+              </details>
             </li>
           </ul>
         </div>

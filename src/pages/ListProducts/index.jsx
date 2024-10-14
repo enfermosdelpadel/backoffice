@@ -99,6 +99,7 @@ function ListProducts() {
                       </th>
                     ))
                   }
+                  <th>Acciones</th>
                 </tr>
               ))
             }
