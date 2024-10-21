@@ -1,5 +1,5 @@
 import Layout from "../../Components/Layout"
-import { ProducsFilter } from "../../Components/ProducsFilter"
+import { TableFilter } from "../../Components/TableFilter"
 import { Dropdown } from "../../Components/Dropdown"
 import {
   useTable,
@@ -7,8 +7,8 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table"
-import useRows from "../../hooks/useRows"
-import useColumns from "../../hooks/useColumns"
+import useRows from "../../hooks/useRowsProdutcs"
+import useColumns from "../../hooks/useColumnsProducts"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -63,7 +63,7 @@ function ListProducts() {
           <thead>
             <tr>
               <th colSpan={4}>
-                <ProducsFilter
+                <TableFilter
                   preGlobalFilteredRows={preGlobalFilteredRows}
                   globalFilter={globalFilter}
                   setGlobalFilter={setGlobalFilter}
