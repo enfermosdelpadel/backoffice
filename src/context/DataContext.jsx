@@ -20,6 +20,9 @@ export const DataContextProvider = ({ children }) => {
   const [isUserLogin, setIsUserLogin] = useState(false)
   const openMenu = () => setIsUserLogin(true)
   const closeMenu = () => setIsUserLogin(false)
+  //Suppliers
+  const [suppliers, setSuppliers] = useState([])
+  const [purchases, setPurchases] = useState([])
 
   const [imageUrl, setImageUrl] = useState("")
 
@@ -260,6 +263,69 @@ export const DataContextProvider = ({ children }) => {
     }
   }
 
+  //Supliers
+
+  const insertSupplier = async (addSuplier) => {
+    try {
+      const { data } = await supabase.from("suppliers").insert({
+        company: addSuplier.company,
+        name: addSuplier.name,
+        email: addSuplier.email,
+        phone: addSuplier.phone,
+        address: addSuplier.address,
+      })
+      console.log(data)
+      alert("Proveedorador Guardado con éxito")
+    } catch (error) {
+      alert(error.error_description || error.message)
+    }
+  }
+
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      const { data, error } = await supabase.from("suppliers").select("*")
+      if (error) {
+        throw error
+      } else {
+        setSuppliers(data)
+      }
+    }
+    fetchSuppliers()
+  }, [])
+
+  const insertPurchase = async (addPurchase) => {
+    const { data, error } = await supabase.from("purchases").insert({
+      supplier_id: addPurchase.supplier,
+      product_id: addPurchase.product,
+      color_id: addPurchase.color,
+      size_id: addPurchase.size,
+      gender_id: addPurchase.gender,
+      quantity: addPurchase.quantity,
+      uni_cost: addPurchase.uni_cost,
+      total_cost: addPurchase.uni_cost * addPurchase.quantity,
+    })
+    if (error) {
+      throw error
+    } else {
+      alert("Compra guardada con éxito")
+      console.log(data)
+    }
+  }
+
+  useEffect(() => {
+    const fetchPurchases = async () => {
+      const { data, error } = await supabase
+        .from("purchases")
+        .select("*,suppliers(*),products(*),colors(*),sizes(*),genders(*)")
+      if (error) {
+        throw error
+      } else {
+        setPurchases(data)
+      }
+    }
+    fetchPurchases()
+  }, [])
+
   return (
     <DataContext.Provider
       value={{
@@ -293,6 +359,12 @@ export const DataContextProvider = ({ children }) => {
         setModels,
         imageUrl,
         setImageUrl,
+        insertSupplier,
+        suppliers,
+        setSuppliers,
+        insertPurchase,
+        purchases,
+        setPurchases,
       }}
     >
       {children}

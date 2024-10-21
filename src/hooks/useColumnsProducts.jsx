@@ -8,6 +8,10 @@ export default function useColumns() {
         accessor: "created_at",
       },
       {
+        Header: "Nombre",
+        accessor: "product_name",
+      },
+      {
         Header: "Marca",
         accessor: "brand",
       },
@@ -23,26 +27,6 @@ export default function useColumns() {
       {
         Header: "SubTipo",
         accessor: "subType",
-      },
-      {
-        Header: "Color",
-        accessor: "color",
-      },
-      {
-        Header: "Talla",
-        accessor: "size",
-      },
-      {
-        Header: "Costo",
-        accessor: "cost",
-      },
-      {
-        Header: "Precio",
-        accessor: "price",
-      },
-      {
-        Header: "Stock",
-        accessor: "stock",
       },
     ],
     []

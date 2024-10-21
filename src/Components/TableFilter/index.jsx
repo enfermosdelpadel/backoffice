@@ -4,12 +4,8 @@ import { useAsyncDebounce } from "react-table"
 import { useState } from "react"
 import "./styles.css"
 
-function ProducsFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const totalProdsAvailable = preGlobalFilteredRows.length
+function TableFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
+  const totalItemsAvailable = preGlobalFilteredRows.length
   const [value, setValue] = useState(globalFilter)
 
   const onFilterChange = useAsyncDebounce(
@@ -24,20 +20,20 @@ function ProducsFilter({
 
   return (
     <span className="style-filter">
-      Buscar productos:{" "}
+      Buscar Items:{" "}
       <input
         size={50}
         value={value || ""}
         onChange={handleInputChange}
-        placeholder={"  " + `${totalProdsAvailable} productos disponibles...`}
+        placeholder={"  " + `${totalItemsAvailable} items disponibles...`}
       />
     </span>
   )
 }
 
-ProducsFilter.propTypes = {
+TableFilter.propTypes = {
   preGlobalFilteredRows: PropTypes.array.isRequired,
   globalFilter: PropTypes.node,
   setGlobalFilter: PropTypes.func.isRequired,
 }
-export { ProducsFilter }
+export { TableFilter }
