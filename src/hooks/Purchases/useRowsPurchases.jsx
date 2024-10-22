@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react"
-import { DataContext } from "../context/DataContext"
+import { DataContext } from "../../context/DataContext"
 
 export default function useRowsPurchases() {
   const { purchases } = useContext(DataContext)

@@ -1,20 +1,25 @@
 import { supabase } from "../../supabase/client"
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AtSymbolIcon, LockClosedIcon } from "@heroicons/react/24/outline"
+import { useForm } from "react-hook-form"
 
 function Login() {
-  const navigate = useNavigate()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      await supabase.auth.signInWithPassword({ email, password })
-      navigate("/")
-    } catch (error) {
-      alert(`Error signing in: ${error.message}`)
+  const navigate = useNavigate()
+  const onSubmit = async (data) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    })
+    navigate("/")
+
+    if (error) {
+      alert(`Error en el Logueo: ${error.message}`)
     }
   }
 
@@ -26,58 +31,56 @@ function Login() {
             Ingresar al sistema
           </h1>
         </div>
-
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="mx-auto mb-0 mt-8 max-w-md space-y-4"
         >
           <div>
-            <label className="sr-only">Email</label>
-
+            <label htmlFor="email" className="sr-only">
+              Email
+            </label>
             <div className="relative">
               <input
+                id="email"
                 type="email"
                 autoComplete="email"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Ingresa tu user/email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email", { required: true })}
               />
-
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                 <AtSymbolIcon className="size-4 text-gray-500" />
               </span>
             </div>
+            {errors.email && (
+              <span className="span-error">Debe ingresar un email</span>
+            )}
           </div>
 
           <div>
-            <label className="sr-only">Password</label>
+            <label htmlFor="password" className="sr-only">
+              Password
+            </label>
 
             <div className="relative">
               <input
                 type="password"
                 id="password"
-                name="password"
                 autoComplete="current-password"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password", { required: true })}
               />
-
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                 <LockClosedIcon className="size-4 text-gray-500" />
               </span>
             </div>
+            {errors.password && (
+              <span className="span-error">Debe ingresar una contraseña</span>
+            )}
           </div>
-
           <div className="flex items-center justify-center">
-            <button
-              type="submit"
-              className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
-            >
-              Ingresar
-            </button>
+            <button className="btn-primary">Ingresar</button>
           </div>
         </form>
       </div>

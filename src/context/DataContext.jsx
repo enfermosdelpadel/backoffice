@@ -188,6 +188,7 @@ export const DataContextProvider = ({ children }) => {
       const {
         data: { user },
       } = await supabase.auth.getUser()
+      console.log(user)
       setUser(user)
     }
     fetchUser()
