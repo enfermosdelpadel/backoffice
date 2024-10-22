@@ -110,7 +110,13 @@ function Table(props) {
             </thead>
 
             <tbody {...getTableBodyProps()}>
-              {
+              {page.length === 0 ? (
+                <tr>
+                  <td colSpan={headerGroups[0].headers.length}>
+                    <div className="text-center">No hay {name}!</div>
+                  </td>
+                </tr>
+              ) : (
                 // Recorremos las filas
                 page.map((row, index) => {
                   // Llamamos a la función que prepara la fila previo renderizado
@@ -135,7 +141,7 @@ function Table(props) {
                     </tr>
                   )
                 })
-              }
+              )}
             </tbody>
           </table>
           <div className="pagination">

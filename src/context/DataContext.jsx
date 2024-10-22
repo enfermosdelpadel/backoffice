@@ -24,6 +24,8 @@ export const DataContextProvider = ({ children }) => {
   const [suppliers, setSuppliers] = useState([])
   const [purchases, setPurchases] = useState([])
 
+  const [loading, setLoading] = useState(false)
+
   const [imageUrl, setImageUrl] = useState("")
 
   const [selectedItem, setSelectedItem] = useState({
@@ -189,7 +191,7 @@ export const DataContextProvider = ({ children }) => {
       setUser(user)
     }
     fetchUser()
-  }, [user])
+  }, [])
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -266,35 +268,35 @@ export const DataContextProvider = ({ children }) => {
   //Supliers
 
   const insertSupplier = async (addSuplier) => {
-    try {
-      const { data } = await supabase.from("suppliers").insert({
-        company: addSuplier.company,
-        name: addSuplier.name,
-        email: addSuplier.email,
-        phone: addSuplier.phone,
-        address: addSuplier.address,
-      })
-      console.log(data)
-      alert("Proveedorador Guardado con éxito")
-    } catch (error) {
-      alert(error.error_description || error.message)
+    const { error } = await supabase.from("suppliers").insert({
+      company: addSuplier.company,
+      name: addSuplier.name,
+      email: addSuplier.email,
+      phone: addSuplier.phone,
+      address: addSuplier.address,
+    })
+    if (error) {
+      console.log(error)
+      throw error
     }
+    fetchSuppliers()
   }
 
   useEffect(() => {
-    const fetchSuppliers = async () => {
-      const { data, error } = await supabase.from("suppliers").select("*")
-      if (error) {
-        throw error
-      } else {
-        setSuppliers(data)
-      }
-    }
     fetchSuppliers()
   }, [])
 
+  const fetchSuppliers = async () => {
+    const { data, error } = await supabase.from("suppliers").select("*")
+    if (error) {
+      throw error
+    }
+    setSuppliers(data)
+  }
+
   const insertPurchase = async (addPurchase) => {
-    const { data, error } = await supabase.from("purchases").insert({
+    setLoading(true)
+    const { error } = await supabase.from("purchases").insert({
       supplier_id: addPurchase.supplier,
       product_id: addPurchase.product,
       color_id: addPurchase.color,
@@ -304,25 +306,27 @@ export const DataContextProvider = ({ children }) => {
       uni_cost: addPurchase.uni_cost,
       total_cost: addPurchase.uni_cost * addPurchase.quantity,
     })
+    setLoading(false)
+    await fetchPurchases()
+
+    if (error) {
+      console.log(error)
+      throw error
+    }
+    alert("Compra guardada con éxito")
+  }
+
+  const fetchPurchases = async () => {
+    const { data, error } = await supabase
+      .from("purchases")
+      .select("*,suppliers(*),products(*),colors(*),sizes(*),genders(*)")
     if (error) {
       throw error
-    } else {
-      alert("Compra guardada con éxito")
-      console.log(data)
     }
+    setPurchases(data)
   }
 
   useEffect(() => {
-    const fetchPurchases = async () => {
-      const { data, error } = await supabase
-        .from("purchases")
-        .select("*,suppliers(*),products(*),colors(*),sizes(*),genders(*)")
-      if (error) {
-        throw error
-      } else {
-        setPurchases(data)
-      }
-    }
     fetchPurchases()
   }, [])
 
@@ -365,6 +369,8 @@ export const DataContextProvider = ({ children }) => {
         insertPurchase,
         purchases,
         setPurchases,
+        loading,
+        setLoading,
       }}
     >
       {children}

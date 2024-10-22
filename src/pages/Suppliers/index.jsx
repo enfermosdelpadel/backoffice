@@ -112,7 +112,7 @@ function Supliers() {
             </div>
           </div>
           <div className="flex justify-start ">
-            <button className="btn-primary ">Añadir un proveedor</button>
+            <button className="btn-primary ">Añadir proveedor</button>
           </div>
         </form>
       </div>

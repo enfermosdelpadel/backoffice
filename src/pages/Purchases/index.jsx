@@ -11,7 +11,7 @@ import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Purchases() {
-  const { suppliers, insertPurchase } = useContext(DataContext)
+  const { suppliers, insertPurchase, loading } = useContext(DataContext)
   const {
     register,
     handleSubmit,
@@ -202,7 +202,9 @@ function Purchases() {
             </div>
           </div>
           <div className="flex justify-start ">
-            <button className="btn-primary ">Añadir Compra</button>
+            <button className="btn-primary ">
+              {loading ? "Loading..." : "Añadir Compra"}
+            </button>
           </div>
         </form>
       </div>
