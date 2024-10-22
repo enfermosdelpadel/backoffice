@@ -3,9 +3,9 @@ import { PlusIcon } from "@heroicons/react/24/outline"
 import { useForm } from "react-hook-form"
 
 import { Table } from "../../Components/Table"
-import useRowsPurchases from "../../hooks/useRowsPurchases"
-import useColumnsPurchases from "../../hooks/useColumnsPurchases"
-import useRowsProdutcs from "../../hooks/useRowsProdutcs"
+import useRowsPurchases from "../../hooks/Purchases/useRowsPurchases"
+import useColumnsPurchases from "../../hooks/Purchases/useColumnsPurchases"
+import useRowsProdutcs from "../../hooks/Products/useRowsProdutcs"
 
 import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"

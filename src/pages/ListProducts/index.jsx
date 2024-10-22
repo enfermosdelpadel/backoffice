@@ -7,8 +7,8 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table"
-import useRows from "../../hooks/useRowsProdutcs"
-import useColumns from "../../hooks/useColumnsProducts"
+import useRows from "../../hooks/Products/useRowsProdutcs"
+import useColumns from "../../hooks/Products/useColumnsProducts"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,

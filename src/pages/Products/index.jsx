@@ -2,9 +2,8 @@ import Layout from "../../Components/Layout"
 import { FormProducts } from "../../Components/FormProducts"
 
 import { Table } from "../../Components/Table"
-import useRows from "../../hooks/useRowsProdutcs"
-import useColumns from "../../hooks/useColumnsProducts"
-
+import useRows from "../../hooks/Products/useRowsProdutcs"
+import useColumns from "../../hooks/Products/useColumnsProducts"
 import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
 

@@ -5,8 +5,8 @@ import { DataContext } from "../../context/DataContext"
 import Layout from "../../Components/Layout"
 
 import { Table } from "../../Components/Table"
-import useColumnsSuppliers from "../../hooks/useColumnsSuppliers"
-import useRowsSuppliers from "../../hooks/useRowsSuppliers"
+import useColumnsSuppliers from "../..//hooks/Suppliers/useColumnsSuppliers"
+import useRowsSuppliers from "../../hooks/Suppliers/useRowsSuppliers"
 
 function Supliers() {
   const { insertSupplier } = useContext(DataContext)
