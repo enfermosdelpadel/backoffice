@@ -153,8 +153,11 @@ const FormProducts = (props) => {
               </div>
               <div>
                 <div className="col-span-6 ">
-                  <label className="label-form">Descripción</label>
+                  <label className="label-form" htmlFor="desc">
+                    Descripción
+                  </label>
                   <textarea
+                    id="desc"
                     className="input-primary border-2 border-gray-300"
                     type="text"
                     rows="5"
@@ -166,7 +169,9 @@ const FormProducts = (props) => {
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label className="label-form">Imágen del producto</label>
+                  <label className="label-form" htmlFor="fileUrl">
+                    Imágen del producto
+                  </label>
                   <div
                     {...getRootProps()}
                     className="w-full border-2 border-dashed h-40 w-45 flex items-center justify-center rounded-lg border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 focus:outline-none focus:border-gray-400"

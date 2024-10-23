@@ -11,7 +11,9 @@ import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Purchases() {
-  const { suppliers, insertPurchase, loading } = useContext(DataContext)
+  const { suppliers, insertPurchase, loading, colors, sizes, genders } =
+    useContext(DataContext)
+
   const {
     register,
     handleSubmit,
@@ -22,24 +24,6 @@ function Purchases() {
   const products = useRowsProdutcs().sort((a, b) =>
     a.product_name.localeCompare(b.product_name)
   )
-
-  const sizes = [
-    { id: 1, name: "size 1" },
-    { id: 2, name: "size 2" },
-    { id: 3, name: "size 3" },
-  ]
-
-  const colors = [
-    { id: 1, name: "Color 1" },
-    { id: 2, name: "Color 2" },
-    { id: 3, name: "Color 3" },
-  ]
-
-  const genders = [
-    { id: 1, name: "Hombre" },
-    { id: 2, name: "Mujer" },
-    { id: 3, name: "Unisex" },
-  ]
 
   const onSubmit = (data) => {
     const total_cost = data.quantity * data.uni_cost
@@ -177,6 +161,7 @@ function Purchases() {
                 Cantidad
               </label>
               <input
+                autoComplete="off"
                 id="quantity"
                 type="number"
                 placeholder="0"
@@ -191,6 +176,7 @@ function Purchases() {
                 Precio Unitario
               </label>
               <input
+                autoComplete="off"
                 id="uni_cost"
                 type="number"
                 placeholder="0"

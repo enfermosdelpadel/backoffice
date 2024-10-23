@@ -11,7 +11,7 @@ import { Categories } from "../Categories"
 import Users from "../Users"
 import { Supliers } from "../Suppliers"
 import { Purchases } from "../Purchases"
-import { Sales } from "../Sales"
+import { Orders } from "../Orders"
 import { Customers } from "../Customers"
 import { DataContextProvider } from "../../context/DataContext"
 import { DataContext } from "../../context/DataContext"
@@ -38,7 +38,7 @@ function AppRoutes() {
     { path: "/*", element: <NotFound /> },
     { path: "/products", element: <Products /> },
     { path: "/listproducts", element: <ListProducts /> },
-    { path: "/sales", element: <Sales /> },
+    { path: "/Orders", element: <Orders /> },
     { path: "/customers", element: <Customers /> },
     { path: "/users", element: <Users /> },
     { path: "/categories", element: <Categories /> },

@@ -5,7 +5,7 @@ import { supabase } from "../supabase/client"
 export const DataContext = createContext()
 
 export const DataContextProvider = ({ children }) => {
-  const [profile, setProfile] = useState([])
+  const [profile, setProfile] = useState([""])
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
   const [brands, setBrands] = useState([""])
@@ -21,8 +21,17 @@ export const DataContextProvider = ({ children }) => {
   const openMenu = () => setIsUserLogin(true)
   const closeMenu = () => setIsUserLogin(false)
   //Suppliers
-  const [suppliers, setSuppliers] = useState([])
-  const [purchases, setPurchases] = useState([])
+  const [suppliers, setSuppliers] = useState([""])
+  const [purchases, setPurchases] = useState([""])
+  const [colors, setColors] = useState([""])
+  const [genders, setGenders] = useState([""])
+  const [sizes, setSizes] = useState([""])
+
+  //Customers
+  const [customers, setCustomers] = useState([""])
+
+  //Sales
+  const [sales, setSales] = useState([""])
 
   const [loading, setLoading] = useState(false)
 
@@ -44,20 +53,7 @@ export const DataContextProvider = ({ children }) => {
     fileUrl: "",
   })
 
-  const [addProduct, setAddProduct] = useState({
-    type: "",
-    subType: "",
-    model: "",
-    brand: "",
-    color: "",
-    gender: "",
-    size: "",
-    cost: "",
-    price: "",
-    desc: "",
-    stock: "",
-    fileUrl: "",
-  })
+  const [addProduct, setAddProduct] = useState({})
 
   // URL for add and update images
   const bucket = import.meta.env.VITE_BUKCKET_NAME
@@ -188,7 +184,7 @@ export const DataContextProvider = ({ children }) => {
       const {
         data: { user },
       } = await supabase.auth.getUser()
-      console.log(user)
+
       setUser(user)
     }
     fetchUser()
@@ -331,6 +327,54 @@ export const DataContextProvider = ({ children }) => {
     fetchPurchases()
   }, [])
 
+  // const fetchColors = async () => {
+  //   const { data, error } = await supabase.from("colors").select("*")
+  //   if (error) {
+  //     throw error
+  //   }
+  //   setColors(data)
+  // }
+
+  // useEffect(() => {
+  //   fetchColors()
+  // })
+
+  // const fetchSizes = async () => {
+  //   const { data, error } = await supabase.from("sizes").select("*")
+  //   if (error) {
+  //     throw error
+  //   }
+  //   setSizes(data)
+  // }
+
+  // useEffect(() => {
+  //   fetchSizes()
+  // })
+
+  // const fetchGenders = async () => {
+  //   const { data, error } = await supabase.from("genders").select("*")
+  //   if (error) {
+  //     throw error
+  //   }
+  //   setGenders(data)
+  // }
+
+  // useEffect(() => {
+  //   fetchGenders()
+  // })
+
+  // const fetchCustomers = async () => {
+  //   const { data, error } = await supabase.from("customers").select("*")
+  //   if (error) {
+  //     throw error
+  //   }
+  //   setCustomers(data)
+  // }
+
+  // useEffect(() => {
+  //   fetchCustomers()
+  // })
+
   return (
     <DataContext.Provider
       value={{
@@ -372,6 +416,11 @@ export const DataContextProvider = ({ children }) => {
         setPurchases,
         loading,
         setLoading,
+        colors,
+        sizes,
+        genders,
+        customers,
+        sales,
       }}
     >
       {children}

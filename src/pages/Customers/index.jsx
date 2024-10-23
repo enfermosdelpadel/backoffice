@@ -1,9 +1,17 @@
 import Layout from "../../Components/Layout"
 
+import { Table } from "../../Components/Table"
+import useRowsCustomers from "../../hooks/Customers/useRowsCustomers"
+import useColumnsCustomers from "../../hooks/Customers/useColumnsCustomers"
+
 function Customers() {
   return (
     <Layout>
-      <h3>Clientes</h3>
+      <Table
+        name="clientes"
+        columns={useColumnsCustomers()}
+        data={useRowsCustomers()}
+      />
     </Layout>
   )
 }
