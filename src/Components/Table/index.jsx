@@ -174,6 +174,7 @@ function Table(props) {
             </div>
 
             <select
+              id="pageSize"
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
             >

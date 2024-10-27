@@ -85,7 +85,7 @@ function Menu() {
                         <span className="justify-right">
                           <InboxStackIcon className="size-5" />
                         </span>
-                        <span>Listado</span>
+                        <span>Stock</span>
                       </span>
                     </NavLink>
                   </li>
@@ -94,7 +94,7 @@ function Menu() {
             </li>
             <li>
               <NavLink
-                to="/sales"
+                to="/orders"
                 className={({ isActive }) =>
                   isActive ? "btn-menu-active" : "btn-menu"
                 }
@@ -103,7 +103,7 @@ function Menu() {
                   <span className="justify-right">
                     <ShoppingBagIcon className="size-5" />
                   </span>
-                  <span>Ventas</span>
+                  <span>Órdenes</span>
                 </span>
               </NavLink>
             </li>

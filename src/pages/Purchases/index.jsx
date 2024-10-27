@@ -7,11 +7,30 @@ import useRowsPurchases from "../../hooks/Purchases/useRowsPurchases"
 import useColumnsPurchases from "../../hooks/Purchases/useColumnsPurchases"
 import useRowsProdutcs from "../../hooks/Products/useRowsProdutcs"
 
-import { useContext } from "react"
+import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Purchases() {
-  const { suppliers, insertPurchase, loading } = useContext(DataContext)
+  const { suppliers, insertPurchase, loading, sizes, colors, genders } =
+    useContext(DataContext)
+
+  const [selectedProduct, setSelectedProduct] = useState(null)
+
+  const handleSizeChange = (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]
+    const selectedType = selectedOption.getAttribute("data-type")
+    setSelectedProduct(selectedType)
+  }
+
+  const filteredSizes = useMemo(() => {
+    if (selectedProduct === "Indumentaria") {
+      return sizes.filter((size) => size.category === "clothing")
+    } else if (selectedProduct === "Zapatillas") {
+      return sizes.filter((size) => size.category === "shoes")
+    }
+    return []
+  }, [selectedProduct, sizes])
+
   const {
     register,
     handleSubmit,
@@ -22,24 +41,6 @@ function Purchases() {
   const products = useRowsProdutcs().sort((a, b) =>
     a.product_name.localeCompare(b.product_name)
   )
-
-  const sizes = [
-    { id: 1, name: "size 1" },
-    { id: 2, name: "size 2" },
-    { id: 3, name: "size 3" },
-  ]
-
-  const colors = [
-    { id: 1, name: "Color 1" },
-    { id: 2, name: "Color 2" },
-    { id: 3, name: "Color 3" },
-  ]
-
-  const genders = [
-    { id: 1, name: "Hombre" },
-    { id: 2, name: "Mujer" },
-    { id: 3, name: "Unisex" },
-  ]
 
   const onSubmit = (data) => {
     const total_cost = data.quantity * data.uni_cost
@@ -91,6 +92,7 @@ function Purchases() {
                 Producto
               </label>
               <select
+                onInput={handleSizeChange}
                 id="product"
                 {...register("product", { required: "select one option" })}
               >
@@ -98,7 +100,11 @@ function Purchases() {
                   Seleccione un Producto
                 </option>
                 {products.map((product) => (
-                  <option key={product.id} value={product.id}>
+                  <option
+                    data-type={product.type}
+                    key={product.id}
+                    value={product.id}
+                  >
                     {product?.product_name}
                   </option>
                 ))}
@@ -118,7 +124,7 @@ function Purchases() {
                 <option value="" hidden>
                   Seleccionar Talle
                 </option>
-                {sizes.map((size) => (
+                {filteredSizes.map((size) => (
                   <option key={size.id} value={size.id}>
                     {size?.name}
                   </option>
@@ -177,6 +183,7 @@ function Purchases() {
                 Cantidad
               </label>
               <input
+                autoComplete="off"
                 id="quantity"
                 type="number"
                 placeholder="0"
@@ -191,6 +198,7 @@ function Purchases() {
                 Precio Unitario
               </label>
               <input
+                autoComplete="off"
                 id="uni_cost"
                 type="number"
                 placeholder="0"

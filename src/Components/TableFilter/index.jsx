@@ -22,6 +22,7 @@ function TableFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
     <span className="style-filter">
       Buscar Items:{" "}
       <input
+        id="inputFilter"
         size={50}
         value={value || ""}
         onChange={handleInputChange}

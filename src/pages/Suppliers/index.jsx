@@ -43,6 +43,7 @@ function Supliers() {
                 Compañia
               </label>
               <input
+                autoComplete="off"
                 className="input-primary"
                 id="company"
                 type="text"
@@ -57,6 +58,7 @@ function Supliers() {
                 Nombre
               </label>
               <input
+                autoComplete="off"
                 className="input-primary"
                 id="name"
                 type="text"
@@ -71,6 +73,7 @@ function Supliers() {
                 Correo Electrónico
               </label>
               <input
+                autoComplete="off"
                 className="input-primary"
                 id="email"
                 type="email"
@@ -85,6 +88,7 @@ function Supliers() {
                 Teléfono
               </label>
               <input
+                autoComplete="off"
                 className="input-primary"
                 id="phone"
                 type="text"
@@ -101,6 +105,7 @@ function Supliers() {
                 Dirección
               </label>
               <input
+                autoComplete="off"
                 className="input-primary"
                 id="address"
                 type="text"

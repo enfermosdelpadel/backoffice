@@ -1,16 +1,8 @@
 import { useMemo } from "react"
 
-export default function useColumnsPurchases() {
+export default function useColumnsStock() {
   const columns = useMemo(
     () => [
-      {
-        Header: "Fecha de Compra",
-        accessor: "purchase_date",
-      },
-      {
-        Header: "Proveedor",
-        accessor: "supplier",
-      },
       {
         Header: "Producto",
         accessor: "product",
@@ -29,15 +21,7 @@ export default function useColumnsPurchases() {
       },
       {
         Header: "Cantidad",
-        accessor: "quantity",
-      },
-      {
-        Header: "Costo Unitario",
-        accessor: "cost",
-      },
-      {
-        Header: "Costo Total",
-        accessor: "total_cost",
+        accessor: "stock",
       },
     ],
     []

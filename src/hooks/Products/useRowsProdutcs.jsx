@@ -11,7 +11,7 @@ export default function useRowsProdutcs() {
         product_name:
           product.type +
           " " +
-          product.subType +
+          product.sub_type +
           " " +
           product.brand +
           " " +
@@ -23,7 +23,7 @@ export default function useRowsProdutcs() {
         }),
         brand: product.brand,
         type: product.type,
-        subType: product.subType,
+        sub_type: product.sub_type,
         model: product.model,
       })),
     [products] // add this dependency array
