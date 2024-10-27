@@ -48,16 +48,16 @@ const FormProducts = () => {
             <label className="label">Sub Tipo</label>
 
             <input
-              value={context.selectedItem?.subType}
+              value={context.selectedItem?.sub_type}
               onChange={(e) => {
                 context.setSelectedItem({
                   ...context.selectedItem,
-                  subType: e.target.value,
+                  sub_type: e.target.value,
                 })
               }}
               type="text"
-              id="subType"
-              name="subType"
+              id="sub_type"
+              name="sub_type"
               className="input-primary"
             />
           </div>

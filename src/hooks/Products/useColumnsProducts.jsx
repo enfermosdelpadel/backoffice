@@ -26,7 +26,7 @@ export default function useColumns() {
       },
       {
         Header: "SubTipo",
-        accessor: "subType",
+        accessor: "sub_type",
       },
     ],
     []

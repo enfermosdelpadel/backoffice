@@ -12,7 +12,7 @@ const FormProducts = (props) => {
   }, [])
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
 
-  const { brand, type, subType, model } = props
+  const { brand, type, sub_type, model } = props
   const { insertProduct, uploadImage, imageUrl } = useContext(DataContext)
   const [selectedType, setSelectedType] = useState(null)
 
@@ -21,12 +21,12 @@ const FormProducts = (props) => {
     setSelectedType(selectedTypeValue)
   }
 
-  const filteredSubTypes = useMemo(
+  const filteredsub_types = useMemo(
     () =>
       selectedType
-        ? subType.filter((subType) => subType.types?.name === selectedType)
+        ? sub_type.filter((sub_type) => sub_type.types?.name === selectedType)
         : [],
-    [selectedType, subType]
+    [selectedType, sub_type]
   )
 
   const {
@@ -84,24 +84,24 @@ const FormProducts = (props) => {
                   )}
                 </div>
                 <div>
-                  <label htmlFor="subType" className="label-form">
+                  <label htmlFor="sub_type" className="label-form">
                     Subtipo
                   </label>
                   <select
-                    id="subType"
+                    id="sub_type"
                     className="w-full"
-                    {...register("subType", { required: "select one option" })}
+                    {...register("sub_type", { required: "select one option" })}
                   >
                     <option value="" hidden>
                       Seleccione un subtipo
                     </option>
-                    {filteredSubTypes?.map((subType, id) => (
-                      <option key={id} value={subType.name}>
-                        {subType?.name}
+                    {filteredsub_types?.map((sub_type, id) => (
+                      <option key={id} value={sub_type.name}>
+                        {sub_type?.name}
                       </option>
                     ))}
                   </select>
-                  {errors.subType && (
+                  {errors.sub_type && (
                     <span className="span-error">Este campo es requerido</span>
                   )}
                 </div>
@@ -210,7 +210,7 @@ export { FormProducts }
 
 FormProducts.propTypes = {
   type: PropTypes.array.isRequired,
-  subType: PropTypes.array.isRequired,
+  sub_type: PropTypes.array.isRequired,
   brand: PropTypes.array.isRequired,
   model: PropTypes.array.isRequired,
 }

@@ -7,12 +7,29 @@ import useRowsPurchases from "../../hooks/Purchases/useRowsPurchases"
 import useColumnsPurchases from "../../hooks/Purchases/useColumnsPurchases"
 import useRowsProdutcs from "../../hooks/Products/useRowsProdutcs"
 
-import { useContext } from "react"
+import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Purchases() {
-  const { suppliers, insertPurchase, loading, colors, sizes, genders } =
+  const { suppliers, insertPurchase, loading, sizes, colors, genders } =
     useContext(DataContext)
+
+  const [selectedProduct, setSelectedProduct] = useState(null)
+
+  const handleSizeChange = (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]
+    const selectedType = selectedOption.getAttribute("data-type")
+    setSelectedProduct(selectedType)
+  }
+
+  const filteredSizes = useMemo(() => {
+    if (selectedProduct === "Indumentaria") {
+      return sizes.filter((size) => size.category === "clothing")
+    } else if (selectedProduct === "Zapatillas") {
+      return sizes.filter((size) => size.category === "shoes")
+    }
+    return []
+  }, [selectedProduct, sizes])
 
   const {
     register,
@@ -75,6 +92,7 @@ function Purchases() {
                 Producto
               </label>
               <select
+                onInput={handleSizeChange}
                 id="product"
                 {...register("product", { required: "select one option" })}
               >
@@ -82,7 +100,11 @@ function Purchases() {
                   Seleccione un Producto
                 </option>
                 {products.map((product) => (
-                  <option key={product.id} value={product.id}>
+                  <option
+                    data-type={product.type}
+                    key={product.id}
+                    value={product.id}
+                  >
                     {product?.product_name}
                   </option>
                 ))}
@@ -102,7 +124,7 @@ function Purchases() {
                 <option value="" hidden>
                   Seleccionar Talle
                 </option>
-                {sizes.map((size) => (
+                {filteredSizes.map((size) => (
                   <option key={size.id} value={size.id}>
                     {size?.name}
                   </option>

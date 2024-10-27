@@ -17,17 +17,20 @@ export default function useRowsPurchases() {
           }
         ),
         supplier: item.suppliers.company,
+        type: item.products.type,
         product:
           item.products.type +
           " " +
-          item.products.subType +
+          item.products.sub_type +
+          " " +
+          item.products.brand +
           " " +
           item.products.model,
         size: item.sizes.name,
         color: item.colors.name,
         gender: item.genders.name,
         quantity: item.quantity,
-        cost: item.total_cost,
+        cost: item.uni_cost,
         total_cost: item.total_cost,
       })),
     [purchases] // add this dependency array

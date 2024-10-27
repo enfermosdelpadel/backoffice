@@ -10,7 +10,7 @@ export const DataContextProvider = ({ children }) => {
   const [products, setProducts] = useState([""])
   const [brands, setBrands] = useState([""])
   const [types, setTypes] = useState([""])
-  const [subTypes, setSubTypes] = useState([""])
+  const [sub_types, setsub_types] = useState([""])
   const [models, setModels] = useState([""])
   //Open and close Modal
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -27,6 +27,9 @@ export const DataContextProvider = ({ children }) => {
   const [genders, setGenders] = useState([""])
   const [sizes, setSizes] = useState([""])
 
+  //Stock
+  const [stock, setStock] = useState([""])
+
   //Customers
   const [customers, setCustomers] = useState([""])
 
@@ -40,7 +43,7 @@ export const DataContextProvider = ({ children }) => {
   const [selectedItem, setSelectedItem] = useState({
     id: "",
     type: "",
-    subType: "",
+    sub_type: "",
     model: "",
     brand: "",
     color: "",
@@ -84,7 +87,7 @@ export const DataContextProvider = ({ children }) => {
     try {
       const { data } = await supabase.from("products").insert({
         type: addProduct.type,
-        subType: addProduct.subType,
+        sub_type: addProduct.sub_type,
         model: addProduct.model,
         brand: addProduct.brand,
         color: addProduct.color,
@@ -125,7 +128,7 @@ export const DataContextProvider = ({ children }) => {
         .from("products")
         .update({
           type: selectedItem.type,
-          subType: selectedItem.subType,
+          sub_type: selectedItem.sub_type,
           model: selectedItem.model,
           brand: selectedItem.brand,
           color: selectedItem.color,
@@ -227,17 +230,17 @@ export const DataContextProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    const fetchsubType = async () => {
+    const fetchsub_type = async () => {
       const { data, error } = await supabase
         .from("sub_types")
         .select("*,types(*)")
       if (error) {
         throw error
       } else {
-        setSubTypes(data)
+        setsub_types(data)
       }
     }
-    fetchsubType()
+    fetchsub_type()
   }, [])
 
   useEffect(() => {
@@ -327,41 +330,41 @@ export const DataContextProvider = ({ children }) => {
     fetchPurchases()
   }, [])
 
-  // const fetchColors = async () => {
-  //   const { data, error } = await supabase.from("colors").select("*")
-  //   if (error) {
-  //     throw error
-  //   }
-  //   setColors(data)
-  // }
+  const fetchColors = async () => {
+    const { data, error } = await supabase.from("colors").select("*")
+    if (error) {
+      throw error
+    }
+    setColors(data)
+  }
 
-  // useEffect(() => {
-  //   fetchColors()
-  // })
+  useEffect(() => {
+    fetchColors()
+  }, [])
 
-  // const fetchSizes = async () => {
-  //   const { data, error } = await supabase.from("sizes").select("*")
-  //   if (error) {
-  //     throw error
-  //   }
-  //   setSizes(data)
-  // }
+  const fetchSizes = async () => {
+    const { data, error } = await supabase.from("sizes").select("*")
+    if (error) {
+      throw error
+    }
+    setSizes(data)
+  }
 
-  // useEffect(() => {
-  //   fetchSizes()
-  // })
+  useEffect(() => {
+    fetchSizes()
+  }, [])
 
-  // const fetchGenders = async () => {
-  //   const { data, error } = await supabase.from("genders").select("*")
-  //   if (error) {
-  //     throw error
-  //   }
-  //   setGenders(data)
-  // }
+  const fetchGenders = async () => {
+    const { data, error } = await supabase.from("genders").select("*")
+    if (error) {
+      throw error
+    }
+    setGenders(data)
+  }
 
-  // useEffect(() => {
-  //   fetchGenders()
-  // })
+  useEffect(() => {
+    fetchGenders()
+  }, [])
 
   // const fetchCustomers = async () => {
   //   const { data, error } = await supabase.from("customers").select("*")
@@ -373,7 +376,20 @@ export const DataContextProvider = ({ children }) => {
 
   // useEffect(() => {
   //   fetchCustomers()
-  // })
+  // }, [])
+
+  const fetchStock = async () => {
+    let { data, error } = await supabase.rpc("get_product_stock")
+
+    if (error) {
+      throw error
+    }
+    setStock(data)
+  }
+
+  useEffect(() => {
+    fetchStock()
+  }, [])
 
   return (
     <DataContext.Provider
@@ -399,21 +415,15 @@ export const DataContextProvider = ({ children }) => {
         uploadImage,
         updateImage,
         brands,
-        setBrands,
         types,
-        setTypes,
-        subTypes,
-        setSubTypes,
+        sub_types,
         models,
-        setModels,
         imageUrl,
         setImageUrl,
         insertSupplier,
         suppliers,
-        setSuppliers,
         insertPurchase,
         purchases,
-        setPurchases,
         loading,
         setLoading,
         colors,
@@ -421,6 +431,7 @@ export const DataContextProvider = ({ children }) => {
         genders,
         customers,
         sales,
+        stock,
       }}
     >
       {children}

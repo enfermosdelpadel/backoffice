@@ -85,7 +85,7 @@ function Menu() {
                         <span className="justify-right">
                           <InboxStackIcon className="size-5" />
                         </span>
-                        <span>Listado</span>
+                        <span>Stock</span>
                       </span>
                     </NavLink>
                   </li>
