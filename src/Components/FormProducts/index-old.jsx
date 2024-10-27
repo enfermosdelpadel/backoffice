@@ -221,7 +221,7 @@ const FormProducts = () => {
 
             <input
               type="file"
-              id="fileUrl"
+              id="image_url"
               name="image"
               onChange={context.updateImage}
               className=""
@@ -231,7 +231,7 @@ const FormProducts = () => {
             <figure className="w-40 h-40 rounded-lg">
               <img
                 className="w-full h-full rounded-lg object-cover"
-                src={context.selectedItem?.fileUrl}
+                src={context.selectedItem?.image_url}
                 alt=""
               />
             </figure>

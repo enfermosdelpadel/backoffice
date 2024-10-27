@@ -53,7 +53,7 @@ export const DataContextProvider = ({ children }) => {
     price: "",
     desc: "",
     stock: "",
-    fileUrl: "",
+    image_url: "",
   })
 
   const [addProduct, setAddProduct] = useState({})
@@ -76,9 +76,9 @@ export const DataContextProvider = ({ children }) => {
     } else if (data) {
       console.log("Image uploaded:", data)
       setImageUrl({
-        fileUrl: `${bucket}${data.path}`,
+        image_url: `${bucket}${data.path}`,
       })
-      console.log("Image uploaded:", imageUrl.fileUrl)
+      console.log("Image uploaded:", imageUrl.image_url)
     } else {
       console.error("Error uploading image:", data)
     }
@@ -97,7 +97,7 @@ export const DataContextProvider = ({ children }) => {
         price: addProduct.price,
         desc: addProduct.desc,
         stock: addProduct.stock,
-        fileUrl: addProduct.fileUrl,
+        image_url: addProduct.image_url,
       })
       console.log(data)
       alert("Producto Guardado con éxito")
@@ -118,7 +118,7 @@ export const DataContextProvider = ({ children }) => {
       })
     setSelectedItem({
       ...selectedItem,
-      fileUrl: `${bucket}${data.path}`,
+      image_url: `${bucket}${data.path}`,
     })
   }
   const editProduct = async (selectedItem) => {
@@ -138,7 +138,7 @@ export const DataContextProvider = ({ children }) => {
           price: selectedItem.price,
           desc: selectedItem.desc,
           stock: selectedItem.stock,
-          fileUrl: selectedItem.fileUrl,
+          image_url: selectedItem.image_url,
         })
         .eq("id", selectedItem.id)
       console.log(data)

@@ -39,7 +39,7 @@ const Products = () => {
         price: "",
         desc: "",
         stock: "",
-        fileUrl: "",
+        image_url: "",
       })
       context.setPreview(null)
     } catch (error) {
@@ -247,7 +247,7 @@ const Products = () => {
 
             <input
               type="file"
-              id="fileUrl"
+              id="image_url"
               onChange={context.uploadImage}
               name="image"
               className="input-primary "
