@@ -117,10 +117,7 @@ function Purchases() {
               <label className="label-form" htmlFor="size">
                 Talle
               </label>
-              <select
-                id="size"
-                {...register("size", { required: "select one option" })}
-              >
+              <select id="size" {...register("size")}>
                 <option value="" hidden>
                   Seleccionar Talle
                 </option>
@@ -130,18 +127,12 @@ function Purchases() {
                   </option>
                 ))}
               </select>
-              {errors.size && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="color">
                 Color
               </label>
-              <select
-                id="color"
-                {...register("color", { required: "select one option" })}
-              >
+              <select id="color" {...register("color")}>
                 <option value="" hidden>
                   Seleccionar color
                 </option>
@@ -151,18 +142,12 @@ function Purchases() {
                   </option>
                 ))}
               </select>
-              {errors.color && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="gender">
                 Genero
               </label>
-              <select
-                id="gender"
-                {...register("gender", { required: "select one option" })}
-              >
+              <select id="gender" {...register("gender")}>
                 <option value="" hidden>
                   Seleccionar genero
                 </option>
@@ -172,9 +157,6 @@ function Purchases() {
                   </option>
                 ))}
               </select>
-              {errors.gender && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
           </div>
           <div className="border border-gray-300 px-4 py-2 rounded pb-4 grid grid-cols-2 gap-4 mb-4">
