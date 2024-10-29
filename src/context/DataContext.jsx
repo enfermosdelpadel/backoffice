@@ -299,9 +299,12 @@ export const DataContextProvider = ({ children }) => {
     const { error } = await supabase.from("purchases").insert({
       supplier_id: addPurchase.supplier,
       product_id: addPurchase.product,
-      color_id: addPurchase.color,
-      size_id: addPurchase.size,
-      gender_id: addPurchase.gender,
+      color_id: (addPurchase.color =
+        addPurchase.color === "" ? null : addPurchase.color),
+      size_id: (addPurchase.size =
+        addPurchase.size === "" ? null : addPurchase.size),
+      gender_id: (addPurchase.gender =
+        addPurchase.gender === "" ? null : addPurchase.gender),
       quantity: addPurchase.quantity,
       uni_cost: addPurchase.uni_cost,
       total_cost: addPurchase.uni_cost * addPurchase.quantity,
@@ -311,6 +314,7 @@ export const DataContextProvider = ({ children }) => {
 
     if (error) {
       console.log(error)
+      alert("Error al guardar la compra")
       throw error
     }
     alert("Compra guardada con éxito")

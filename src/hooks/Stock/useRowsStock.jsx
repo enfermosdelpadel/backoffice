@@ -8,8 +8,8 @@ export default function useRowsStock() {
     () =>
       stock.map((item) => ({
         id: item.product_id,
-        product:
-          item.type + " " + item.sub_type + " " + item.brand + " " + item.model,
+        type: item.type,
+        product: item.sub_type + " " + item.brand + " " + item.model,
         size: item.size,
         color: item.color,
         gender: item.gender,

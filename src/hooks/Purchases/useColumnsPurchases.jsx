@@ -11,9 +11,14 @@ export default function useColumnsPurchases() {
         Header: "Proveedor",
         accessor: "supplier",
       },
+
       {
         Header: "Producto",
         accessor: "product",
+      },
+      {
+        Header: "Tipo",
+        accessor: "type",
       },
       {
         Header: "Talla",
