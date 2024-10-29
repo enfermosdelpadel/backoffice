@@ -52,9 +52,7 @@ const FormProducts = (props) => {
       <div className="w-full mt-4 bg-white ">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <PlusIcon className="h-6 w-6 mr-2 text-blue-900" />
-          <h3 className="text-lg font-medium text-blue-900">
-            Añadir un producto
-          </h3>
+          <h3 className="h3">Añadir un producto</h3>
         </div>
         <form onSubmit={onSubmit} className="flex flex-col w-full h-full p-4">
           <div className="mb-4 border border-gray-300 rounded-md p-4">

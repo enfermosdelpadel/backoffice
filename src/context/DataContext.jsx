@@ -217,29 +217,31 @@ export const DataContextProvider = ({ children }) => {
     fetchBrands()
   }, [])
 
-  useEffect(() => {
-    const fetchType = async () => {
-      const { data, error } = await supabase.from("types").select("*")
-      if (error) {
-        throw error
-      } else {
-        setTypes(data)
-      }
+  const fetchType = async () => {
+    const { data, error } = await supabase.from("types").select("*")
+    if (error) {
+      throw error
+    } else {
+      setTypes(data)
     }
+  }
+
+  useEffect(() => {
     fetchType()
   }, [])
 
-  useEffect(() => {
-    const fetchsub_type = async () => {
-      const { data, error } = await supabase
-        .from("sub_types")
-        .select("*,types(*)")
-      if (error) {
-        throw error
-      } else {
-        setsub_types(data)
-      }
+  const fetchsub_type = async () => {
+    const { data, error } = await supabase
+      .from("sub_types")
+      .select("*,types(*)")
+    if (error) {
+      throw error
+    } else {
+      setsub_types(data)
     }
+  }
+
+  useEffect(() => {
     fetchsub_type()
   }, [])
 
@@ -318,6 +320,22 @@ export const DataContextProvider = ({ children }) => {
       throw error
     }
     alert("Compra guardada con éxito")
+  }
+
+  const updatePercentage = async (data) => {
+    const { error } = await supabase
+      .from("types")
+      .update({
+        adjustment_percentage: data.percentage,
+      })
+      .eq("id", data.item)
+    fetchType()
+    if (error) {
+      console.log(error)
+      alert("Error al guardar el porcentaje")
+      throw error
+    }
+    alert("Porcentaje guardado con éxito")
   }
 
   const fetchPurchases = async () => {
@@ -427,6 +445,7 @@ export const DataContextProvider = ({ children }) => {
         insertSupplier,
         suppliers,
         insertPurchase,
+        updatePercentage,
         purchases,
         loading,
         setLoading,

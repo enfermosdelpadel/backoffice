@@ -12,6 +12,7 @@ import {
   TagIcon,
   DocumentPlusIcon,
   UserGroupIcon,
+  DocumentCurrencyDollarIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -86,6 +87,21 @@ function Menu() {
                           <InboxStackIcon className="size-5" />
                         </span>
                         <span>Stock</span>
+                      </span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/prices"
+                      className={({ isActive }) =>
+                        isActive ? "btn-menu-active" : "btn-menu"
+                      }
+                    >
+                      <span className="flex items-right space-x-2">
+                        <span className="justify-right">
+                          <DocumentCurrencyDollarIcon className="size-5" />
+                        </span>
+                        <span>Precios</span>
                       </span>
                     </NavLink>
                   </li>
