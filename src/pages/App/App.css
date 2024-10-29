@@ -82,4 +82,7 @@
   button {
     @apply border border-gray-300 px-2 py-1 rounded-sm active:border-gray-500 hover:bg-blue-400 hover:text-white;
   }
+  h3 {
+    @apply text-lg font-medium text-blue-900;
+  }
 }
