@@ -8,6 +8,10 @@ export default function useColumnsStock() {
         accessor: "product",
       },
       {
+        Header: "Tipo",
+        accessor: "type",
+      },
+      {
         Header: "Talla",
         accessor: "size",
       },

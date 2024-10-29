@@ -8,6 +8,10 @@ export default function useColumns() {
         accessor: "created_at",
       },
       {
+        Header: "Tipo",
+        accessor: "type",
+      },
+      {
         Header: "Nombre",
         accessor: "product_name",
       },
@@ -20,10 +24,6 @@ export default function useColumns() {
         accessor: "model",
       },
 
-      {
-        Header: "Tipo",
-        accessor: "type",
-      },
       {
         Header: "SubTipo",
         accessor: "sub_type",
