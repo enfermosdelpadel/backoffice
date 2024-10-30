@@ -3,8 +3,8 @@ import { useContext } from "react"
 import { sockTotal } from "../../util"
 
 function Statistics() {
-  const { user, products } = useContext(DataContext)
-  const stock = sockTotal(products)
+  const { user, stock } = useContext(DataContext)
+  const stock_total = sockTotal(stock)
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <h1 className="text-2xl font-bold sm:text-3xl text-center">
@@ -30,7 +30,7 @@ function Statistics() {
           </dt>
 
           <dd className="text-4xl font-extrabold text-blue-600 md:text-5xl">
-            {isNaN(stock) ? "..." : stock}
+            {isNaN(stock_total) ? "..." : stock_total}
           </dd>
         </div>
 
