@@ -27,6 +27,11 @@ export default function useColumnsStock() {
         Header: "Cantidad",
         accessor: "stock",
       },
+
+      {
+        Header: "Precio",
+        accessor: "price",
+      },
     ],
     []
   )

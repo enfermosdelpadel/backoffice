@@ -14,6 +14,12 @@ export default function useRowsStock() {
         color: item.color,
         gender: item.gender,
         stock: item.stock,
+        price:
+          item.price !== undefined && typeof item.price === "number"
+            ? item.price.toLocaleString("es-ES", {
+                useGrouping: true,
+              })
+            : "",
       })),
     [stock] // add this dependency array
   )
