@@ -23,6 +23,10 @@ export default function useColumns() {
         Header: "Modelo",
         accessor: "model",
       },
+      {
+        Header: "Genero",
+        accessor: "gender",
+      },
 
       {
         Header: "SubTipo",

@@ -19,8 +19,9 @@ export default function useRowsProdutcs() {
         type: product.type,
         sub_type: product.sub_type,
         model: product.model,
+        gender: product.gender,
       })),
-    [products] // add this dependency array
+    [products]
   )
 
   return rows

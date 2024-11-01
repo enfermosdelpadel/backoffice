@@ -84,6 +84,7 @@ function Prices() {
               <tr>
                 <th>Tipo</th>
                 <th>Porcentaje</th>
+                <th>Fecha de cambio</th>
               </tr>
             </thead>
             <tbody>
@@ -91,6 +92,16 @@ function Prices() {
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>{item.adjustment_percentage}%</td>
+                  <td>
+                    {new Date(item.adjustement_date).toLocaleDateString(
+                      "es-ES",
+                      {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                      }
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

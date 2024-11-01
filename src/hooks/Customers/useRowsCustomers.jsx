@@ -13,7 +13,7 @@ export default function useRowsCustomers() {
         address: customer.address,
         phone: customer.phone,
       })),
-    [customers] // add this dependency array
+    [customers]
   )
 
   return rows

@@ -12,7 +12,7 @@ const FormProducts = (props) => {
   }, [])
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
 
-  const { brand, type, sub_type, model } = props
+  const { brand, type, sub_type, model, gender } = props
   const { insertProduct, uploadImage, imageUrl } = useContext(DataContext)
   const [selectedType, setSelectedType] = useState(null)
 
@@ -148,6 +148,28 @@ const FormProducts = (props) => {
                     <span className="span-error">Este campo es requerido</span>
                   )}
                 </div>
+                <div>
+                  <label htmlFor="gender" className="label-form">
+                    Género
+                  </label>
+                  <select
+                    id="gender"
+                    className="w-full"
+                    {...register("gender", { required: "select one option" })}
+                  >
+                    <option value="" hidden>
+                      Seleccione un Genero
+                    </option>
+                    {gender?.map((gender, id) => (
+                      <option key={id} value={gender.name}>
+                        {gender?.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.gender && (
+                    <span className="span-error">Este campo es requerido</span>
+                  )}
+                </div>
               </div>
               <div>
                 <div className="col-span-6 ">
@@ -211,4 +233,5 @@ FormProducts.propTypes = {
   sub_type: PropTypes.array.isRequired,
   brand: PropTypes.array.isRequired,
   model: PropTypes.array.isRequired,
+  gender: PropTypes.array.isRequired,
 }

@@ -21,8 +21,17 @@ export default function useColumnsPurchases() {
         accessor: "type",
       },
       {
-        Header: "Talla",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Talla
+          </div>
+        ),
         accessor: "size",
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
       },
       {
         Header: "Color",
@@ -33,16 +42,43 @@ export default function useColumnsPurchases() {
         accessor: "gender",
       },
       {
-        Header: "Cantidad",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Cantidad
+          </div>
+        ),
         accessor: "quantity",
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
       },
       {
-        Header: "Costo Unitario",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "right",
+            }}
+          >
+            Costo Unitario
+          </div>
+        ),
         accessor: "cost",
+        Cell: (row) => <div style={{ textAlign: "right" }}>{row.value}</div>,
       },
       {
-        Header: "Costo Total",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "right",
+            }}
+          >
+            Costo Total
+          </div>
+        ),
         accessor: "total_cost",
+        Cell: (row) => <div style={{ textAlign: "right" }}>{row.value}</div>,
       },
     ],
     []

@@ -327,6 +327,7 @@ export const DataContextProvider = ({ children }) => {
       .from("types")
       .update({
         adjustment_percentage: data.percentage,
+        adjustement_date: new Date().toISOString(),
       })
       .eq("id", data.item)
     fetchType()
@@ -341,7 +342,7 @@ export const DataContextProvider = ({ children }) => {
   const fetchPurchases = async () => {
     const { data, error } = await supabase
       .from("purchases")
-      .select("*,suppliers(*),products(*),colors(*),sizes(*),genders(*)")
+      .select("*,suppliers(*),products(*),colors(*),sizes(*)")
     if (error) {
       throw error
     }
@@ -402,7 +403,7 @@ export const DataContextProvider = ({ children }) => {
 
   const fetchStock = async () => {
     let { data, error } = await supabase.rpc("get_product_stock")
-
+    console.log(data)
     if (error) {
       throw error
     }
@@ -412,6 +413,41 @@ export const DataContextProvider = ({ children }) => {
   useEffect(() => {
     fetchStock()
   }, [])
+
+  // const stock_group = stock.reduce((acc, item) => {
+  //   if (!acc[item.product_id]) {
+  //     acc[item.product_id] = {
+  //       size: [],
+  //       color: [],
+  //     }
+  //   }
+  //   acc[item.product_id].product_id = item.product_id
+  //   acc[item.product_id].stock = item.stock
+  //   acc[item.product_id].price = item.price
+  //   acc[item.product_id].sub_type = item.sub_type
+  //   acc[item.product_id].type = item.type
+  //   acc[item.product_id].model = item.model
+  //   acc[item.product_id].brand = item.brand
+  //   acc[item.product_id].gender = item.gender
+
+  //   const colorIndex = acc[item.product_id].color.findIndex(
+  //     (color) => color === item.color
+  //   )
+  //   if (colorIndex === -1) {
+  //     acc[item.product_id].color.push(item.color)
+  //   }
+
+  //   const sizeIndex = acc[item.product_id].size.findIndex(
+  //     (size) => size === item.size
+  //   )
+  //   if (sizeIndex === -1) {
+  //     acc[item.product_id].size.push(item.size)
+  //   }
+
+  //   return acc
+  // }, {})
+
+  // console.log(stock_group)
 
   return (
     <DataContext.Provider

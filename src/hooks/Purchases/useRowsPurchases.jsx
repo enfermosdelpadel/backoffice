@@ -27,22 +27,29 @@ export default function useRowsPurchases() {
           : "",
         size: item.sizes && item.sizes.name ? item.sizes.name : "",
         color: item.colors && item.colors.name ? item.colors.name : "",
-        gender: item.genders && item.genders.name ? item.genders.name : "",
+        gender:
+          item.products && item.products.gender ? item.products.gender : "",
         quantity: item.quantity,
         cost:
           item.uni_cost !== undefined && typeof item.uni_cost === "number"
-            ? item.uni_cost.toLocaleString("es-ES", {
+            ? item.uni_cost.toLocaleString("es-AR", {
+                maximumFractionDigits: 2,
+                style: "currency",
+                currency: "ARS",
                 useGrouping: true,
               })
             : "",
         total_cost:
           item.total_cost !== undefined && typeof item.total_cost === "number"
-            ? item.total_cost.toLocaleString("es-ES", {
+            ? item.total_cost.toLocaleString("es-AR", {
+                maximumFractionDigits: 2,
+                style: "currency",
+                currency: "ARS",
                 useGrouping: true,
               })
             : "",
       })),
-    [purchases] // add this dependency array
+    [purchases]
   )
 
   return rows

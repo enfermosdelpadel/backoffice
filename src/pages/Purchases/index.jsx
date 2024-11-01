@@ -11,7 +11,7 @@ import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Purchases() {
-  const { suppliers, insertPurchase, loading, sizes, colors, genders } =
+  const { suppliers, insertPurchase, loading, sizes, colors } =
     useContext(DataContext)
 
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -38,9 +38,17 @@ function Purchases() {
     reset,
   } = useForm()
 
-  const products = useRowsProdutcs().sort((a, b) =>
-    a.product_name.localeCompare(b.product_name)
-  )
+  const products = useRowsProdutcs()
+    .map((p) => {
+      if (p.type === "Indumentaria") {
+        return {
+          ...p,
+          product_name: `${p.product_name} ${p.gender}`,
+        }
+      }
+      return p
+    })
+    .sort((a, b) => a.product_name.localeCompare(b.product_name))
 
   const onSubmit = (data) => {
     const total_cost = data.quantity * data.uni_cost
@@ -139,21 +147,6 @@ function Purchases() {
                 {colors.map((color) => (
                   <option key={color.id} value={color.id}>
                     {color?.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex flex-col">
-              <label className="label-form" htmlFor="gender">
-                Genero
-              </label>
-              <select id="gender" {...register("gender")}>
-                <option value="" hidden>
-                  Seleccionar genero
-                </option>
-                {genders.map((gender) => (
-                  <option key={gender.id} value={gender.id}>
-                    {gender?.name}
                   </option>
                 ))}
               </select>

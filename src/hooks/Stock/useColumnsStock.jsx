@@ -12,8 +12,17 @@ export default function useColumnsStock() {
         accessor: "type",
       },
       {
-        Header: "Talla",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Talla
+          </div>
+        ),
         accessor: "size",
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
       },
       {
         Header: "Color",
@@ -24,13 +33,31 @@ export default function useColumnsStock() {
         accessor: "gender",
       },
       {
-        Header: "Cantidad",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Cantidad
+          </div>
+        ),
         accessor: "stock",
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
       },
 
       {
-        Header: "Precio",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "right",
+            }}
+          >
+            Precio
+          </div>
+        ),
         accessor: "price",
+        Cell: (row) => <div style={{ textAlign: "right" }}>{row.value}</div>,
       },
     ],
     []
