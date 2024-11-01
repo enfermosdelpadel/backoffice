@@ -14,7 +14,7 @@ export default function useRowsSuppliers() {
         phone: item.phone,
         address: item.address,
       })),
-    [suppliers] // add this dependency array
+    [suppliers]
   )
 
   return rows

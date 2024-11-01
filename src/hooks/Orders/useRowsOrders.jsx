@@ -13,7 +13,7 @@ export default function useRowsOrders() {
         address: sale.address,
         phone: sale.phone,
       })),
-    [sales] // add this dependency array
+    [sales]
   )
 
   return rows

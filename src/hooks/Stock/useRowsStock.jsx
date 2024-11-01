@@ -16,12 +16,15 @@ export default function useRowsStock() {
         stock: item.stock,
         price:
           item.price !== undefined && typeof item.price === "number"
-            ? item.price.toLocaleString("es-ES", {
+            ? item.price.toLocaleString("es-AR", {
+                maximumFractionDigits: 2,
+                style: "currency",
+                currency: "ARS",
                 useGrouping: true,
               })
             : "",
       })),
-    [stock] // add this dependency array
+    [stock]
   )
 
   return rows
