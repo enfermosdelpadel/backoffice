@@ -33,8 +33,10 @@ export const DataContextProvider = ({ children }) => {
   //Customers
   const [customers, setCustomers] = useState([""])
 
-  //Sales
-  const [sales, setSales] = useState([""])
+  //Orders
+  const [orders, setOrders] = useState([""])
+  const [orderDetails, setOrderDetails] = useState([""])
+  const [orderId, setOrderId] = useState(null)
 
   const [loading, setLoading] = useState(false)
 
@@ -414,40 +416,48 @@ export const DataContextProvider = ({ children }) => {
     fetchStock()
   }, [])
 
-  // const stock_group = stock.reduce((acc, item) => {
-  //   if (!acc[item.product_id]) {
-  //     acc[item.product_id] = {
-  //       size: [],
-  //       color: [],
-  //     }
-  //   }
-  //   acc[item.product_id].product_id = item.product_id
-  //   acc[item.product_id].stock = item.stock
-  //   acc[item.product_id].price = item.price
-  //   acc[item.product_id].sub_type = item.sub_type
-  //   acc[item.product_id].type = item.type
-  //   acc[item.product_id].model = item.model
-  //   acc[item.product_id].brand = item.brand
-  //   acc[item.product_id].gender = item.gender
+  //  Sales
 
-  //   const colorIndex = acc[item.product_id].color.findIndex(
-  //     (color) => color === item.color
-  //   )
-  //   if (colorIndex === -1) {
-  //     acc[item.product_id].color.push(item.color)
-  //   }
+  const fetchSales = async () => {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*,customers(*)")
+    if (error) {
+      throw error
+    }
+    setOrders(data)
+  }
 
-  //   const sizeIndex = acc[item.product_id].size.findIndex(
-  //     (size) => size === item.size
-  //   )
-  //   if (sizeIndex === -1) {
-  //     acc[item.product_id].size.push(item.size)
-  //   }
+  useEffect(() => {
+    fetchSales()
+  }, [])
 
-  //   return acc
-  // }, {})
+  const fetchOrderDetails = async () => {
+    const { data, error } = await supabase
+      .from("order_details")
+      .select("*, products(*)")
+    if (error) {
+      throw error
+    }
+    console.log(data)
+    setOrderDetails(data)
+  }
 
-  // console.log(stock_group)
+  useEffect(() => {
+    fetchOrderDetails()
+  }, [])
+
+  const fetchCustomers = async () => {
+    const { data, error } = await supabase.from("customers").select("*")
+    if (error) {
+      throw error
+    }
+    setCustomers(data)
+  }
+
+  useEffect(() => {
+    fetchCustomers()
+  }, [])
 
   return (
     <DataContext.Provider
@@ -489,8 +499,11 @@ export const DataContextProvider = ({ children }) => {
         sizes,
         genders,
         customers,
-        sales,
+        orders,
+        orderDetails,
         stock,
+        orderId,
+        setOrderId,
       }}
     >
       {children}
