@@ -30,8 +30,7 @@ export default function useColumnsOrders() {
         Cell: (row) => {
           const labelColors = {
             Pendiente: "bg-yellow-500",
-            Enviado: "bg-green-500",
-            en_camino: "bg-blue-500",
+            Enviado: "bg-blue-500",
             Entregado: "bg-green-500",
             Cancelado: "bg-red-500",
           }
