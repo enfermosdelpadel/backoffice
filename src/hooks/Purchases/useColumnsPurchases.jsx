@@ -6,6 +6,7 @@ export default function useColumnsPurchases() {
       {
         Header: "Fecha de Compra",
         accessor: "purchase_date",
+        width: 200,
       },
       {
         Header: "Proveedor",
@@ -15,6 +16,7 @@ export default function useColumnsPurchases() {
       {
         Header: "Producto",
         accessor: "product",
+        width: 500,
       },
       {
         Header: "Tipo",

@@ -14,6 +14,8 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ClipboardDocumentListIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
 } from "@heroicons/react/24/outline"
 
 function Table(props) {
@@ -67,7 +69,7 @@ function Table(props) {
           <table {...getTableProps()}>
             <thead>
               <tr>
-                <th colSpan={4}>
+                <th colSpan={10}>
                   <TableFilter
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={globalFilter}
@@ -96,11 +98,24 @@ function Table(props) {
                                 : "asc"
                               : ""
                           }
+                          style={{
+                            cursor: "pointer",
+                            width: column.width,
+                            minWidth: column.minWidth,
+                          }}
                         >
-                          {
-                            // Pintamos el título de nuestra columna (propiedad "Header")
-                            column.render("Header")
-                          }
+                          <span className="flex items-center">
+                            {column.render("Header")}
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <ArrowUpIcon className="h-4 w-4 ml-1" />
+                              ) : (
+                                <ArrowDownIcon className="h-4 w-4 ml-1" />
+                              )
+                            ) : (
+                              ""
+                            )}
+                          </span>
                         </th>
                       ))
                     }

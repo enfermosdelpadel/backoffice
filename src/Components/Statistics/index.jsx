@@ -32,10 +32,12 @@ function Statistics() {
 
             datasets: [
               {
-                label: "Gasto Diario",
+                label: "Ventas Diarias",
                 data: salesByDate?.map((data) => data.totalAmount),
                 backgroundColor: "#FF3030",
                 borderColor: "#FF3030",
+                pointBackgroundColor: "#FF3030",
+                pointBorderColor: "#FF3030",
               },
             ],
           }}

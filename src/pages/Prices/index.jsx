@@ -18,7 +18,6 @@ function Prices() {
 
   const onSubmit = (data) => {
     updatePercentage(data)
-    console.log(data)
     reset()
   }
   return (

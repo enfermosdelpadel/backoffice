@@ -20,7 +20,6 @@ function Supliers() {
 
   const onSubmit = async (data) => {
     insertSupplier(data)
-    console.log(data)
     reset()
   }
 
@@ -40,7 +39,7 @@ function Supliers() {
           <div className="border border-gray-300 px-4 py-2 rounded pb-4 grid grid-cols-2 gap-4 mb-2">
             <div className="mb-4">
               <label className="label-form" htmlFor="company">
-                Compañia
+                Compañia (*)
               </label>
               <input
                 autoComplete="off"
@@ -55,7 +54,7 @@ function Supliers() {
             </div>
             <div className="mb-4">
               <label className="label-form" htmlFor="name">
-                Nombre
+                Nombre (*)
               </label>
               <input
                 autoComplete="off"
@@ -70,7 +69,7 @@ function Supliers() {
             </div>
             <div className="mb-4">
               <label className="label-form" htmlFor="email">
-                Correo Electrónico
+                Correo Electrónico (*)
               </label>
               <input
                 autoComplete="off"
@@ -85,7 +84,7 @@ function Supliers() {
             </div>
             <div className="mb-4">
               <label className="label-form" htmlFor="phone">
-                Teléfono
+                Teléfono (*)
               </label>
               <input
                 autoComplete="off"
@@ -102,7 +101,7 @@ function Supliers() {
             </div>
             <div className="mb-4">
               <label className="label-form" htmlFor="address">
-                Dirección
+                Dirección (*)
               </label>
               <input
                 autoComplete="off"
@@ -118,6 +117,7 @@ function Supliers() {
           </div>
           <div className="flex justify-start ">
             <button className="btn-primary ">Añadir proveedor</button>
+            <span className="p-2 pl-4">(*) Campos obligatorios</span>
           </div>
         </form>
       </div>
