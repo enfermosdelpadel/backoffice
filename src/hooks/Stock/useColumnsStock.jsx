@@ -6,6 +6,7 @@ export default function useColumnsStock() {
       {
         Header: "Producto",
         accessor: "product",
+        width: 300,
       },
       {
         Header: "Tipo",

@@ -5,6 +5,9 @@ import { supabase } from "../supabase/client"
 export const DataContext = createContext()
 
 export const DataContextProvider = ({ children }) => {
+  //Modal
+  const [modalStatus, setModalStatus] = useState(false)
+
   const [profile, setProfile] = useState([""])
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
@@ -37,6 +40,7 @@ export const DataContextProvider = ({ children }) => {
   const [orders, setOrders] = useState([""])
   const [orderDetails, setOrderDetails] = useState([""])
   const [orderId, setOrderId] = useState(null)
+  const [changeStatus, setChangeStatus] = useState("")
 
   const [loading, setLoading] = useState(false)
 
@@ -504,6 +508,9 @@ export const DataContextProvider = ({ children }) => {
         stock,
         orderId,
         setOrderId,
+        modalStatus,
+        setModalStatus,
+        setChangeStatus,
       }}
     >
       {children}

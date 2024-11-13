@@ -13,12 +13,15 @@ const FormOrderDetail = (props) => {
         <h3 className="h3">Detalle del pedido</h3>
       </div>
       <div className="flex flex-col w-full h-full p-4 pb-4">
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-4">
           <div className="text-center font-bold bg-blue-400 border px-2 py-1">
             Producto
           </div>
           <div className="text-center font-bold bg-blue-400 border px-2 py-1">
             Cantidad
+          </div>
+          <div className="text-center font-bold bg-blue-400 border px-2 py-1">
+            Talle
           </div>
           <div className="text-center font-bold bg-blue-400 border px-2 py-1">
             Precio Unitario
@@ -28,7 +31,7 @@ const FormOrderDetail = (props) => {
           ?.filter((detail) => detail.order_id === orderId)
           .map((detail) => (
             <div key={detail.id}>
-              <div className="grid grid-cols-3">
+              <div className="grid grid-cols-4">
                 <div className="text-center border px-2 py-1">
                   {detail.products.sub_type +
                     " " +
@@ -38,6 +41,9 @@ const FormOrderDetail = (props) => {
                 </div>
                 <div className="text-center border px-2 py-1">
                   {detail.quantity}
+                </div>
+                <div className="text-center border px-2 py-1">
+                  {detail.size}
                 </div>
                 <div className="text-center border px-2 py-1">
                   {detail.unit_price.toLocaleString("es-AR", {

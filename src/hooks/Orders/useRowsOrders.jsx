@@ -1,15 +1,23 @@
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
 export default function useRowsOrders() {
-  const { orders, setOrderId } = useContext(DataContext)
+  const { orders, setOrderId, setModalStatus } = useContext(DataContext)
+  const [selectedOrderId, setSelectedOrderId] = useState(null)
+  console.log(selectedOrderId)
 
   const rows = useMemo(
     () =>
       orders.map((sale) => ({
         id: sale.id,
         order_number: (
-          <button onClick={() => setOrderId(sale.id)}>
+          <button
+            onClick={() => {
+              setOrderId(sale.id)
+              setSelectedOrderId(sale.id)
+            }}
+            className={selectedOrderId === sale.id ? "order-selected" : ""}
+          >
             {sale.order_number}
           </button>
         ),
@@ -29,9 +37,33 @@ export default function useRowsOrders() {
                 useGrouping: true,
               })
             : "",
-        status: sale.status,
+        status: (
+          <span
+            onClick={() => {
+              setModalStatus(sale.status)
+            }}
+            className={
+              {
+                Pendiente: "bg-yellow-500",
+                Enviado: "bg-blue-500",
+                Entregado: "bg-green-500",
+                Cancelado: "bg-red-500",
+              }[sale.status] || "bg-gray-500"
+            }
+            style={{
+              padding: "0.35rem",
+              borderRadius: "0.25rem",
+              cursor: "pointer",
+              width: "100px",
+              display: "inline-block",
+              textAlign: "center",
+            }}
+          >
+            {sale.status}
+          </span>
+        ),
       })),
-    [orders, setOrderId]
+    [orders, setOrderId, selectedOrderId, setModalStatus]
   )
 
   return rows

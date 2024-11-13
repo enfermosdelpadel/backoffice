@@ -75,7 +75,7 @@ function Purchases() {
           <div className="border border-gray-300 px-4 py-2 rounded pb-4 grid grid-cols-2 gap-4 mb-2">
             <div className="flex flex-col">
               <label className="label-form" htmlFor="supplier">
-                Proveedor
+                Proveedor (*)
               </label>
               <select
                 id="supplier"
@@ -97,7 +97,7 @@ function Purchases() {
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="product">
-                Producto
+                Producto (*)
               </label>
               <select
                 onInput={handleSizeChange}
@@ -155,7 +155,7 @@ function Purchases() {
           <div className="border border-gray-300 px-4 py-2 rounded pb-4 grid grid-cols-2 gap-4 mb-4">
             <div className="flex flex-col">
               <label className="label-form" htmlFor="quantity">
-                Cantidad
+                Cantidad (*)
               </label>
               <input
                 autoComplete="off"
@@ -170,7 +170,7 @@ function Purchases() {
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="uni_cost">
-                Precio Unitario
+                Precio Unitario (*)
               </label>
               <input
                 autoComplete="off"
@@ -188,6 +188,7 @@ function Purchases() {
             <button className="btn-primary ">
               {loading ? "Loading..." : "Añadir Compra"}
             </button>
+            <span className="p-2 pl-4"> (*) Campos obligatorios </span>
           </div>
         </form>
       </div>

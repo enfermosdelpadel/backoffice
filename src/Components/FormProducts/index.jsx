@@ -13,7 +13,8 @@ const FormProducts = (props) => {
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
 
   const { brand, type, sub_type, model, gender } = props
-  const { insertProduct, uploadImage, imageUrl } = useContext(DataContext)
+  const { insertProduct, uploadImage, imageUrl, loading } =
+    useContext(DataContext)
   const [selectedType, setSelectedType] = useState(null)
 
   const handleTypeChange = (e) => {
@@ -60,7 +61,7 @@ const FormProducts = (props) => {
               <div className="grid grid-cols-1 gap-0 ">
                 <div>
                   <label htmlFor="type" className="label-form">
-                    Tipo
+                    Tipo (*)
                   </label>
                   <select
                     id="type"
@@ -83,7 +84,7 @@ const FormProducts = (props) => {
                 </div>
                 <div>
                   <label htmlFor="sub_type" className="label-form">
-                    Subtipo
+                    Subtipo (*)
                   </label>
                   <select
                     id="sub_type"
@@ -106,7 +107,7 @@ const FormProducts = (props) => {
 
                 <div>
                   <label htmlFor="brand" className="label-form">
-                    Marca
+                    Marca (*)
                   </label>
                   <select
                     id="brand"
@@ -128,7 +129,7 @@ const FormProducts = (props) => {
                 </div>
                 <div>
                   <label htmlFor="model" className="label-form">
-                    Modelo
+                    Modelo (*)
                   </label>
                   <select
                     id="model"
@@ -150,7 +151,7 @@ const FormProducts = (props) => {
                 </div>
                 <div>
                   <label htmlFor="gender" className="label-form">
-                    Género
+                    Género (*)
                   </label>
                   <select
                     id="gender"
@@ -174,7 +175,7 @@ const FormProducts = (props) => {
               <div>
                 <div className="col-span-6 ">
                   <label className="label-form" htmlFor="desc">
-                    Descripción
+                    Descripción (*)
                   </label>
                   <textarea
                     id="desc"
@@ -215,8 +216,11 @@ const FormProducts = (props) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-start ">
-            <button className="btn-primary ">Añadir Producto</button>
+          <div className="flex flex-coljustify-start ">
+            <button className="btn-primary ">
+              {loading ? "Loading..." : "Añadir Producto"}
+            </button>
+            <span className="pt-2 pl-5">(*) Campos obligatorios</span>
           </div>
           {/* <pre>
         <code>{JSON.stringify(watch(), null, 2)}</code>
