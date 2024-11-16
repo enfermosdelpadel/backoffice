@@ -33,14 +33,10 @@ export const DataContextProvider = ({ children }) => {
   //Stock
   const [stock, setStock] = useState([""])
 
-  //Customers
-  const [customers, setCustomers] = useState([""])
-
   //Orders
   const [orders, setOrders] = useState([""])
   const [orderDetails, setOrderDetails] = useState([""])
   const [orderId, setOrderId] = useState(null)
-  const [changeStatus, setChangeStatus] = useState("")
 
   const [loading, setLoading] = useState(false)
 
@@ -66,51 +62,37 @@ export const DataContextProvider = ({ children }) => {
 
   // URL for add and update images
   const bucket = import.meta.env.VITE_BUKCKET_NAME
-
   const uploadImage = async (e) => {
+    setLoading(true)
     const file = e.target.files[0]
-    if (!file) return
     const fileName = `${Date.now()}-${file.name}`
     const { data, error: uploadError } = await supabase.storage
       .from("images")
       .upload(`public/${fileName}`, file, {
         upsert: false,
       })
-    if (uploadError) {
-      console.error("Error uploading image:", uploadError)
-      alert("Error al subir imagen")
-    } else if (data) {
-      console.log("Image uploaded:", data)
-      setImageUrl({
-        image_url: `${bucket}${data.path}`,
-      })
-      console.log("Image uploaded:", imageUrl.image_url)
+    setLoading(false)
+    if (!uploadError) {
+      setImageUrl(`${bucket}${data.path}`)
+      console.log("image url", imageUrl)
     } else {
-      console.error("Error uploading image:", data)
+      alert(uploadError.message)
     }
   }
   const insertProduct = async (addProduct) => {
-    try {
-      const { data } = await supabase.from("products").insert({
-        type: addProduct.type,
-        sub_type: addProduct.sub_type,
-        model: addProduct.model,
-        brand: addProduct.brand,
-        color: addProduct.color,
-        gender: addProduct.gender,
-        size: addProduct.size,
-        cost: addProduct.cost,
-        price: addProduct.price,
-        desc: addProduct.desc,
-        stock: addProduct.stock,
-        image_url: addProduct.image_url,
-      })
-      console.log(data)
-      alert("Producto Guardado con éxito")
-      // setProducts([...products, addProduct]) ver porque no funciona
-    } catch (error) {
+    const { error } = await supabase.from("products").insert({
+      type: addProduct.type,
+      sub_type: addProduct.sub_type,
+      model: addProduct.model,
+      brand: addProduct.brand,
+      color: addProduct.color,
+      gender: addProduct.gender,
+      description: addProduct.description,
+      image_url: addProduct.image_url,
+    })
+    if (error) {
       alert(error.error_description || error.message)
-    }
+    } else alert("Producto Guardado con éxito")
   }
 
   const updateImage = async (e) => {
@@ -139,11 +121,7 @@ export const DataContextProvider = ({ children }) => {
           brand: selectedItem.brand,
           color: selectedItem.color,
           gender: selectedItem.gender,
-          size: selectedItem.size,
-          cost: selectedItem.cost,
-          price: selectedItem.price,
           desc: selectedItem.desc,
-          stock: selectedItem.stock,
           image_url: selectedItem.image_url,
         })
         .eq("id", selectedItem.id)
@@ -348,10 +326,11 @@ export const DataContextProvider = ({ children }) => {
   const fetchPurchases = async () => {
     const { data, error } = await supabase
       .from("purchases")
-      .select("*,suppliers(*),products(*),colors(*),sizes(*)")
+      .select("*,suppliers(*),products(*),sizes(*)")
     if (error) {
       throw error
     }
+    console.log(data)
     setPurchases(data)
   }
 
@@ -394,22 +373,9 @@ export const DataContextProvider = ({ children }) => {
   useEffect(() => {
     fetchGenders()
   }, [])
-
-  // const fetchCustomers = async () => {
-  //   const { data, error } = await supabase.from("customers").select("*")
-  //   if (error) {
-  //     throw error
-  //   }
-  //   setCustomers(data)
-  // }
-
-  // useEffect(() => {
-  //   fetchCustomers()
-  // }, [])
-
   const fetchStock = async () => {
     let { data, error } = await supabase.rpc("get_product_stock")
-    console.log(data)
+    // console.log(data)
     if (error) {
       throw error
     }
@@ -425,7 +391,7 @@ export const DataContextProvider = ({ children }) => {
   const fetchSales = async () => {
     const { data, error } = await supabase
       .from("orders")
-      .select("*,customers(*)")
+      .select("*,profiles(*)")
     if (error) {
       throw error
     }
@@ -443,7 +409,6 @@ export const DataContextProvider = ({ children }) => {
     if (error) {
       throw error
     }
-    console.log(data)
     setOrderDetails(data)
   }
 
@@ -451,17 +416,17 @@ export const DataContextProvider = ({ children }) => {
     fetchOrderDetails()
   }, [])
 
-  const fetchCustomers = async () => {
-    const { data, error } = await supabase.from("customers").select("*")
+  const changeStatus = async (id, status) => {
+    const { error } = await supabase
+      .from("orders")
+      .update({ status: status })
+      .eq("id", id)
     if (error) {
       throw error
     }
-    setCustomers(data)
+    setModalStatus(false)
+    fetchSales()
   }
-
-  useEffect(() => {
-    fetchCustomers()
-  }, [])
 
   return (
     <DataContext.Provider
@@ -502,7 +467,6 @@ export const DataContextProvider = ({ children }) => {
         colors,
         sizes,
         genders,
-        customers,
         orders,
         orderDetails,
         stock,
@@ -510,7 +474,7 @@ export const DataContextProvider = ({ children }) => {
         setOrderId,
         modalStatus,
         setModalStatus,
-        setChangeStatus,
+        changeStatus,
       }}
     >
       {children}
