@@ -20,6 +20,10 @@ export default function useColumnsCustomers() {
         Header: "Teléfono",
         accessor: "phone",
       },
+      {
+        Header: "DNI",
+        accessor: "dni",
+      },
     ],
     []
   )

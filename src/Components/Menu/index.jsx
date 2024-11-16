@@ -13,6 +13,7 @@ import {
   DocumentPlusIcon,
   UserGroupIcon,
   DocumentCurrencyDollarIcon,
+  PaintBrushIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -209,6 +210,21 @@ function Menu() {
                           <TagIcon className="size-5" />
                         </span>
                         <span>Categorias</span>
+                      </span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/attributes"
+                      className={({ isActive }) =>
+                        isActive ? "btn-menu-active" : "btn-menu"
+                      }
+                    >
+                      <span className="flex items-right space-x-2">
+                        <span className="justify-right">
+                          <PaintBrushIcon className="size-5" />
+                        </span>
+                        <span>Atributos</span>
                       </span>
                     </NavLink>
                   </li>

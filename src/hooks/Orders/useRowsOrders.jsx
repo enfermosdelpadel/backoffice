@@ -4,7 +4,6 @@ import { DataContext } from "../../context/DataContext"
 export default function useRowsOrders() {
   const { orders, setOrderId, setModalStatus } = useContext(DataContext)
   const [selectedOrderId, setSelectedOrderId] = useState(null)
-  console.log(selectedOrderId)
 
   const rows = useMemo(
     () =>
@@ -22,7 +21,9 @@ export default function useRowsOrders() {
           </button>
         ),
         customer:
-          sale.customers && sale.customers.name ? sale.customers.name : "",
+          sale.profiles?.first_name && sale.profiles?.first_name
+            ? sale.profiles?.first_name + " " + sale.profiles?.last_name
+            : "",
         order_date: new Date(sale.order_date).toLocaleDateString("es-ES", {
           year: "numeric",
           month: "numeric",
@@ -41,6 +42,7 @@ export default function useRowsOrders() {
           <span
             onClick={() => {
               setModalStatus(sale.status)
+              setOrderId(sale.id)
             }}
             className={
               {

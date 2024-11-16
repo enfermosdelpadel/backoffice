@@ -9,13 +9,18 @@ import ReactModal from "react-modal"
 import { StatusModal } from "../../Components/StatusModal"
 
 function Orders() {
-  const { orderId, modalStatus } = useContext(DataContext)
+  const { orderId, setModalStatus, modalStatus, changeStatus } =
+    useContext(DataContext)
   console.log(orderId)
 
   return (
     <Layout>
       <ReactModal className="modal" isOpen={modalStatus}>
-        <StatusModal />
+        <StatusModal
+          setModalStatus={setModalStatus}
+          orderId={orderId}
+          changeStatus={changeStatus}
+        />
       </ReactModal>
       <Table
         columns={useColumnsOrders()}
