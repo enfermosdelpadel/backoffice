@@ -20,6 +20,7 @@ export default function useRowsProdutcs() {
         sub_type: product.sub_type,
         model: product.model,
         gender: product.gender,
+        color: product.color,
       })),
     [products]
   )

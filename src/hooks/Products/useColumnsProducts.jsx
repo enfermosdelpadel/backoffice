@@ -27,6 +27,10 @@ export default function useColumns() {
         Header: "Genero",
         accessor: "gender",
       },
+      {
+        Header: "Color",
+        accessor: "color",
+      },
 
       {
         Header: "SubTipo",
