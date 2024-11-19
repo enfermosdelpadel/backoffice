@@ -3,7 +3,6 @@ import useReportProducs from "../Category/useReportProducs"
 
 export default function useRowsCategory() {
   const reportProducs = useReportProducs()
-  console.log("reportProducs", reportProducs)
 
   const rows = useMemo(
     () =>

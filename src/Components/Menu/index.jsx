@@ -9,12 +9,12 @@ import {
   ChevronDownIcon,
   PlusCircleIcon,
   TagIcon,
-  DocumentPlusIcon,
   UserGroupIcon,
   DocumentCurrencyDollarIcon,
   PaintBrushIcon,
   PresentationChartBarIcon,
   WrenchScrewdriverIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -119,7 +119,7 @@ function Menu() {
               >
                 <span className="flex items-center space-x-2">
                   <span className="justify-right">
-                    <ShoppingBagIcon className="size-5" />
+                    <ShoppingCartIcon className="size-5" />
                   </span>
                   <span>Órdenes</span>
                 </span>
@@ -164,7 +164,7 @@ function Menu() {
               >
                 <span className="flex items-right space-x-2">
                   <span>
-                    <DocumentPlusIcon className="size-5" />
+                    <ShoppingBagIcon className="size-5" />
                   </span>
                   <span>Compras</span>
                 </span>

@@ -53,7 +53,6 @@ function Purchases() {
     const total_cost = data.quantity * data.uni_cost
 
     insertPurchase(data, total_cost)
-    console.log("Formulario enviado:", data, total_cost)
 
     reset()
   }
