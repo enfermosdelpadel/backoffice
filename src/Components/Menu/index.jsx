@@ -8,12 +8,13 @@ import {
   InboxStackIcon,
   ChevronDownIcon,
   PlusCircleIcon,
-  CogIcon,
   TagIcon,
   DocumentPlusIcon,
   UserGroupIcon,
   DocumentCurrencyDollarIcon,
   PaintBrushIcon,
+  PresentationChartBarIcon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -185,10 +186,25 @@ function Menu() {
               </NavLink>
             </li>
             <li>
+              <NavLink
+                to="/Reports"
+                className={({ isActive }) =>
+                  isActive ? "btn-menu-active" : "btn-menu"
+                }
+              >
+                <span className="flex items-right space-x-2">
+                  <span>
+                    <PresentationChartBarIcon className="size-5" />
+                  </span>
+                  <span>Reportes</span>
+                </span>
+              </NavLink>
+            </li>
+            <li>
               <details className="group [&_summary::-webkit-details-marker]:hidden hover:cursor-pointer">
                 <summary className="btn-menu gap-2">
                   <span className="justify-right">
-                    <CogIcon className="size-5" />
+                    <WrenchScrewdriverIcon className="size-5" />
                   </span>
                   <span>Ajustes</span>
 

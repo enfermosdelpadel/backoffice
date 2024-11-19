@@ -9,6 +9,7 @@ export default function useSalesByDate() {
     const result = orders.reduce((acc, order) => {
       const date = new Date(order.order_date).toLocaleDateString("es-ES", {
         day: "numeric",
+        month: "numeric",
       })
       const existingDate = acc.find((item) => item.date === date)
       if (existingDate) {
@@ -19,7 +20,11 @@ export default function useSalesByDate() {
       }
       return acc
     }, [])
-    return result
+    return result.sort(
+      (a, b) =>
+        new Date(a.date.split("/").reverse().join("-")) -
+        new Date(b.date.split("/").reverse().join("-"))
+    )
   }, [orders])
   return salesByDate
 }

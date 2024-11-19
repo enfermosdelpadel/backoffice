@@ -9,9 +9,14 @@ import ReactModal from "react-modal"
 import { StatusModal } from "../../Components/StatusModal"
 
 function Orders() {
-  const { orderId, setModalStatus, modalStatus, changeStatus } =
-    useContext(DataContext)
-  console.log(orderId)
+  const {
+    orderId,
+    setModalStatus,
+    modalStatus,
+    changeStatus,
+    sendEmail,
+    userEmail,
+  } = useContext(DataContext)
 
   return (
     <Layout>
@@ -20,6 +25,8 @@ function Orders() {
           setModalStatus={setModalStatus}
           orderId={orderId}
           changeStatus={changeStatus}
+          sendEmail={sendEmail}
+          userEmail={userEmail}
         />
       </ReactModal>
       <Table

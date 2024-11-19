@@ -15,10 +15,12 @@ export const DataContextProvider = ({ children }) => {
   const [types, setTypes] = useState([""])
   const [sub_types, setsub_types] = useState([""])
   const [models, setModels] = useState([""])
+
   //Open and close Modal
   const [isFormOpen, setIsFormOpen] = useState(false)
   const openForm = () => setIsFormOpen(true)
   const closeForm = () => setIsFormOpen(false)
+
   //Open and close Menu
   const [isUserLogin, setIsUserLogin] = useState(false)
   const openMenu = () => setIsUserLogin(true)
@@ -37,26 +39,15 @@ export const DataContextProvider = ({ children }) => {
   const [orders, setOrders] = useState([""])
   const [orderDetails, setOrderDetails] = useState([""])
   const [orderId, setOrderId] = useState(null)
+  const [userEmail, setUserEmail] = useState(null)
 
   const [loading, setLoading] = useState(false)
 
   const [imageUrl, setImageUrl] = useState("")
 
-  const [selectedItem, setSelectedItem] = useState({
-    id: "",
-    type: "",
-    sub_type: "",
-    model: "",
-    brand: "",
-    color: "",
-    gender: "",
-    size: "",
-    cost: "",
-    price: "",
-    desc: "",
-    stock: "",
-    image_url: "",
-  })
+  //Categories
+  const [selectedItem, setSelectedItem] = useState({})
+  const [isEditing, setIsEditing] = useState(false)
 
   const [addProduct, setAddProduct] = useState({})
 
@@ -95,61 +86,61 @@ export const DataContextProvider = ({ children }) => {
     } else alert("Producto Guardado con éxito")
   }
 
-  const updateImage = async (e) => {
-    const date = Date.now()
-    const imageFile = e.target.files[0]
-    const { data } = await supabase.storage
-      .from("images/")
-      .upload(`public/${date}.png`, imageFile, {
-        cacheControl: "3600",
-        upsert: false,
-      })
-    setSelectedItem({
-      ...selectedItem,
-      image_url: `${bucket}${data.path}`,
-    })
-  }
-  const editProduct = async (selectedItem) => {
-    try {
-      console.log(selectedItem.id)
-      const { data } = await supabase
-        .from("products")
-        .update({
-          type: selectedItem.type,
-          sub_type: selectedItem.sub_type,
-          model: selectedItem.model,
-          brand: selectedItem.brand,
-          color: selectedItem.color,
-          gender: selectedItem.gender,
-          desc: selectedItem.desc,
-          image_url: selectedItem.image_url,
-        })
-        .eq("id", selectedItem.id)
-      console.log(data)
-      alert("Producto Actualizado con éxito")
-      closeForm()
-      setProducts(
-        products.map((product) =>
-          product.id === selectedItem.id ? selectedItem : product
-        )
-      )
-    } catch (error) {
-      alert(error.error_description || error.message)
-    }
-  }
+  // const updateImage = async (e) => {
+  //   const date = Date.now()
+  //   const imageFile = e.target.files[0]
+  //   const { data } = await supabase.storage
+  //     .from("images/")
+  //     .upload(`public/${date}.png`, imageFile, {
+  //       cacheControl: "3600",
+  //       upsert: false,
+  //     })
+  //   setSelectedItem({
+  //     ...selectedItem,
+  //     image_url: `${bucket}${data.path}`,
+  //   })
+  // }
+  // const editProduct = async (selectedItem) => {
+  //   try {
+  //     console.log(selectedItem.id)
+  //     const { data } = await supabase
+  //       .from("products")
+  //       .update({
+  //         type: selectedItem.type,
+  //         sub_type: selectedItem.sub_type,
+  //         model: selectedItem.model,
+  //         brand: selectedItem.brand,
+  //         color: selectedItem.color,
+  //         gender: selectedItem.gender,
+  //         desc: selectedItem.desc,
+  //         image_url: selectedItem.image_url,
+  //       })
+  //       .eq("id", selectedItem.id)
+  //     console.log(data)
+  //     alert("Producto Actualizado con éxito")
+  //     closeForm()
+  //     setProducts(
+  //       products.map((product) =>
+  //         product.id === selectedItem.id ? selectedItem : product
+  //       )
+  //     )
+  //   } catch (error) {
+  //     alert(error.error_description || error.message)
+  //   }
+  // }
 
-  const deleteProduct = async (id) => {
-    try {
-      const { error } = await supabase.from("products").delete().eq("id", id)
+  // const deleteProduct = async (id) => {
+  //   try {
+  //     const { error } = await supabase.from("products").delete().eq("id", id)
 
-      if (error) {
-        throw error
-      }
-      setProducts(products.filter((product) => product.id !== id))
-    } catch (error) {
-      alert(error.error_description || error.message)
-    }
-  }
+  //     if (error) {
+  //       throw error
+  //     }
+  //     setProducts(products.filter((product) => product.id !== id))
+  //   } catch (error) {
+  //     alert(error.error_description || error.message)
+  //   }
+  // }
 
   //Fetch Products, Users, Profiles
 
@@ -330,7 +321,6 @@ export const DataContextProvider = ({ children }) => {
     if (error) {
       throw error
     }
-    console.log(data)
     setPurchases(data)
   }
 
@@ -428,13 +418,28 @@ export const DataContextProvider = ({ children }) => {
     fetchSales()
   }
 
+  const sendEmail = async (data) => {
+    const response = await fetch(
+      "https://fastapi-resend.onrender.com/send_mail",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`)
+    }
+  }
+
   return (
     <DataContext.Provider
       value={{
         user,
         profile,
         products,
-        deleteProduct,
         isFormOpen,
         openForm,
         closeForm,
@@ -442,7 +447,6 @@ export const DataContextProvider = ({ children }) => {
         setProducts,
         addProduct,
         setAddProduct,
-        editProduct,
         setSelectedItem,
         selectedItem,
         openMenu,
@@ -450,7 +454,9 @@ export const DataContextProvider = ({ children }) => {
         isUserLogin,
         logout,
         uploadImage,
-        updateImage,
+        // editProduct,
+        // deleteProduct,
+        // updateImage,
         brands,
         types,
         sub_types,
@@ -475,6 +481,11 @@ export const DataContextProvider = ({ children }) => {
         modalStatus,
         setModalStatus,
         changeStatus,
+        sendEmail,
+        userEmail,
+        setUserEmail,
+        isEditing,
+        setIsEditing,
       }}
     >
       {children}
