@@ -17,6 +17,7 @@ import { DataContextProvider } from "../../context/DataContext"
 import { DataContext } from "../../context/DataContext"
 import { Prices } from "../Prices"
 import { Attributes } from "../Attributes"
+import { Reports } from "../Reports/Index"
 import "./App.css"
 
 function AppRoutes() {
@@ -48,6 +49,7 @@ function AppRoutes() {
     { path: "/purchases", element: <Purchases /> },
     { path: "/prices", element: <Prices /> },
     { path: "/attributes", element: <Attributes /> },
+    { path: "/reports", element: <Reports /> },
   ])
   return routes
 }

@@ -26,8 +26,7 @@ export default function useRowsPurchases() {
             item.products.brand
           : " ",
         size: item.sizes && item.sizes.name ? item.sizes.name : "",
-        color:
-          item.products.color && item.products.color ? item.products.color : "",
+        color: item.products && item.products.color ? item.products.color : "",
         gender:
           item.products && item.products.gender ? item.products.gender : "",
         quantity: item.quantity,

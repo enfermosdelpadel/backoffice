@@ -1,12 +1,14 @@
 import { defaults } from "chart.js/auto"
 import { Bar, Doughnut, Line } from "react-chartjs-2"
-
+import { GlobalInfo } from "../GlobalInfo"
 import useSalesByDate from "./data/useSalesByDate"
 import useProductsByCategory from "./data/useProductsByCategory"
 import useOrdersByStatus from "./data/useOrdersByStatus"
-import { UserActive } from "../../Components/UserActive"
+import useOrdersByUser from "./data/useOrdersByUser"
+import useReportProducs from "../../pages/Reports/Data/Category/useReportProducs"
 
 import "./index.css"
+import { TableLowStock } from "../TableLowStock"
 
 defaults.maintainAspectRatio = false
 defaults.responsive = true
@@ -21,11 +23,37 @@ function Statistics() {
   const salesByDate = useSalesByDate()
   const productsByCategory = useProductsByCategory()
   const ordersByStatus = useOrdersByStatus()
+  const ordersByUser = useOrdersByUser()
+  const reportProducs = useReportProducs()
+  const totalEarned = reportProducs.reduce(
+    (acc, item) => acc + (item.earns > 0 ? item.earns : 0),
+    0
+  )
+  const totalPurchased = reportProducs.reduce(
+    (acc, item) => acc + (item.totalPurchased > 0 ? item.totalPurchased : 0),
+    0
+  )
+  const totalSold = reportProducs.reduce(
+    (acc, item) => acc + (item.totalSold > 0 ? item.totalSold : 0),
+    0
+  )
+  const lowStock = reportProducs
+    .map((item) => ({
+      product: item.categoryKey,
+      stock: item.stock,
+    }))
+    .filter((item) => item.stock < 3)
 
   return (
     <div className="App">
-      <UserActive />
-      <div className="dataCard revenueCard">
+      <div className="dataCard categoryCard">
+        <GlobalInfo
+          totalEarned={totalEarned}
+          totalPurchased={totalPurchased}
+          totalSold={totalSold}
+        />
+      </div>
+      <div className="dataCard categoryCard">
         <Line
           data={{
             labels: salesByDate?.map((data) => data.date),
@@ -55,14 +83,50 @@ function Statistics() {
           }}
         />
       </div>
+      <div className="dataCard categoryCard">
+        <Bar
+          data={{
+            labels: ordersByUser.map((data) => data.username),
+            datasets: [
+              {
+                label: "Cantidad de ordenes",
+                data: ordersByUser.map((data) => data.count),
+                backgroundColor: [
+                  "rgba(43, 63, 229, 0.8)",
+                  "rgba(250, 192, 19, 0.8)",
+                  "rgba(253, 135, 135, 0.8)",
+                  "rgba(34, 197, 94, 0.8)",
+                  "rgba(250, 192, 19, 0.8)",
+                  "rgba(43, 63, 229, 0.8)",
+                  "rgba(253, 135, 135, 0.8)",
+                  "rgba(34, 197, 94, 0.8)",
+                ],
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            indexAxis: "y",
 
-      <div className="dataCard customerCard">
+            plugins: {
+              title: {
+                text: "Ventas por usuario",
+              },
+            },
+          }}
+        />
+      </div>
+      <div className="dataCard categoryCard">
+        <TableLowStock lowStock={lowStock} />
+      </div>
+
+      <div className="dataCard categoryCard">
         <Bar
           data={{
             labels: productsByCategory.map((data) => data.category),
             datasets: [
               {
-                label: "Esado de Pedidos",
+                label: "Tipos de Productos",
                 data: productsByCategory.map((data) => data.count),
                 backgroundColor: [
                   "rgba(43, 63, 229, 0.8)",
