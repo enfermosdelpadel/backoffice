@@ -5,168 +5,142 @@ import { supabase } from "../supabase/client"
 export const DataContext = createContext()
 
 export const DataContextProvider = ({ children }) => {
-  const [profile, setProfile] = useState([])
+  //Modal
+  const [modalStatus, setModalStatus] = useState(false)
+
+  const [profile, setProfile] = useState([""])
   const [user, setUser] = useState([null]) // Initialize user as null
   const [products, setProducts] = useState([""])
   const [brands, setBrands] = useState([""])
   const [types, setTypes] = useState([""])
-  const [subTypes, setSubTypes] = useState([""])
+  const [sub_types, setsub_types] = useState([""])
   const [models, setModels] = useState([""])
+
   //Open and close Modal
   const [isFormOpen, setIsFormOpen] = useState(false)
   const openForm = () => setIsFormOpen(true)
   const closeForm = () => setIsFormOpen(false)
+
   //Open and close Menu
   const [isUserLogin, setIsUserLogin] = useState(false)
   const openMenu = () => setIsUserLogin(true)
   const closeMenu = () => setIsUserLogin(false)
   //Suppliers
-  const [suppliers, setSuppliers] = useState([])
-  const [purchases, setPurchases] = useState([])
+  const [suppliers, setSuppliers] = useState([""])
+  const [purchases, setPurchases] = useState([""])
+  const [colors, setColors] = useState([""])
+  const [genders, setGenders] = useState([""])
+  const [sizes, setSizes] = useState([""])
+
+  //Stock
+  const [stock, setStock] = useState([""])
+
+  //Orders
+  const [orders, setOrders] = useState([""])
+  const [orderDetails, setOrderDetails] = useState([""])
+  const [orderId, setOrderId] = useState(null)
+  const [userEmail, setUserEmail] = useState(null)
 
   const [loading, setLoading] = useState(false)
 
   const [imageUrl, setImageUrl] = useState("")
 
-  const [selectedItem, setSelectedItem] = useState({
-    id: "",
-    type: "",
-    subType: "",
-    model: "",
-    brand: "",
-    color: "",
-    gender: "",
-    size: "",
-    cost: "",
-    price: "",
-    desc: "",
-    stock: "",
-    fileUrl: "",
-  })
+  //Categories
+  const [selectedItem, setSelectedItem] = useState({})
+  const [isEditing, setIsEditing] = useState(false)
 
-  const [addProduct, setAddProduct] = useState({
-    type: "",
-    subType: "",
-    model: "",
-    brand: "",
-    color: "",
-    gender: "",
-    size: "",
-    cost: "",
-    price: "",
-    desc: "",
-    stock: "",
-    fileUrl: "",
-  })
+  const [addProduct, setAddProduct] = useState({})
 
   // URL for add and update images
   const bucket = import.meta.env.VITE_BUKCKET_NAME
-
   const uploadImage = async (e) => {
+    setLoading(true)
     const file = e.target.files[0]
-    if (!file) return
     const fileName = `${Date.now()}-${file.name}`
     const { data, error: uploadError } = await supabase.storage
       .from("images")
       .upload(`public/${fileName}`, file, {
         upsert: false,
       })
-    if (uploadError) {
-      console.error("Error uploading image:", uploadError)
-      alert("Error al subir imagen")
-    } else if (data) {
-      console.log("Image uploaded:", data)
-      setImageUrl({
-        fileUrl: `${bucket}${data.path}`,
-      })
-      console.log("Image uploaded:", imageUrl.fileUrl)
+    setLoading(false)
+    if (!uploadError) {
+      setImageUrl(`${bucket}${data.path}`)
+      console.log("image url", imageUrl)
     } else {
-      console.error("Error uploading image:", data)
+      alert(uploadError.message)
     }
   }
   const insertProduct = async (addProduct) => {
-    try {
-      const { data } = await supabase.from("products").insert({
-        type: addProduct.type,
-        subType: addProduct.subType,
-        model: addProduct.model,
-        brand: addProduct.brand,
-        color: addProduct.color,
-        gender: addProduct.gender,
-        size: addProduct.size,
-        cost: addProduct.cost,
-        price: addProduct.price,
-        desc: addProduct.desc,
-        stock: addProduct.stock,
-        fileUrl: addProduct.fileUrl,
-      })
-      console.log(data)
-      alert("Producto Guardado con éxito")
-      // setProducts([...products, addProduct]) ver porque no funciona
-    } catch (error) {
-      alert(error.error_description || error.message)
-    }
-  }
-
-  const updateImage = async (e) => {
-    const date = Date.now()
-    const imageFile = e.target.files[0]
-    const { data } = await supabase.storage
-      .from("images/")
-      .upload(`public/${date}.png`, imageFile, {
-        cacheControl: "3600",
-        upsert: false,
-      })
-    setSelectedItem({
-      ...selectedItem,
-      fileUrl: `${bucket}${data.path}`,
+    const { error } = await supabase.from("products").insert({
+      type: addProduct.type,
+      sub_type: addProduct.sub_type,
+      model: addProduct.model,
+      brand: addProduct.brand,
+      color: addProduct.color,
+      gender: addProduct.gender,
+      description: addProduct.description,
+      image_url: addProduct.image_url,
     })
-  }
-  const editProduct = async (selectedItem) => {
-    try {
-      console.log(selectedItem.id)
-      const { data } = await supabase
-        .from("products")
-        .update({
-          type: selectedItem.type,
-          subType: selectedItem.subType,
-          model: selectedItem.model,
-          brand: selectedItem.brand,
-          color: selectedItem.color,
-          gender: selectedItem.gender,
-          size: selectedItem.size,
-          cost: selectedItem.cost,
-          price: selectedItem.price,
-          desc: selectedItem.desc,
-          stock: selectedItem.stock,
-          fileUrl: selectedItem.fileUrl,
-        })
-        .eq("id", selectedItem.id)
-      console.log(data)
-      alert("Producto Actualizado con éxito")
-      closeForm()
-      setProducts(
-        products.map((product) =>
-          product.id === selectedItem.id ? selectedItem : product
-        )
-      )
-    } catch (error) {
+    if (error) {
       alert(error.error_description || error.message)
-    }
+    } else alert("Producto Guardado con éxito")
   }
 
-  const deleteProduct = async (id) => {
-    try {
-      const { error } = await supabase.from("products").delete().eq("id", id)
+  // const updateImage = async (e) => {
+  //   const date = Date.now()
+  //   const imageFile = e.target.files[0]
+  //   const { data } = await supabase.storage
+  //     .from("images/")
+  //     .upload(`public/${date}.png`, imageFile, {
+  //       cacheControl: "3600",
+  //       upsert: false,
+  //     })
+  //   setSelectedItem({
+  //     ...selectedItem,
+  //     image_url: `${bucket}${data.path}`,
+  //   })
+  // }
+  // const editProduct = async (selectedItem) => {
+  //   try {
+  //     console.log(selectedItem.id)
+  //     const { data } = await supabase
+  //       .from("products")
+  //       .update({
+  //         type: selectedItem.type,
+  //         sub_type: selectedItem.sub_type,
+  //         model: selectedItem.model,
+  //         brand: selectedItem.brand,
+  //         color: selectedItem.color,
+  //         gender: selectedItem.gender,
+  //         desc: selectedItem.desc,
+  //         image_url: selectedItem.image_url,
+  //       })
+  //       .eq("id", selectedItem.id)
+  //     console.log(data)
+  //     alert("Producto Actualizado con éxito")
+  //     closeForm()
+  //     setProducts(
+  //       products.map((product) =>
+  //         product.id === selectedItem.id ? selectedItem : product
+  //       )
+  //     )
+  //   } catch (error) {
+  //     alert(error.error_description || error.message)
+  //   }
+  // }
 
-      if (error) {
-        throw error
-      }
-      setProducts(products.filter((product) => product.id !== id))
-    } catch (error) {
-      alert(error.error_description || error.message)
-    }
-  }
+  // const deleteProduct = async (id) => {
+  //   try {
+  //     const { error } = await supabase.from("products").delete().eq("id", id)
+
+  //     if (error) {
+  //       throw error
+  //     }
+  //     setProducts(products.filter((product) => product.id !== id))
+  //   } catch (error) {
+  //     alert(error.error_description || error.message)
+  //   }
+  // }
 
   //Fetch Products, Users, Profiles
 
@@ -188,7 +162,7 @@ export const DataContextProvider = ({ children }) => {
       const {
         data: { user },
       } = await supabase.auth.getUser()
-      console.log(user)
+
       setUser(user)
     }
     fetchUser()
@@ -218,30 +192,32 @@ export const DataContextProvider = ({ children }) => {
     fetchBrands()
   }, [])
 
-  useEffect(() => {
-    const fetchType = async () => {
-      const { data, error } = await supabase.from("types").select("*")
-      if (error) {
-        throw error
-      } else {
-        setTypes(data)
-      }
+  const fetchType = async () => {
+    const { data, error } = await supabase.from("types").select("*")
+    if (error) {
+      throw error
+    } else {
+      setTypes(data)
     }
+  }
+
+  useEffect(() => {
     fetchType()
   }, [])
 
-  useEffect(() => {
-    const fetchsubType = async () => {
-      const { data, error } = await supabase
-        .from("sub_types")
-        .select("*,types(*)")
-      if (error) {
-        throw error
-      } else {
-        setSubTypes(data)
-      }
+  const fetchsub_type = async () => {
+    const { data, error } = await supabase
+      .from("sub_types")
+      .select("*,types(*)")
+    if (error) {
+      throw error
+    } else {
+      setsub_types(data)
     }
-    fetchsubType()
+  }
+
+  useEffect(() => {
+    fetchsub_type()
   }, [])
 
   useEffect(() => {
@@ -300,9 +276,12 @@ export const DataContextProvider = ({ children }) => {
     const { error } = await supabase.from("purchases").insert({
       supplier_id: addPurchase.supplier,
       product_id: addPurchase.product,
-      color_id: addPurchase.color,
-      size_id: addPurchase.size,
-      gender_id: addPurchase.gender,
+      color_id: (addPurchase.color =
+        addPurchase.color === "" ? null : addPurchase.color),
+      size_id: (addPurchase.size =
+        addPurchase.size === "" ? null : addPurchase.size),
+      gender_id: (addPurchase.gender =
+        addPurchase.gender === "" ? null : addPurchase.gender),
       quantity: addPurchase.quantity,
       uni_cost: addPurchase.uni_cost,
       total_cost: addPurchase.uni_cost * addPurchase.quantity,
@@ -312,15 +291,33 @@ export const DataContextProvider = ({ children }) => {
 
     if (error) {
       console.log(error)
+      alert("Error al guardar la compra")
       throw error
     }
     alert("Compra guardada con éxito")
   }
 
+  const updatePercentage = async (data) => {
+    const { error } = await supabase
+      .from("types")
+      .update({
+        adjustment_percentage: data.percentage,
+        adjustement_date: new Date().toISOString(),
+      })
+      .eq("id", data.item)
+    fetchType()
+    if (error) {
+      console.log(error)
+      alert("Error al guardar el porcentaje")
+      throw error
+    }
+    alert("Porcentaje guardado con éxito")
+  }
+
   const fetchPurchases = async () => {
     const { data, error } = await supabase
       .from("purchases")
-      .select("*,suppliers(*),products(*),colors(*),sizes(*),genders(*)")
+      .select("*,suppliers(*),products(*),sizes(*)")
     if (error) {
       throw error
     }
@@ -331,13 +328,118 @@ export const DataContextProvider = ({ children }) => {
     fetchPurchases()
   }, [])
 
+  const fetchColors = async () => {
+    const { data, error } = await supabase.from("colors").select("*")
+    if (error) {
+      throw error
+    }
+    setColors(data)
+  }
+
+  useEffect(() => {
+    fetchColors()
+  }, [])
+
+  const fetchSizes = async () => {
+    const { data, error } = await supabase.from("sizes").select("*")
+    if (error) {
+      throw error
+    }
+    setSizes(data)
+  }
+
+  useEffect(() => {
+    fetchSizes()
+  }, [])
+
+  const fetchGenders = async () => {
+    const { data, error } = await supabase.from("genders").select("*")
+    if (error) {
+      throw error
+    }
+    setGenders(data)
+  }
+
+  useEffect(() => {
+    fetchGenders()
+  }, [])
+  const fetchStock = async () => {
+    let { data, error } = await supabase.rpc("get_product_stock")
+    // console.log(data)
+    if (error) {
+      throw error
+    }
+    setStock(data)
+  }
+
+  useEffect(() => {
+    fetchStock()
+  }, [])
+
+  //  Sales
+
+  const fetchSales = async () => {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*,profiles(*)")
+    if (error) {
+      throw error
+    }
+    setOrders(data)
+  }
+
+  useEffect(() => {
+    fetchSales()
+  }, [])
+
+  const fetchOrderDetails = async () => {
+    const { data, error } = await supabase
+      .from("order_details")
+      .select("*, products(*)")
+    if (error) {
+      throw error
+    }
+    setOrderDetails(data)
+  }
+
+  useEffect(() => {
+    fetchOrderDetails()
+  }, [])
+
+  const changeStatus = async (id, status) => {
+    const { error } = await supabase
+      .from("orders")
+      .update({ status: status })
+      .eq("id", id)
+    if (error) {
+      throw error
+    }
+    setModalStatus(false)
+    fetchSales()
+  }
+
+  const sendEmail = async (data) => {
+    const response = await fetch(
+      "https://fastapi-resend.onrender.com/send_mail",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`)
+    }
+  }
+
   return (
     <DataContext.Provider
       value={{
         user,
         profile,
         products,
-        deleteProduct,
         isFormOpen,
         openForm,
         closeForm,
@@ -345,7 +447,6 @@ export const DataContextProvider = ({ children }) => {
         setProducts,
         addProduct,
         setAddProduct,
-        editProduct,
         setSelectedItem,
         selectedItem,
         openMenu,
@@ -353,25 +454,38 @@ export const DataContextProvider = ({ children }) => {
         isUserLogin,
         logout,
         uploadImage,
-        updateImage,
+        // editProduct,
+        // deleteProduct,
+        // updateImage,
         brands,
-        setBrands,
         types,
-        setTypes,
-        subTypes,
-        setSubTypes,
+        sub_types,
         models,
-        setModels,
         imageUrl,
         setImageUrl,
         insertSupplier,
         suppliers,
-        setSuppliers,
         insertPurchase,
+        updatePercentage,
         purchases,
-        setPurchases,
         loading,
         setLoading,
+        colors,
+        sizes,
+        genders,
+        orders,
+        orderDetails,
+        stock,
+        orderId,
+        setOrderId,
+        modalStatus,
+        setModalStatus,
+        changeStatus,
+        sendEmail,
+        userEmail,
+        setUserEmail,
+        isEditing,
+        setIsEditing,
       }}
     >
       {children}

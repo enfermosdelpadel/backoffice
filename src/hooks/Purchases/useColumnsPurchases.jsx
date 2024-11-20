@@ -6,18 +6,34 @@ export default function useColumnsPurchases() {
       {
         Header: "Fecha de Compra",
         accessor: "purchase_date",
+        width: 200,
       },
       {
         Header: "Proveedor",
         accessor: "supplier",
       },
+
       {
         Header: "Producto",
         accessor: "product",
+        width: 500,
       },
       {
-        Header: "Talla",
+        Header: "Tipo",
+        accessor: "type",
+      },
+      {
+        Header: () => (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Talla
+          </div>
+        ),
         accessor: "size",
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
       },
       {
         Header: "Color",
@@ -28,16 +44,43 @@ export default function useColumnsPurchases() {
         accessor: "gender",
       },
       {
-        Header: "Cantidad",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Cantidad
+          </div>
+        ),
         accessor: "quantity",
+        Cell: (row) => <div style={{ textAlign: "center" }}>{row.value}</div>,
       },
       {
-        Header: "Costo",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "right",
+            }}
+          >
+            Costo Unitario
+          </div>
+        ),
         accessor: "cost",
+        Cell: (row) => <div style={{ textAlign: "right" }}>{row.value}</div>,
       },
       {
-        Header: "Total",
+        Header: () => (
+          <div
+            style={{
+              textAlign: "right",
+            }}
+          >
+            Costo Total
+          </div>
+        ),
         accessor: "total_cost",
+        Cell: (row) => <div style={{ textAlign: "right" }}>{row.value}</div>,
       },
     ],
     []

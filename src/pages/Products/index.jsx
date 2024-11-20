@@ -8,14 +8,17 @@ import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Products() {
-  const { brands, types, subTypes, models } = useContext(DataContext)
+  const { brands, types, sub_types, models, genders, colors } =
+    useContext(DataContext)
   return (
     <Layout>
       <FormProducts
         brand={brands}
         type={types}
-        subType={subTypes}
+        sub_type={sub_types}
         model={models}
+        gender={genders}
+        color={colors}
       />
 
       <Table columns={useColumns()} data={useRows()} name="productos" />

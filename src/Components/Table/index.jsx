@@ -1,5 +1,6 @@
 import { TableFilter } from "../TableFilter"
 import PropTypes from "prop-types"
+import { CSVLink } from "react-csv"
 
 import {
   useTable,
@@ -14,6 +15,8 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ClipboardDocumentListIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
 } from "@heroicons/react/24/outline"
 
 function Table(props) {
@@ -53,7 +56,10 @@ function Table(props) {
     setGlobalFilter,
     state: { globalFilter, pageIndex, pageSize },
   } = table
-
+  const csvData = [
+    columns.map((column) => column.Header),
+    ...data.map((row) => columns.map((column) => row[column.accessor])),
+  ]
   return (
     <>
       <div className="w-full mt-4 bg-white ">
@@ -62,12 +68,21 @@ function Table(props) {
           <h3 className="text-lg font-medium text-blue-900">
             Listado de {name}
           </h3>
+          <div className="flex items-center justify-end ml-auto">
+            <CSVLink
+              data={csvData}
+              filename={`${name}_${new Date().toISOString().split("T")[0]}.csv`}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Exportar a CSV
+            </CSVLink>
+          </div>
         </div>
         <div className="container">
           <table {...getTableProps()}>
             <thead>
               <tr>
-                <th colSpan={4}>
+                <th colSpan={10}>
                   <TableFilter
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={globalFilter}
@@ -96,11 +111,24 @@ function Table(props) {
                                 : "asc"
                               : ""
                           }
+                          style={{
+                            cursor: "pointer",
+                            width: column.width,
+                            minWidth: column.minWidth,
+                          }}
                         >
-                          {
-                            // Pintamos el título de nuestra columna (propiedad "Header")
-                            column.render("Header")
-                          }
+                          <span className="flex items-center">
+                            {column.render("Header")}
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <ArrowUpIcon className="h-4 w-4 ml-1" />
+                              ) : (
+                                <ArrowDownIcon className="h-4 w-4 ml-1" />
+                              )
+                            ) : (
+                              ""
+                            )}
+                          </span>
                         </th>
                       ))
                     }
@@ -174,6 +202,7 @@ function Table(props) {
             </div>
 
             <select
+              id="pageSize"
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
             >

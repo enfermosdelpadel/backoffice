@@ -1,58 +1,189 @@
-import { DataContext } from "../../context/DataContext"
-import { useContext } from "react"
-import { sockTotal } from "../../util"
+import { defaults } from "chart.js/auto"
+import { Bar, Doughnut, Line } from "react-chartjs-2"
+import { GlobalInfo } from "../GlobalInfo"
+import useSalesByDate from "./data/useSalesByDate"
+import useProductsByCategory from "./data/useProductsByCategory"
+import useOrdersByStatus from "./data/useOrdersByStatus"
+import useOrdersByUser from "./data/useOrdersByUser"
+import useReportProducs from "../../pages/Reports/Data/Category/useReportProducs"
+
+import "./index.css"
+import { TableLowStock } from "../TableLowStock"
+
+defaults.maintainAspectRatio = false
+defaults.responsive = true
+
+defaults.plugins.title.display = true
+defaults.plugins.title.align = "start"
+defaults.plugins.title.font.size = 20
+defaults.plugins.title.color = "black"
 
 function Statistics() {
-  const { user, products } = useContext(DataContext)
-  const stock = sockTotal(products)
+  //Hooks useMemo
+  const salesByDate = useSalesByDate()
+  const productsByCategory = useProductsByCategory()
+  const ordersByStatus = useOrdersByStatus()
+  const ordersByUser = useOrdersByUser()
+  const reportProducs = useReportProducs()
+  const totalEarned = reportProducs.reduce(
+    (acc, item) => acc + (item.earns > 0 ? item.earns : 0),
+    0
+  )
+  const totalPurchased = reportProducs.reduce(
+    (acc, item) => acc + (item.totalPurchased > 0 ? item.totalPurchased : 0),
+    0
+  )
+  const totalSold = reportProducs.reduce(
+    (acc, item) => acc + (item.totalSold > 0 ? item.totalSold : 0),
+    0
+  )
+  const lowStock = reportProducs
+    .map((item) => ({
+      product: item.categoryKey,
+      stock: item.stock,
+    }))
+    .filter((item) => item.stock < 3)
+
   return (
-    <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      <h1 className="text-2xl font-bold sm:text-3xl text-center">
-        Bienvenido{" "}
-        {user.email?.split("@")[0].charAt(0).toUpperCase() +
-          user.email?.split("@")[0].slice(1) +
-          "!"}
-      </h1>
-      <dl className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="flex flex-col rounded-lg bg-blue-50 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-500">
-            Ventas Totales
-          </dt>
+    <div className="App">
+      <div className="dataCard categoryCard">
+        <GlobalInfo
+          totalEarned={totalEarned}
+          totalPurchased={totalPurchased}
+          totalSold={totalSold}
+        />
+      </div>
+      <div className="dataCard categoryCard">
+        <Line
+          data={{
+            labels: salesByDate?.map((data) => data.date),
 
-          <dd className="text-4xl font-extrabold text-blue-600 md:text-5xl">
-            $4.8m
-          </dd>
-        </div>
+            datasets: [
+              {
+                label: "Ventas Diarias",
+                data: salesByDate?.map((data) => data.totalAmount),
+                backgroundColor: "#FF3030",
+                borderColor: "#FF3030",
+                pointBackgroundColor: "#FF3030",
+                pointBorderColor: "#FF3030",
+              },
+            ],
+          }}
+          options={{
+            elements: {
+              line: {
+                tension: 0.5,
+              },
+            },
+            plugins: {
+              title: {
+                text: "Ventas Mensuales",
+              },
+            },
+          }}
+        />
+      </div>
+      <div className="dataCard categoryCard">
+        <Bar
+          data={{
+            labels: ordersByUser.map((data) => data.username),
+            datasets: [
+              {
+                label: "Cantidad de ordenes",
+                data: ordersByUser.map((data) => data.count),
+                backgroundColor: [
+                  "rgba(43, 63, 229, 0.8)",
+                  "rgba(250, 192, 19, 0.8)",
+                  "rgba(253, 135, 135, 0.8)",
+                  "rgba(34, 197, 94, 0.8)",
+                  "rgba(250, 192, 19, 0.8)",
+                  "rgba(43, 63, 229, 0.8)",
+                  "rgba(253, 135, 135, 0.8)",
+                  "rgba(34, 197, 94, 0.8)",
+                ],
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            indexAxis: "y",
 
-        <div className="flex flex-col rounded-lg bg-green-50 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-500">
-            Stock Total
-          </dt>
+            plugins: {
+              title: {
+                text: "Ventas por usuario",
+              },
+            },
+          }}
+        />
+      </div>
+      <div className="dataCard categoryCard">
+        <TableLowStock lowStock={lowStock} />
+      </div>
 
-          <dd className="text-4xl font-extrabold text-blue-600 md:text-5xl">
-            {isNaN(stock) ? "..." : stock}
-          </dd>
-        </div>
+      <div className="dataCard categoryCard">
+        <Bar
+          data={{
+            labels: productsByCategory.map((data) => data.category),
+            datasets: [
+              {
+                label: "Tipos de Productos",
+                data: productsByCategory.map((data) => data.count),
+                backgroundColor: [
+                  "rgba(43, 63, 229, 0.8)",
+                  "rgba(250, 192, 19, 0.8)",
+                  "rgba(253, 135, 135, 0.8)",
+                  "rgba(34, 197, 94, 0.8)",
+                  "rgba(250, 192, 19, 0.8)",
+                  "rgba(43, 63, 229, 0.8)",
+                  "rgba(253, 135, 135, 0.8)",
+                  "rgba(34, 197, 94, 0.8)",
+                ],
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              title: {
+                text: "Productos en Stock por categoría",
+              },
+            },
+          }}
+        />
+      </div>
 
-        <div className="flex flex-col rounded-lg bg-red-50 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-500">
-            Clientes Totales
-          </dt>
-
-          <dd className="text-4xl font-extrabold text-blue-600 md:text-5xl">
-            86
-          </dd>
-        </div>
-        <div className="flex flex-col rounded-lg bg-red-50 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-500">
-            Usuarios de sistema
-          </dt>
-
-          <dd className="text-4xl font-extrabold text-blue-600 md:text-5xl">
-            2
-          </dd>
-        </div>
-      </dl>
+      <div className="dataCard categoryCard">
+        <Doughnut
+          data={{
+            labels: ordersByStatus.map((data) => data.status),
+            datasets: [
+              {
+                label: "Count",
+                data: ordersByStatus.map((data) => data.count),
+                backgroundColor: [
+                  "rgba(250, 192, 19, 0.8)", // Pendiente
+                  "rgba(43, 63, 229, 0.8)", // Enviado
+                  "rgba(253, 135, 135, 0.8)", // Cancelado
+                  "rgba(34, 197, 94, 0.8)", // Entregado
+                ],
+                borderColor: [
+                  "rgba(250, 192, 19, 0.8)", // Pendiente
+                  "rgba(43, 63, 229, 0.8)", // Enviado
+                  "rgba(253, 135, 135, 0.8)", // Cancelado
+                  "rgba(34, 197, 94, 0.8)", // Entregado
+                ],
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              title: {
+                text: "Estado de los Pedidos",
+              },
+            },
+          }}
+        />
+      </div>
     </div>
   )
 }

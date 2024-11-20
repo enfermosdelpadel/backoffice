@@ -1,19 +1,14 @@
 import PropTypes from "prop-types"
 import { useForm } from "react-hook-form"
-import { useContext, useState, useMemo, useCallback } from "react"
+import { useContext, useState, useMemo } from "react"
 import { DataContext } from "../../context/DataContext"
-import { useDropzone } from "react-dropzone"
-import { PhotoIcon, PlusIcon } from "@heroicons/react/16/solid"
+import { PlusIcon } from "@heroicons/react/16/solid"
+import { ImageProduct } from "../ImageProduct"
 
 const FormProducts = (props) => {
-  //upload files
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles[0])
-  }, [])
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
-
-  const { brand, type, subType, model } = props
-  const { insertProduct, uploadImage, imageUrl } = useContext(DataContext)
+  const { brand, type, sub_type, model, gender, color } = props
+  const { insertProduct, uploadImage, imageUrl, loading } =
+    useContext(DataContext)
   const [selectedType, setSelectedType] = useState(null)
 
   const handleTypeChange = (e) => {
@@ -21,12 +16,12 @@ const FormProducts = (props) => {
     setSelectedType(selectedTypeValue)
   }
 
-  const filteredSubTypes = useMemo(
+  const filteredsub_types = useMemo(
     () =>
       selectedType
-        ? subType.filter((subType) => subType.types?.name === selectedType)
+        ? sub_type.filter((sub_type) => sub_type.types?.name === selectedType)
         : [],
-    [selectedType, subType]
+    [selectedType, sub_type]
   )
 
   const {
@@ -35,15 +30,14 @@ const FormProducts = (props) => {
     formState: { errors },
     // watch,
     reset,
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      imageUrl: undefined,
+    },
+  })
 
   const onSubmit = handleSubmit(async (data) => {
-    const file = acceptedFiles[0]
-    await uploadImage({ target: { files: [file] } })
-    data.fileUrl = imageUrl.fileUrl
     insertProduct(data)
-    // console.log(data)
-
     reset()
   })
 
@@ -52,9 +46,7 @@ const FormProducts = (props) => {
       <div className="w-full mt-4 bg-white ">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <PlusIcon className="h-6 w-6 mr-2 text-blue-900" />
-          <h3 className="text-lg font-medium text-blue-900">
-            Añadir un producto
-          </h3>
+          <h3 className="h3">Añadir un producto</h3>
         </div>
         <form onSubmit={onSubmit} className="flex flex-col w-full h-full p-4">
           <div className="mb-4 border border-gray-300 rounded-md p-4">
@@ -62,7 +54,12 @@ const FormProducts = (props) => {
               <div className="grid grid-cols-1 gap-0 ">
                 <div>
                   <label htmlFor="type" className="label-form">
-                    Tipo
+                    Tipo (*){" "}
+                    {errors.type && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </label>
                   <select
                     id="type"
@@ -71,7 +68,7 @@ const FormProducts = (props) => {
                     onChange={handleTypeChange}
                   >
                     <option value="" hidden>
-                      Seleccione un tipo
+                      Seleccione un tipo {""}
                     </option>
                     {type.map((type, index) => (
                       <option key={index} value={type.name}>
@@ -79,36 +76,40 @@ const FormProducts = (props) => {
                       </option>
                     ))}
                   </select>
-                  {errors.type && (
-                    <span className="span-error">Este campo es requerido</span>
-                  )}
                 </div>
                 <div>
-                  <label htmlFor="subType" className="label-form">
-                    Subtipo
+                  <label htmlFor="sub_type" className="label-form">
+                    Subtipo (*){" "}
+                    {errors.sub_type && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </label>
                   <select
-                    id="subType"
+                    id="sub_type"
                     className="w-full"
-                    {...register("subType", { required: "select one option" })}
+                    {...register("sub_type", { required: "select one option" })}
                   >
                     <option value="" hidden>
                       Seleccione un subtipo
                     </option>
-                    {filteredSubTypes?.map((subType, id) => (
-                      <option key={id} value={subType.name}>
-                        {subType?.name}
+                    {filteredsub_types?.map((sub_type, id) => (
+                      <option key={id} value={sub_type.name}>
+                        {sub_type?.name}
                       </option>
                     ))}
                   </select>
-                  {errors.subType && (
-                    <span className="span-error">Este campo es requerido</span>
-                  )}
                 </div>
 
                 <div>
                   <label htmlFor="brand" className="label-form">
-                    Marca
+                    Marca (*){" "}
+                    {errors.brand && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </label>
                   <select
                     id="brand"
@@ -124,13 +125,15 @@ const FormProducts = (props) => {
                       </option>
                     ))}
                   </select>
-                  {errors.brand && (
-                    <span className="span-error">Este campo es requerido</span>
-                  )}
                 </div>
                 <div>
                   <label htmlFor="model" className="label-form">
-                    Modelo
+                    Modelo (*){" "}
+                    {errors.model && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </label>
                   <select
                     id="model"
@@ -146,56 +149,98 @@ const FormProducts = (props) => {
                       </option>
                     ))}
                   </select>
-                  {errors.model && (
-                    <span className="span-error">Este campo es requerido</span>
-                  )}
+                </div>
+                <div>
+                  <label htmlFor="gender" className="label-form">
+                    Género (*){" "}
+                    {errors.gender && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
+                  </label>
+                  <select
+                    id="gender"
+                    className="w-full"
+                    {...register("gender", { required: "select one option" })}
+                  >
+                    <option value="" hidden>
+                      Seleccione un Genero
+                    </option>
+                    {gender?.map((gender, id) => (
+                      <option key={id} value={gender.name}>
+                        {gender?.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="color" className="label-form">
+                    Color (*){" "}
+                    {errors.color && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
+                  </label>
+                  <select
+                    id="color"
+                    className="w-full"
+                    {...register("color", { required: "select one option" })}
+                  >
+                    <option value="" hidden>
+                      Seleccione un Genero
+                    </option>
+                    {color?.map((color, id) => (
+                      <option key={id} value={color.name}>
+                        {color?.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div>
                 <div className="col-span-6 ">
-                  <label className="label-form">Descripción</label>
+                  <label className="label-form" htmlFor="description">
+                    Descripción (*){" "}
+                    {errors.description && (
+                      <span className="span-error">
+                        Este campo es requerido
+                      </span>
+                    )}
+                  </label>
                   <textarea
+                    id="description"
                     className="input-primary border-2 border-gray-300"
                     type="text"
                     rows="5"
-                    {...register("desc", { required: true })}
+                    {...register("description", { required: true })}
                   />
-                  {errors.desc && (
-                    <span className="span-error">Este campo es requerido</span>
-                  )}
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label className="label-form">Imágen del producto</label>
-                  <div
-                    {...getRootProps()}
-                    className="w-full border-2 border-dashed h-40 w-45 flex items-center justify-center rounded-lg border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 focus:outline-none focus:border-gray-400"
-                  >
-                    <input type="file" id="fileUrl" {...getInputProps()} />
-                    {acceptedFiles[0] ? (
-                      <img
-                        className="inline-block h-40 w-45 rounded-lg object-cover"
-                        src={URL.createObjectURL(acceptedFiles[0])}
-                      />
-                    ) : (
-                      <div className="">
-                        <PhotoIcon className="mx-auto h-10 w-10 text-gray-400" />
-                        <p className="text-center text-gray-600">
-                          Selecciona una imagen
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                  <label className="label-form" htmlFor="image_url">
+                    Imágen del producto
+                  </label>
+                  <ImageProduct
+                    register={register}
+                    uploadImage={uploadImage}
+                    image={imageUrl}
+                    isloading={loading}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex justify-start ">
-            <button className="btn-primary ">Añadir Producto</button>
+          <div className="flex flex-coljustify-start ">
+            <button className="btn-primary ">
+              {loading ? "Loading..." : "Añadir Producto"}
+            </button>
+            <span className="pt-2 pl-5">(*) Campos obligatorios</span>
           </div>
           {/* <pre>
-        <code>{JSON.stringify(watch(), null, 2)}</code>
-      </pre> */}
+            <code>{JSON.stringify(watch(), null, 2)}</code>
+          </pre> */}
         </form>
       </div>
     </>
@@ -205,7 +250,9 @@ export { FormProducts }
 
 FormProducts.propTypes = {
   type: PropTypes.array.isRequired,
-  subType: PropTypes.array.isRequired,
+  sub_type: PropTypes.array.isRequired,
   brand: PropTypes.array.isRequired,
   model: PropTypes.array.isRequired,
+  gender: PropTypes.array.isRequired,
+  color: PropTypes.array.isRequired,
 }

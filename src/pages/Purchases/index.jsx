@@ -7,11 +7,29 @@ import useRowsPurchases from "../../hooks/Purchases/useRowsPurchases"
 import useColumnsPurchases from "../../hooks/Purchases/useColumnsPurchases"
 import useRowsProdutcs from "../../hooks/Products/useRowsProdutcs"
 
-import { useContext } from "react"
+import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Purchases() {
-  const { suppliers, insertPurchase, loading } = useContext(DataContext)
+  const { suppliers, insertPurchase, loading, sizes } = useContext(DataContext)
+
+  const [selectedProduct, setSelectedProduct] = useState(null)
+
+  const handleSizeChange = (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]
+    const selectedType = selectedOption.getAttribute("data-type")
+    setSelectedProduct(selectedType)
+  }
+
+  const filteredSizes = useMemo(() => {
+    if (selectedProduct === "Indumentaria") {
+      return sizes.filter((size) => size.category === "clothing")
+    } else if (selectedProduct === "Zapatillas") {
+      return sizes.filter((size) => size.category === "shoes")
+    }
+    return []
+  }, [selectedProduct, sizes])
+
   const {
     register,
     handleSubmit,
@@ -19,33 +37,22 @@ function Purchases() {
     reset,
   } = useForm()
 
-  const products = useRowsProdutcs().sort((a, b) =>
-    a.product_name.localeCompare(b.product_name)
-  )
-
-  const sizes = [
-    { id: 1, name: "size 1" },
-    { id: 2, name: "size 2" },
-    { id: 3, name: "size 3" },
-  ]
-
-  const colors = [
-    { id: 1, name: "Color 1" },
-    { id: 2, name: "Color 2" },
-    { id: 3, name: "Color 3" },
-  ]
-
-  const genders = [
-    { id: 1, name: "Hombre" },
-    { id: 2, name: "Mujer" },
-    { id: 3, name: "Unisex" },
-  ]
+  const products = useRowsProdutcs()
+    .map((p) => {
+      if (p.type === "Indumentaria") {
+        return {
+          ...p,
+          product_name: `${p.product_name} ${p.gender} ${p.color}`,
+        }
+      }
+      return p
+    })
+    .sort((a, b) => a.product_name.localeCompare(b.product_name))
 
   const onSubmit = (data) => {
     const total_cost = data.quantity * data.uni_cost
 
     insertPurchase(data, total_cost)
-    console.log("Formulario enviado:", data, total_cost)
 
     reset()
   }
@@ -66,7 +73,10 @@ function Purchases() {
           <div className="border border-gray-300 px-4 py-2 rounded pb-4 grid grid-cols-2 gap-4 mb-2">
             <div className="flex flex-col">
               <label className="label-form" htmlFor="supplier">
-                Proveedor
+                Proveedor (*){" "}
+                {errors.supplier && (
+                  <span className="span-error">Este campo es requerido</span>
+                )}
               </label>
               <select
                 id="supplier"
@@ -82,15 +92,16 @@ function Purchases() {
                   </option>
                 ))}
               </select>
-              {errors.supplier && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="product">
-                Producto
+                Producto (*){" "}
+                {errors.product && (
+                  <span className="span-error">Este campo es requerido</span>
+                )}
               </label>
               <select
+                onInput={handleSizeChange}
                 id="product"
                 {...register("product", { required: "select one option" })}
               >
@@ -98,113 +109,69 @@ function Purchases() {
                   Seleccione un Producto
                 </option>
                 {products.map((product) => (
-                  <option key={product.id} value={product.id}>
+                  <option
+                    data-type={product.type}
+                    key={product.id}
+                    value={product.id}
+                  >
                     {product?.product_name}
                   </option>
                 ))}
               </select>
-              {errors.product && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="size">
                 Talle
               </label>
-              <select
-                id="size"
-                {...register("size", { required: "select one option" })}
-              >
+              <select id="size" {...register("size")}>
                 <option value="" hidden>
                   Seleccionar Talle
                 </option>
-                {sizes.map((size) => (
+                {filteredSizes.map((size) => (
                   <option key={size.id} value={size.id}>
                     {size?.name}
                   </option>
                 ))}
               </select>
-              {errors.size && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
-            </div>
-            <div className="flex flex-col">
-              <label className="label-form" htmlFor="color">
-                Color
-              </label>
-              <select
-                id="color"
-                {...register("color", { required: "select one option" })}
-              >
-                <option value="" hidden>
-                  Seleccionar color
-                </option>
-                {colors.map((color) => (
-                  <option key={color.id} value={color.id}>
-                    {color?.name}
-                  </option>
-                ))}
-              </select>
-              {errors.color && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
-            </div>
-            <div className="flex flex-col">
-              <label className="label-form" htmlFor="gender">
-                Genero
-              </label>
-              <select
-                id="gender"
-                {...register("gender", { required: "select one option" })}
-              >
-                <option value="" hidden>
-                  Seleccionar genero
-                </option>
-                {genders.map((gender) => (
-                  <option key={gender.id} value={gender.id}>
-                    {gender?.name}
-                  </option>
-                ))}
-              </select>
-              {errors.gender && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
           </div>
           <div className="border border-gray-300 px-4 py-2 rounded pb-4 grid grid-cols-2 gap-4 mb-4">
             <div className="flex flex-col">
               <label className="label-form" htmlFor="quantity">
-                Cantidad
+                Cantidad (*){" "}
+                {errors.quantity && (
+                  <span className="span-error">Este campo es requerido</span>
+                )}
               </label>
               <input
+                autoComplete="off"
                 id="quantity"
                 type="number"
                 placeholder="0"
                 {...register("quantity", { required: true })}
               />
-              {errors.quantity && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
             <div className="flex flex-col">
               <label className="label-form" htmlFor="uni_cost">
-                Precio Unitario
+                Precio Unitario (*){" "}
+                {errors.uni_cost && (
+                  <span className="span-error">Este campo es requerido</span>
+                )}
               </label>
               <input
+                autoComplete="off"
                 id="uni_cost"
                 type="number"
                 placeholder="0"
                 {...register("uni_cost", { required: true })}
               />
-              {errors.uni_cost && (
-                <span className="span-error">Este campo es requerido</span>
-              )}
             </div>
           </div>
           <div className="flex justify-start ">
             <button className="btn-primary ">
-              {loading ? "Loading..." : "Añadir Compra"}
+              {loading ? "Guardando..." : "Añadir Compra"}
             </button>
+            <span className="p-2 pl-4"> (*) Campos obligatorios </span>
           </div>
         </form>
       </div>

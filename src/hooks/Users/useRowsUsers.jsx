@@ -4,16 +4,21 @@ import { DataContext } from "../../context/DataContext"
 export default function useRowsSuppliers() {
   const { profile } = useContext(DataContext)
 
+  const users = useMemo(
+    () => profile.filter((item) => !item.is_customer),
+    [profile]
+  )
+
   const rows = useMemo(
     () =>
-      profile.map((item) => ({
+      users.map((item) => ({
         id: item.id,
         name: item.first_name + " " + item.last_name,
         email: item.email,
         address: item.address,
         dni: item.dni,
       })),
-    [profile] // add this dependency array
+    [users]
   )
 
   return rows

@@ -48,16 +48,16 @@ const FormProducts = () => {
             <label className="label">Sub Tipo</label>
 
             <input
-              value={context.selectedItem?.subType}
+              value={context.selectedItem?.sub_type}
               onChange={(e) => {
                 context.setSelectedItem({
                   ...context.selectedItem,
-                  subType: e.target.value,
+                  sub_type: e.target.value,
                 })
               }}
               type="text"
-              id="subType"
-              name="subType"
+              id="sub_type"
+              name="sub_type"
               className="input-primary"
             />
           </div>
@@ -221,7 +221,7 @@ const FormProducts = () => {
 
             <input
               type="file"
-              id="fileUrl"
+              id="image_url"
               name="image"
               onChange={context.updateImage}
               className=""
@@ -231,7 +231,7 @@ const FormProducts = () => {
             <figure className="w-40 h-40 rounded-lg">
               <img
                 className="w-full h-full rounded-lg object-cover"
-                src={context.selectedItem?.fileUrl}
+                src={context.selectedItem?.image_url}
                 alt=""
               />
             </figure>

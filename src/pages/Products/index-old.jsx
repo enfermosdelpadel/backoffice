@@ -12,7 +12,7 @@ const Products = () => {
     e.preventDefault()
     if (
       context.addProduct.type === "" ||
-      context.addProduct.subType === "" ||
+      context.addProduct.sub_type === "" ||
       context.addProduct.brand === "" ||
       context.addProduct.color === "" ||
       context.addProduct.cost === "" ||
@@ -29,7 +29,7 @@ const Products = () => {
       })
       context.setAddProduct({
         type: "",
-        subType: "",
+        sub_type: "",
         model: "",
         brand: "",
         color: "",
@@ -39,7 +39,7 @@ const Products = () => {
         price: "",
         desc: "",
         stock: "",
-        fileUrl: "",
+        image_url: "",
       })
       context.setPreview(null)
     } catch (error) {
@@ -74,15 +74,15 @@ const Products = () => {
 
             <input
               type="text"
-              id="subType"
-              value={context.addProduct.subType}
+              id="sub_type"
+              value={context.addProduct.sub_type}
               onChange={(e) =>
                 context.setAddProduct({
                   ...context.addProduct,
-                  subType: e.target.value,
+                  sub_type: e.target.value,
                 })
               }
-              name="subType"
+              name="sub_type"
               className="input-primary"
             />
           </div>
@@ -247,7 +247,7 @@ const Products = () => {
 
             <input
               type="file"
-              id="fileUrl"
+              id="image_url"
               onChange={context.uploadImage}
               name="image"
               className="input-primary "

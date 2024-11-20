@@ -4,7 +4,7 @@
 
 @layer components {
   .input-primary {
-    @apply mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm;
+    @apply mt-1 w-full border-gray-200 bg-white text-sm text-gray-700 shadow-sm;
   }
   .btn-menu {
     @apply relative flex rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700;
@@ -58,6 +58,12 @@
   .span-error {
     @apply text-xs text-red-500;
   }
+  .order-selected {
+    @apply bg-blue-300 text-white border-0 rounded-md;
+  }
+  .modal {
+    @apply bg-gray-100 opacity-100 bg-opacity-60 fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center;
+  }
 }
 
 @layer base {
@@ -81,5 +87,8 @@
 
   button {
     @apply border border-gray-300 px-2 py-1 rounded-sm active:border-gray-500 hover:bg-blue-400 hover:text-white;
+  }
+  h3 {
+    @apply text-lg font-medium text-blue-900;
   }
 }

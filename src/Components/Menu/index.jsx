@@ -8,10 +8,13 @@ import {
   InboxStackIcon,
   ChevronDownIcon,
   PlusCircleIcon,
-  CogIcon,
   TagIcon,
-  DocumentPlusIcon,
   UserGroupIcon,
+  DocumentCurrencyDollarIcon,
+  PaintBrushIcon,
+  PresentationChartBarIcon,
+  WrenchScrewdriverIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline"
 import { NavLink } from "react-router-dom"
 
@@ -85,7 +88,22 @@ function Menu() {
                         <span className="justify-right">
                           <InboxStackIcon className="size-5" />
                         </span>
-                        <span>Listado</span>
+                        <span>Stock</span>
+                      </span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/prices"
+                      className={({ isActive }) =>
+                        isActive ? "btn-menu-active" : "btn-menu"
+                      }
+                    >
+                      <span className="flex items-right space-x-2">
+                        <span className="justify-right">
+                          <DocumentCurrencyDollarIcon className="size-5" />
+                        </span>
+                        <span>Precios</span>
                       </span>
                     </NavLink>
                   </li>
@@ -94,16 +112,16 @@ function Menu() {
             </li>
             <li>
               <NavLink
-                to="/sales"
+                to="/orders"
                 className={({ isActive }) =>
                   isActive ? "btn-menu-active" : "btn-menu"
                 }
               >
                 <span className="flex items-center space-x-2">
                   <span className="justify-right">
-                    <ShoppingBagIcon className="size-5" />
+                    <ShoppingCartIcon className="size-5" />
                   </span>
-                  <span>Ventas</span>
+                  <span>Órdenes</span>
                 </span>
               </NavLink>
             </li>
@@ -146,7 +164,7 @@ function Menu() {
               >
                 <span className="flex items-right space-x-2">
                   <span>
-                    <DocumentPlusIcon className="size-5" />
+                    <ShoppingBagIcon className="size-5" />
                   </span>
                   <span>Compras</span>
                 </span>
@@ -168,10 +186,25 @@ function Menu() {
               </NavLink>
             </li>
             <li>
+              <NavLink
+                to="/Reports"
+                className={({ isActive }) =>
+                  isActive ? "btn-menu-active" : "btn-menu"
+                }
+              >
+                <span className="flex items-right space-x-2">
+                  <span>
+                    <PresentationChartBarIcon className="size-5" />
+                  </span>
+                  <span>Reportes</span>
+                </span>
+              </NavLink>
+            </li>
+            <li>
               <details className="group [&_summary::-webkit-details-marker]:hidden hover:cursor-pointer">
                 <summary className="btn-menu gap-2">
                   <span className="justify-right">
-                    <CogIcon className="size-5" />
+                    <WrenchScrewdriverIcon className="size-5" />
                   </span>
                   <span>Ajustes</span>
 
@@ -193,6 +226,21 @@ function Menu() {
                           <TagIcon className="size-5" />
                         </span>
                         <span>Categorias</span>
+                      </span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/attributes"
+                      className={({ isActive }) =>
+                        isActive ? "btn-menu-active" : "btn-menu"
+                      }
+                    >
+                      <span className="flex items-right space-x-2">
+                        <span className="justify-right">
+                          <PaintBrushIcon className="size-5" />
+                        </span>
+                        <span>Atributos</span>
                       </span>
                     </NavLink>
                   </li>

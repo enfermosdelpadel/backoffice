@@ -16,21 +16,40 @@ export default function useRowsPurchases() {
             day: "numeric",
           }
         ),
-        supplier: item.suppliers.company,
-        product:
-          item.products.type +
-          " " +
-          item.products.subType +
-          " " +
-          item.products.model,
-        size: item.sizes.name,
-        color: item.colors.name,
-        gender: item.genders.name,
+        supplier: item.suppliers ? item.suppliers.company : "",
+        type: item.products ? item.products.type : "",
+        product: item.products
+          ? item.products.sub_type +
+            " " +
+            item.products.model +
+            " " +
+            item.products.brand
+          : " ",
+        size: item.sizes && item.sizes.name ? item.sizes.name : "",
+        color: item.products && item.products.color ? item.products.color : "",
+        gender:
+          item.products && item.products.gender ? item.products.gender : "",
         quantity: item.quantity,
-        cost: item.total_cost,
-        total_cost: item.total_cost,
+        cost:
+          item.uni_cost !== undefined && typeof item.uni_cost === "number"
+            ? item.uni_cost.toLocaleString("es-AR", {
+                maximumFractionDigits: 2,
+                style: "currency",
+                currency: "ARS",
+                useGrouping: true,
+              })
+            : "",
+        total_cost:
+          item.total_cost !== undefined && typeof item.total_cost === "number"
+            ? item.total_cost.toLocaleString("es-AR", {
+                maximumFractionDigits: 2,
+                style: "currency",
+                currency: "ARS",
+                useGrouping: true,
+              })
+            : "",
       })),
-    [purchases] // add this dependency array
+    [purchases]
   )
 
   return rows

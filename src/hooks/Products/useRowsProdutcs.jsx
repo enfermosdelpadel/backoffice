@@ -9,13 +9,7 @@ export default function useRowsProdutcs() {
       products.map((product) => ({
         id: product.id,
         product_name:
-          product.type +
-          " " +
-          product.subType +
-          " " +
-          product.brand +
-          " " +
-          product.model,
+          product.sub_type + " " + product.brand + " " + product.model,
         created_at: new Date(product.created_at).toLocaleDateString("es-ES", {
           year: "numeric",
           month: "numeric",
@@ -23,10 +17,12 @@ export default function useRowsProdutcs() {
         }),
         brand: product.brand,
         type: product.type,
-        subType: product.subType,
+        sub_type: product.sub_type,
         model: product.model,
+        gender: product.gender,
+        color: product.color,
       })),
-    [products] // add this dependency array
+    [products]
   )
 
   return rows
