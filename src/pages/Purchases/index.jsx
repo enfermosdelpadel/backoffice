@@ -10,6 +10,8 @@ import useRowsProdutcs from "../../hooks/Products/useRowsProdutcs"
 import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
+import { Toaster } from "react-hot-toast"
+
 function Purchases() {
   const { suppliers, insertPurchase, loading, sizes } = useContext(DataContext)
 
@@ -39,7 +41,7 @@ function Purchases() {
 
   const products = useRowsProdutcs()
     .map((p) => {
-      if (p.type === "Indumentaria") {
+      if (p.type !== "Paleta") {
         return {
           ...p,
           product_name: `${p.product_name} ${p.gender} ${p.color}`,
@@ -59,6 +61,7 @@ function Purchases() {
 
   return (
     <Layout>
+      <Toaster gutter={30} duration={3000} />
       <div className="w-full">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <PlusIcon className="h-6 w-6 mr-2 text-blue-900" />
