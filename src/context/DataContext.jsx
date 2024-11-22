@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import { createContext, useState, useEffect } from "react"
 import { supabase } from "../supabase/client"
+import { toast } from "react-hot-toast"
 
 export const DataContext = createContext()
 
@@ -294,7 +295,7 @@ export const DataContextProvider = ({ children }) => {
       alert("Error al guardar la compra")
       throw error
     }
-    alert("Compra guardada con éxito")
+    toast.success("Compra guardada con éxito")
   }
 
   const updatePercentage = async (data) => {
@@ -486,6 +487,7 @@ export const DataContextProvider = ({ children }) => {
         setUserEmail,
         isEditing,
         setIsEditing,
+        toast,
       }}
     >
       {children}

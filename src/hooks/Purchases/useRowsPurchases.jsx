@@ -21,9 +21,9 @@ export default function useRowsPurchases() {
         product: item.products
           ? item.products.sub_type +
             " " +
-            item.products.model +
+            item.products.brand +
             " " +
-            item.products.brand
+            item.products.model
           : " ",
         size: item.sizes && item.sizes.name ? item.sizes.name : "",
         color: item.products && item.products.color ? item.products.color : "",
