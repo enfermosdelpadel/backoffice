@@ -10,6 +10,7 @@ export default function useSalesByDate() {
       const date = new Date(order.order_date).toLocaleDateString("es-ES", {
         day: "numeric",
         month: "numeric",
+        year: "numeric",
       })
       const existingDate = acc.find((item) => item.date === date)
       if (existingDate) {

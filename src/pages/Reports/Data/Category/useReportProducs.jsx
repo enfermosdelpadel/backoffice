@@ -31,14 +31,18 @@ export default function useReportProducs() {
         0
       )
 
-      const categoryKey = `${product.type} ${product.sub_type} ${
-        product.model
-      } ${product.brand} ${product.color || ""}`
+      const categoryKey = ` ${product.sub_type} ${product.model} ${
+        product.brand
+      } ${product.color || ""}`
       const category = acc.find(
         (category) => category.categoryKey === categoryKey
       )
       if (!category) {
         acc.push({
+          type: product.type,
+          subType: product.sub_type,
+          model: product.model,
+          brand: product.brand,
           categoryKey,
           purchased: 0,
           sold: 0,
