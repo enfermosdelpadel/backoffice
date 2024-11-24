@@ -7,6 +7,7 @@ export default function useRowsCategory() {
   const rows = useMemo(
     () =>
       reportProducs.map((item) => ({
+        type: item.type,
         categoryKey: item.categoryKey,
         purchased: item.purchased,
         sold: item.sold,

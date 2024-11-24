@@ -26,7 +26,7 @@ export default function useOrdersByUser() {
       return acc
     }, [])
 
-    return result.sort((a, b) => b.count - a.count).slice(0, 10)
+    return result.sort((a, b) => b.count - a.count).slice(0, 5)
   }, [orders, profile])
   return ordersByUser
 }

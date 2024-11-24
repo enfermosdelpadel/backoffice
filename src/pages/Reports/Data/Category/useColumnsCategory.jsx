@@ -4,6 +4,10 @@ export default function useColumnsCategory() {
   const columns = useMemo(
     () => [
       {
+        Header: "Tipo",
+        accessor: "type",
+      },
+      {
         Header: "Nombre",
         accessor: "categoryKey",
         width: 350,
