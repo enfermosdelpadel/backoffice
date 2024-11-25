@@ -41,7 +41,7 @@ const ImageProduct = ({ register, uploadImage, image, isloading }) => {
       />
 
       <img
-        src={preview ? preview : "/public/image-x.svg"}
+        src={preview ? preview : "image-x.svg"}
         alt="product image"
         className="w-32 h-32 object-cover"
       />
