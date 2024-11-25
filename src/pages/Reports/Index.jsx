@@ -14,7 +14,7 @@ function Reports() {
         <TabList>
           <Tab>Reporte Productos</Tab>
           <Tab>Informe Ventas</Tab>
-          <Tab>Reporte...</Tab>
+          <Tab></Tab>
         </TabList>
 
         <TabPanel>

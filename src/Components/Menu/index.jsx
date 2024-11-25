@@ -30,7 +30,11 @@ function Menu() {
       }  h-screen w-50 flex-col justify-between border-e fixed top-0 left-0 bg-white`}
     >
       <div className="border-t border-gray-100">
+        <img src="/backo" alt="" />
         <div className="px-2 py-4">
+          <picture className="flex justify-center">
+            <img src="/edp-logo.svg" className="pt-10 w-20 mr-2" alt="" />
+          </picture>
           <ul className="mt-20 space-y-2">
             <li>
               <NavLink

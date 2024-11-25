@@ -16,7 +16,7 @@ function GlobalInfo({
 }) {
   return (
     <div className="flex flex-row space-y-12 sm:space-y-0 sm:space-x-4">
-      <article className="flex items-center gap-4 rounded-lg border border-gray-100 bg-white p-3 justify-center w-1/2">
+      <article className="flex items-center gap-4 rounded-lg border border-gray-100 bg-white p-3 justify-center w-1/2 sm:w-auto">
         <span className="rounded-full bg-cyan-100 p-3 text-cyan-600">
           <ChartBarSquareIcon className="size-8" />
         </span>
@@ -74,7 +74,7 @@ function GlobalInfo({
           <p className="text-sm text-gray-500"> en ventas realizadas</p>
         </div>
       </article>
-      <article className="flex items-center gap-4 w-1/2 rounded-lg border border-gray-100 bg-white p-3 sm:justify-between">
+      <article className="flex items-center gap-4 w-56 rounded-lg border border-gray-100 bg-white p-3 sm:justify-between">
         <span className="rounded-full bg-orange-100 p-3 text-orange-600 sm:order-last">
           <ShoppingCartIcon className="size-8" />
         </span>
