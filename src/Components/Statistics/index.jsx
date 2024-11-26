@@ -346,14 +346,14 @@ function Statistics() {
                 backgroundColor: [
                   "rgba(250, 192, 19, 0.8)", // Pendiente
                   "rgba(43, 63, 229, 0.8)", // Enviado
-                  "rgba(253, 135, 135, 0.8)", // Cancelado
                   "rgba(34, 197, 94, 0.8)", // Entregado
+                  "rgba(253, 135, 135, 0.8)  ", // Cancelado
                 ],
                 borderColor: [
                   "rgba(250, 192, 19, 0.8)", // Pendiente
                   "rgba(43, 63, 229, 0.8)", // Enviado
-                  "rgba(253, 135, 135, 0.8)", // Cancelado
                   "rgba(34, 197, 94, 0.8)", // Entregado
+                  "rgba(253, 135, 135, 0.8)  ", // Cancelado
                 ],
               },
             ],
