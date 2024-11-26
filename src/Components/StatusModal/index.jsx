@@ -7,18 +7,19 @@ function StatusModal({
   changeStatus,
   sendEmail,
   userEmail,
+  orderNumber,
 }) {
   const handleStatusChange = async (e) => {
     e.preventDefault()
     const msgEnviado =
-      "<br/> Pronto tendrás los productos en tu casa. <br/><br/>EDP"
+      "<br/> Pronto tendrás los productos en tu casa!. <br/><br/>EDP"
     const msgEntregado =
       "<br/> Espero que lo disfrutes<br/> <br/> Gracias por tu compra!<br/><br/>EDP"
     const status = e.target.value
     const infoMail = {
       to: userEmail,
       subject: "Cambio de estado del Pedido",
-      html: `El estado del pedido ${orderId} a cambiado a ${status}.<br/>${
+      html: `El estado del pedido ${orderNumber} a cambiado a ${status}.<br/>${
         status === "Enviado" ? msgEnviado : msgEntregado
       }`,
     }
@@ -90,4 +91,5 @@ StatusModal.propTypes = {
   changeStatus: PropTypes.func.isRequired,
   sendEmail: PropTypes.func.isRequired,
   userEmail: PropTypes.string.isRequired,
+  orderNumber: PropTypes.string.isRequired,
 }

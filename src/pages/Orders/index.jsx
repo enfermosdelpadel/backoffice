@@ -16,8 +16,8 @@ function Orders() {
     changeStatus,
     sendEmail,
     userEmail,
+    orderNumber,
   } = useContext(DataContext)
-
   return (
     <Layout>
       <ReactModal className="modal" isOpen={modalStatus}>
@@ -27,6 +27,7 @@ function Orders() {
           changeStatus={changeStatus}
           sendEmail={sendEmail}
           userEmail={userEmail}
+          orderNumber={orderNumber}
         />
       </ReactModal>
       <Table

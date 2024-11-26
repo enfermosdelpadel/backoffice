@@ -41,6 +41,7 @@ export const DataContextProvider = ({ children }) => {
   const [orderDetails, setOrderDetails] = useState([""])
   const [orderId, setOrderId] = useState(null)
   const [userEmail, setUserEmail] = useState(null)
+  const [orderNumber, setOrderNumber] = useState(null)
 
   const [loading, setLoading] = useState(false)
 
@@ -488,6 +489,8 @@ export const DataContextProvider = ({ children }) => {
         isEditing,
         setIsEditing,
         toast,
+        orderNumber,
+        setOrderNumber,
       }}
     >
       {children}
