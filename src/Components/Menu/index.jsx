@@ -27,7 +27,7 @@ function Menu() {
     <div
       className={`${
         context.isUserLogin ? "flex" : "hidden"
-      }  h-screen w-50 flex-col justify-between border-e fixed top-0 left-0 bg-white`}
+      }  h-screen w-48 flex-col justify-between border-e fixed top-0 left-0 bg-white`}
     >
       <div className="border-t border-gray-100">
         <img src="/backo" alt="" />

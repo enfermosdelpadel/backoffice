@@ -2,8 +2,14 @@ import { useContext, useMemo, useState } from "react"
 import { DataContext } from "../../context/DataContext"
 
 export default function useRowsOrders() {
-  const { orders, setOrderId, setModalStatus, setUserEmail, setOrderNumber } =
-    useContext(DataContext)
+  const {
+    orders,
+    setOrderId,
+    setModalStatus,
+    setUserEmail,
+    setOrderNumber,
+    setClientName,
+  } = useContext(DataContext)
   const [selectedOrderId, setSelectedOrderId] = useState(null)
 
   const rows = useMemo(
@@ -46,6 +52,7 @@ export default function useRowsOrders() {
               setOrderId(sale.id)
               setUserEmail(sale.profiles?.email)
               setOrderNumber(sale.order_number)
+              setClientName(sale.profiles?.first_name)
             }}
             className={
               {
@@ -75,6 +82,7 @@ export default function useRowsOrders() {
       setModalStatus,
       setUserEmail,
       setOrderNumber,
+      setClientName,
     ]
   )
 

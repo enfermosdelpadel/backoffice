@@ -32,7 +32,19 @@ defaults.plugins.title.color = "black"
 
 function Statistics() {
   const { orders } = useContext(DataContext)
+
+  //Calculos
   const totalOrders = orders.length
+  const totalOrdersDone = orders.filter(
+    (order) => order.status !== "Cancelado"
+  ).length
+  const totalOrdersCanceled = orders.filter(
+    (order) => order.status === "Cancelado"
+  ).length
+  const totalPercentage = Math.round(
+    ((totalOrders - totalOrdersCanceled) / totalOrders) * 100
+  )
+
   //Hooks useMemo
   const salesByDate = useSalesByDate()
   const ordersByStatus = useOrdersByStatus()
@@ -139,7 +151,8 @@ function Statistics() {
           totalPurchased={totalPurchased}
           totalSold={totalSold}
           totalStock={totalStock}
-          totalOrders={totalOrders}
+          totalOrders={totalOrdersDone}
+          totalPercentage={totalPercentage}
         />
       </div>
       <div className="dataCard categoryCard">
@@ -343,18 +356,15 @@ function Statistics() {
               {
                 label: "Count",
                 data: ordersByStatus.map((data) => data.count),
-                backgroundColor: [
-                  "rgba(250, 192, 19, 0.8)", // Pendiente
-                  "rgba(43, 63, 229, 0.8)", // Enviado
-                  "rgba(34, 197, 94, 0.8)", // Entregado
-                  "rgba(253, 135, 135, 0.8)  ", // Cancelado
-                ],
-                borderColor: [
-                  "rgba(250, 192, 19, 0.8)", // Pendiente
-                  "rgba(43, 63, 229, 0.8)", // Enviado
-                  "rgba(34, 197, 94, 0.8)", // Entregado
-                  "rgba(253, 135, 135, 0.8)  ", // Cancelado
-                ],
+                backgroundColor: ordersByStatus.map((status) => {
+                  const colorMap = {
+                    Cancelado: "rgba(220, 20, 60, 0.8)", // Rojo más fuerte
+                    Pendiente: "rgba(250, 192, 19, 0.8)", // Amarillo
+                    Entregado: "rgba(34, 197, 94, 0.8)", // Verde
+                    Enviado: "rgba(43, 63, 229, 0.8)", // Azul
+                  }
+                  return colorMap[status.status] || "rgba(80, 80, 80, 0.8)" // Gris oscuro si no se encuentra en el mapa
+                }),
               },
             ],
           }}
