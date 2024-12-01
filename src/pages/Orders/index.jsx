@@ -17,6 +17,7 @@ function Orders() {
     sendEmail,
     userEmail,
     orderNumber,
+    clientName,
   } = useContext(DataContext)
   return (
     <Layout>
@@ -28,6 +29,7 @@ function Orders() {
           sendEmail={sendEmail}
           userEmail={userEmail}
           orderNumber={orderNumber}
+          clientName={clientName}
         />
       </ReactModal>
       <Table

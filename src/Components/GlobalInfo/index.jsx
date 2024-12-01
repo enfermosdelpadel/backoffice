@@ -13,6 +13,7 @@ function GlobalInfo({
   totalSold,
   totalStock,
   totalOrders,
+  totalPercentage,
 }) {
   return (
     <div className="flex flex-row space-y-12 sm:space-y-0 sm:space-x-4">
@@ -79,7 +80,12 @@ function GlobalInfo({
           <ShoppingCartIcon className="size-8" />
         </span>
         <div>
-          <p className="text-2xl font-medium text-gray-900">{totalOrders}</p>
+          <div className="flex flex-row gap-2">
+            <p className="text-2xl font-medium text-gray-900">{totalOrders}</p>
+            <p className="text-lg font-medium text-green-500">
+              {totalPercentage}%
+            </p>
+          </div>
           <p className="text-sm text-gray-500"> órdenes realizadas</p>
         </div>
       </article>
@@ -106,4 +112,5 @@ GlobalInfo.propTypes = {
   totalSold: PropTypes.number.isRequired,
   totalStock: PropTypes.number.isRequired,
   totalOrders: PropTypes.number.isRequired,
+  totalPercentage: PropTypes.number.isRequired,
 }

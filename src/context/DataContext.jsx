@@ -42,6 +42,7 @@ export const DataContextProvider = ({ children }) => {
   const [orderId, setOrderId] = useState(null)
   const [userEmail, setUserEmail] = useState(null)
   const [orderNumber, setOrderNumber] = useState(null)
+  const [clientName, setClientName] = useState(null)
 
   const [loading, setLoading] = useState(false)
 
@@ -384,6 +385,7 @@ export const DataContextProvider = ({ children }) => {
     const { data, error } = await supabase
       .from("orders")
       .select("*,profiles(*)")
+      .order("order_date", { ascending: false })
     if (error) {
       throw error
     }
@@ -491,6 +493,8 @@ export const DataContextProvider = ({ children }) => {
         toast,
         orderNumber,
         setOrderNumber,
+        clientName,
+        setClientName,
       }}
     >
       {children}
