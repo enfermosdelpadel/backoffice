@@ -57,22 +57,21 @@ export const DataContextProvider = ({ children }) => {
   // URL for add and update images
   const bucket = import.meta.env.VITE_BUKCKET_NAME
   const uploadImage = async (e) => {
-    setLoading(true)
     const file = e.target.files[0]
     const fileName = `${Date.now()}-${file.name}`
-    const { data, error: uploadError } = await supabase.storage
+    const { data, error } = await supabase.storage
       .from("images")
       .upload(`public/${fileName}`, file, {
         upsert: false,
       })
-    setLoading(false)
-    if (!uploadError) {
+    if (data) {
       setImageUrl(`${bucket}${data.path}`)
-      console.log("image url", imageUrl)
+      console.log(data.path)
     } else {
-      alert(uploadError.message)
+      toast.error("Error al subir la imagen", error)
     }
   }
+
   const insertProduct = async (addProduct) => {
     const { error } = await supabase.from("products").insert({
       type: addProduct.type,
@@ -82,11 +81,14 @@ export const DataContextProvider = ({ children }) => {
       color: addProduct.color,
       gender: addProduct.gender,
       description: addProduct.description,
-      image_url: addProduct.image_url,
+      image_url: imageUrl,
     })
     if (error) {
       alert(error.error_description || error.message)
-    } else alert("Producto Guardado con éxito")
+    } else {
+      toast.success("Producto guardado con éxito")
+      setLoading(false)
+    }
   }
 
   // const updateImage = async (e) => {

@@ -61,7 +61,7 @@ function Purchases() {
 
   return (
     <Layout>
-      <Toaster gutter={30} duration={3000} />
+      <Toaster gutter={30} duration={4000} />
       <div className="w-full">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <PlusIcon className="h-6 w-6 mr-2 text-blue-900" />
