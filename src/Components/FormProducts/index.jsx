@@ -4,11 +4,11 @@ import { useContext, useState, useMemo } from "react"
 import { DataContext } from "../../context/DataContext"
 import { PlusIcon } from "@heroicons/react/16/solid"
 import { ImageProduct } from "../ImageProduct"
+import { Toaster } from "react-hot-toast"
 
 const FormProducts = (props) => {
   const { brand, type, sub_type, model, gender, color } = props
-  const { insertProduct, uploadImage, imageUrl, loading } =
-    useContext(DataContext)
+  const { insertProduct, uploadImage, loading } = useContext(DataContext)
   const [selectedType, setSelectedType] = useState(null)
 
   const handleTypeChange = (e) => {
@@ -30,11 +30,7 @@ const FormProducts = (props) => {
     formState: { errors },
     // watch,
     reset,
-  } = useForm({
-    defaultValues: {
-      imageUrl: undefined,
-    },
-  })
+  } = useForm()
 
   const onSubmit = handleSubmit(async (data) => {
     insertProduct(data)
@@ -43,6 +39,7 @@ const FormProducts = (props) => {
 
   return (
     <>
+      <Toaster gutter={30} duration={4000} />
       <div className="w-full mt-4 bg-white ">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <PlusIcon className="h-6 w-6 mr-2 text-blue-900" />
@@ -219,15 +216,10 @@ const FormProducts = (props) => {
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label className="label-form" htmlFor="image_url">
+                  <label className="label-form" htmlFor="imageUrl">
                     Imágen del producto
                   </label>
-                  <ImageProduct
-                    register={register}
-                    uploadImage={uploadImage}
-                    image={imageUrl}
-                    isloading={loading}
-                  />
+                  <ImageProduct register={register} uploadImage={uploadImage} />
                 </div>
               </div>
             </div>
