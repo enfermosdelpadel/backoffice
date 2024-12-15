@@ -16,6 +16,7 @@ export default function useRowsSuppliers() {
         name: item.first_name + " " + item.last_name,
         email: item.email,
         address: item.address,
+        phone: item.phone,
         dni: item.dni,
       })),
     [users]

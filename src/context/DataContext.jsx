@@ -185,6 +185,50 @@ export const DataContextProvider = ({ children }) => {
     fetchProfiles()
   }, [])
 
+  //Categories Fetch
+
+  const editCategory = async (category, id, data) => {
+    try {
+      const { error } = await supabase
+        .from(category)
+        .update({
+          name: data.name,
+        })
+        .eq("id", id)
+      if (error) {
+        throw error
+      }
+      if (category === "types") {
+        setTypes(
+          types.map((type) =>
+            type.id === id ? { ...type, name: data.name } : type
+          )
+        )
+      } else if (category === "sub_types") {
+        setsub_types(
+          sub_types.map((sub_type) =>
+            sub_type.id === id ? { ...sub_type, name: data.name } : sub_type
+          )
+        )
+      } else if (category === "models") {
+        setModels(
+          models.map((model) =>
+            model.id === id ? { ...model, name: data.name } : model
+          )
+        )
+      } else if (category === "brands") {
+        setBrands(
+          brands.map((brand) =>
+            brand.id === id ? { ...brand, name: data.name } : brand
+          )
+        )
+      }
+      toast.success("Categoría actualizada con éxito")
+    } catch (error) {
+      toast.error("Error al actualizar la categoría")
+    }
+  }
+
   useEffect(() => {
     const fetchBrands = async () => {
       const { data, error } = await supabase.from("brands").select("*")
@@ -261,6 +305,7 @@ export const DataContextProvider = ({ children }) => {
       console.log(error)
       throw error
     }
+    toast.success("Proveedor creado con éxito")
     fetchSuppliers()
   }
 
@@ -296,7 +341,7 @@ export const DataContextProvider = ({ children }) => {
 
     if (error) {
       console.log(error)
-      alert("Error al guardar la compra")
+      toast.error("Error al guardar la compra")
       throw error
     }
     toast.success("Compra guardada con éxito")
@@ -313,10 +358,10 @@ export const DataContextProvider = ({ children }) => {
     fetchType()
     if (error) {
       console.log(error)
-      alert("Error al guardar el porcentaje")
+      toast.error("Error al guardar el porcentaje")
       throw error
     }
-    alert("Porcentaje guardado con éxito")
+    toast.success("Porcentaje guardado con éxito")
   }
 
   const fetchPurchases = async () => {
@@ -497,6 +542,7 @@ export const DataContextProvider = ({ children }) => {
         setOrderNumber,
         clientName,
         setClientName,
+        editCategory,
       }}
     >
       {children}

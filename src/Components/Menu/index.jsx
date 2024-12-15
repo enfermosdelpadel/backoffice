@@ -114,36 +114,7 @@ function Menu() {
                 </ul>
               </details>
             </li>
-            <li>
-              <NavLink
-                to="/orders"
-                className={({ isActive }) =>
-                  isActive ? "btn-menu-active" : "btn-menu"
-                }
-              >
-                <span className="flex items-center space-x-2">
-                  <span className="justify-right">
-                    <ShoppingCartIcon className="size-5" />
-                  </span>
-                  <span>Órdenes</span>
-                </span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/customers"
-                className={({ isActive }) =>
-                  isActive ? "btn-menu-active" : "btn-menu"
-                }
-              >
-                <span className="flex items-right space-x-2">
-                  <span>
-                    <IdentificationIcon className="size-5" />
-                  </span>
-                  <span>Clientes</span>
-                </span>
-              </NavLink>
-            </li>
+
             <li>
               <NavLink
                 to="/suppliers"
@@ -176,16 +147,31 @@ function Menu() {
             </li>
             <li>
               <NavLink
-                to="/users"
+                to="/orders"
+                className={({ isActive }) =>
+                  isActive ? "btn-menu-active" : "btn-menu"
+                }
+              >
+                <span className="flex items-center space-x-2">
+                  <span className="justify-right">
+                    <ShoppingCartIcon className="size-5" />
+                  </span>
+                  <span>Órdenes</span>
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/customers"
                 className={({ isActive }) =>
                   isActive ? "btn-menu-active" : "btn-menu"
                 }
               >
                 <span className="flex items-right space-x-2">
                   <span>
-                    <UsersIcon className="size-5" />
+                    <IdentificationIcon className="size-5" />
                   </span>
-                  <span>Usuarios</span>
+                  <span>Clientes</span>
                 </span>
               </NavLink>
             </li>
@@ -201,6 +187,21 @@ function Menu() {
                     <PresentationChartBarIcon className="size-5" />
                   </span>
                   <span>Reportes</span>
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/users"
+                className={({ isActive }) =>
+                  isActive ? "btn-menu-active" : "btn-menu"
+                }
+              >
+                <span className="flex items-right space-x-2">
+                  <span>
+                    <UsersIcon className="size-5" />
+                  </span>
+                  <span>Usuarios</span>
                 </span>
               </NavLink>
             </li>

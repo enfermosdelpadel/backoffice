@@ -5,6 +5,7 @@ import { CurrencyDollarIcon } from "@heroicons/react/24/outline"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
+import { Toaster } from "react-hot-toast"
 
 function Prices() {
   const {
@@ -22,6 +23,7 @@ function Prices() {
   }
   return (
     <Layout>
+      <Toaster gutter={30} duration={4000} />
       <div className="w-full mt-4 bg-white ">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <CurrencyDollarIcon className="h-6 w-6 mr-2 text-blue-900" />
