@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
+
+import { Toaster } from "react-hot-toast"
+
 import Layout from "../../Components/Layout"
 
 import { Table } from "../../Components/Table"
@@ -25,6 +28,7 @@ function Supliers() {
 
   return (
     <Layout>
+      <Toaster gutter={30} duration={4000} />
       <div className="w-full">
         <div className="flex items-stretch px-3 pt-3 pb-2 bg-gray-300">
           <PlusIcon className="h-6 w-6 mr-2 text-blue-900" />

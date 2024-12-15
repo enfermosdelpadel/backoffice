@@ -15,6 +15,10 @@ export default function useColumns() {
         Header: "Correo",
         accessor: "email",
       },
+      {
+        Header: "Teléfono",
+        accessor: "phone",
+      },
 
       {
         Header: "Direccion",

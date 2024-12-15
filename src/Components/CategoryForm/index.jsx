@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 // import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"
 const CategoryForm = (props) => {
-  const { data, id } = props
+  const { data, id, editCategory } = props
   const [categories, setCategories] = useState([...data])
   const [newCategory, setNewCategory] = useState("")
   const [editingCategory, setEditingCategory] = useState(null)
@@ -22,13 +22,7 @@ const CategoryForm = (props) => {
   }
 
   const handleSaveEdit = (id, newName) => {
-    const updatedCategories = categories?.map((category) => {
-      if (category.id === id) {
-        return { ...category, name: newName }
-      }
-      return category
-    })
-    setCategories(updatedCategories)
+    editCategory("categories", id, { name: newName })
     setEditingCategory(null)
   }
 
@@ -39,16 +33,6 @@ const CategoryForm = (props) => {
   return (
     <div className="flex">
       <div className="w-1/2 flex-wrap mr-2">
-        {/* <select defaultValue={"DEFAULT"} id="category">
-          <option value="DEFAULT" disabled>
-            Seleccione un tipo
-          </option>
-          {categories?.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category?.name}
-            </option>
-          ))}
-        </select> */}
         <input
           type="text"
           value={newCategory}
@@ -131,4 +115,5 @@ export { CategoryForm }
 CategoryForm.propTypes = {
   data: PropTypes.array.isRequired,
   id: PropTypes.string.isRequired,
+  editCategory: PropTypes.func.isRequired,
 }

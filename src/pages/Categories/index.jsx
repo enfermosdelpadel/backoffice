@@ -7,7 +7,8 @@ import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
 
 function Categories() {
-  const { brands, types, sub_types, models } = useContext(DataContext)
+  const { brands, types, sub_types, models, editCategory } =
+    useContext(DataContext)
   return (
     <Layout>
       <Tabs className="w-full pt-5 px-5 bg-white h-full">
@@ -19,16 +20,20 @@ function Categories() {
         </TabList>
 
         <TabPanel>
-          <CategoryForm data={types} id="types" />
+          <CategoryForm data={types} id="types" editCategory={editCategory} />
         </TabPanel>
         <TabPanel>
-          <CategoryForm data={sub_types} id="sub_types" />
+          <CategoryForm
+            data={sub_types}
+            id="sub_types"
+            editCategory={editCategory}
+          />
         </TabPanel>
         <TabPanel>
-          <CategoryForm data={brands} id="brands" />
+          <CategoryForm data={brands} id="brands" editCategory={editCategory} />
         </TabPanel>
         <TabPanel>
-          <CategoryForm data={models} id="brands" />
+          <CategoryForm data={models} id="brands" editCategory={editCategory} />
         </TabPanel>
       </Tabs>
     </Layout>
